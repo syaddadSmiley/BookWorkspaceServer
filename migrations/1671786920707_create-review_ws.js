@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS review_ws (
     komen VARCHAR(300) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_ws) REFERENCES workingspaces(id),
+    FOREIGN KEY (id_ws) REFERENCES workspaces(id),
     FOREIGN KEY (id_user) REFERENCES users(uid)
 );
 `
