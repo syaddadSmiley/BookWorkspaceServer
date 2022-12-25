@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
+const EntryChecker = require('../utils/checkBeforeEntry');
 const BaseController = require('../controllers/BaseController');
 const { UUID } = require('sequelize');
 const uuid = require('uuid');
@@ -16,23 +17,24 @@ const tokenList = {};
 
 class WorkspaceController extends BaseController {
 
+    //TOKEN ADMIN SHOULD REQUIRED
     static async createWorkspaces(req, res) {
         try{
 
             const body = req.body;
             const schema = {
-                id_service: Joi.string(),
-                id_type: Joi.string(),
-                id_url: Joi.string(),
+                id_service: Joi.string().max(50),
+                id_type: Joi.string().max(50),
+                id_url: Joi.string().max(50),
                 email: Joi.string().email().max(50).required(),
                 name: Joi.string().max(50).required(),
                 address: Joi.string().max(150).required(),
-                password: Joi.string().required(),
+                password: Joi.string().max(100).required(),
                 mobile_number: Joi.number().required(),
                 description: Joi.string().max(2000).required(),
                 longtitude: Joi.number(),
                 latitude: Joi.number(),
-                user_agent: Joi.string().required(),
+                user_agent: Joi.string().max(200).required(),
             };
             
             const { error } = Joi.validate({
@@ -87,6 +89,35 @@ class WorkspaceController extends BaseController {
 
     }
 
+    static async getWsById(req, res) {
+        try{
+            const body = req.body;
+            const reqId = req.params.id;
+
+            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+            
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
+
+            if (EntryChecker(check)) {
+                var result = await super.getById(req, 'workspaces');
+                if (!(_.isNull(result))) {
+                    console.log(result);
+                    const filteredWorkspaceData = _.omit(result.dataValues, ['createdAt', 'updatedAt', 'password']);
+                    requestHandler.sendSuccess(res, 'success')({ filteredWorkspaceData });
+                } else {
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+                }
+            } else {
+                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+            }
+
+        }catch(error){
+            requestHandler.sendError(req, res, error);
+        }
+    }
+
     static async getAllWorkspaces(req, res) {
         try{
         //VALIDATE REQ BODY
@@ -111,8 +142,12 @@ class WorkspaceController extends BaseController {
                 offset: 0,
                 status: "noAll",
             }
+
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
            
-            if (String(cleanedUserAgent).includes("Mozilla") ||  String(cleanedUserAgent).includes("Chrome") || String(cleanedUserAgent).includes("Dart")) {
+            if (EntryChecker(check)) {
                 if (data.perPage === 0){
                     data.perPage = 20;
                 }

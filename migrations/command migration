@@ -1,7 +1,7 @@
-node migration.js run 20181022121627-create-users.js up "&" 
+node migration.js run 1671754141400_create-workingspace.js up "&" 
 node migration.js run 1671786920707_create-review_ws.js up "&" 
 node migration.js run 1671786046665_create-url_ws.js up "&" 
-node migration.js run 1671754141400_create-workingspace.js up "&" 
+####node migration.js run 1671754141400_create-workingspace.js up "&" 
 node migration.js run 1671784704886_create-type_ws.js up "&" 
 node migration.js run 1671784230350_create-services.js up "&" 
 node migration.js run 1671787102729_create-booking_ws.js up

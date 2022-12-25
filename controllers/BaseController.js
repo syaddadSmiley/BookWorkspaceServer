@@ -21,7 +21,8 @@ class BaseController {
 	* @return an err if an error occur
     */
 	static async getById(req, modelName) {
-		const reqParam = req.params.id;
+		// const reqParam = req.params.id;
+		const reqParam = req.params.id.replace(/[^a-zA-Z0-9_-]/g, '');
 		logger.log(reqParam, 'warn');
 		let result;
 		try {
