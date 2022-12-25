@@ -1,7 +1,7 @@
 queries = `
 CREATE TABLE IF NOT EXISTS type_ws (
     id VARCHAR(50) NOT NULL PRIMARY KEY,
-    id_ws VARCHAR(50) NOT NULL,
+    id_ws VARCHAR(50) NOT NULL DEFAULT "NULL",
     kapasitas MEDIUMINT NOT NULL,
     type VARCHAR(50) NOT NULL,
     harga INTEGER NOT NULL,
