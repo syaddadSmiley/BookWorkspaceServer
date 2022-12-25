@@ -17,6 +17,6 @@ CREATE TABLE IF NOT EXISTS booking_ws (
 `
 
 module.exports = {
-    "up": "",
+    "up": queries,
     "down": ""
 }

@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS services (
 `
 
 module.exports = {
-    "up": "",
+    "up": queries,
     "down": ""
 }

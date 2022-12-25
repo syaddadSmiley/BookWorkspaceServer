@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS review_ws (
 `
 
 module.exports = {
-    "up": "",
+    "up": queries,
     "down": ""
 }

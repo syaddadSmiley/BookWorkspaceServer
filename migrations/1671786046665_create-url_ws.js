@@ -10,6 +10,6 @@ CREATE TABLE IF NOT EXISTS url_ws (
 `
 
 module.exports = {
-    "up": "",
+    "up": queries,
     "down": ""
 }
