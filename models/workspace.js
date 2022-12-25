@@ -1,7 +1,7 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-	const Users = sequelize.define('workspace', {
+	const Users = sequelize.define('workspaces', {
 		id: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -41,11 +41,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         longtitude: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         latitude: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 		createdAt:{
 			type: DataTypes.DATE, field: 'created_at',

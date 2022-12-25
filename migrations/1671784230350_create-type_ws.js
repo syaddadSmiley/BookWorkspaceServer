@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS type_ws (
     harga INTEGER NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_ws) REFERENCES workingspaces(id)
+    FOREIGN KEY (id_ws) REFERENCES workspaces(id)
 );
 `
 

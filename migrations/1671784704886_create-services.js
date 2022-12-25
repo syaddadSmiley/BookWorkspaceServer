@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS services (
     tanggal_akhir DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_ws) REFERENCES workingspaces(id),
+    FOREIGN KEY (id_ws) REFERENCES workspaces(id),
     FOREIGN KEY (id_type_ws) REFERENCES type_ws(id)
 );
 `

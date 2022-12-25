@@ -129,8 +129,9 @@ class BaseController {
 	}
 
 	static async getList(req, modelName, options) {
-		const page = req.query.page;
-
+		const page = options.page;
+		
+		const limit = 20;
 		let results;
 		try {
 			if (_.isUndefined(options)) {
@@ -142,11 +143,17 @@ class BaseController {
 					options = _.extend({}, options, {});
 				} else {
 					options = _.extend({}, options, {
-						offset: this.limit * (page - 1),
-						limit: this.limit,
+						offset: limit * (page - 1),
+						limit: limit,
 					});
 				}
 			} else {
+				if(options.status === "noAll"){
+					options = _.extend({}, options, {
+						offset: limit * (page - 1),
+						limit: limit,
+					});
+				}
 				options = _.extend({}, options, {}); // extend it so we can't mutate
 			}
 

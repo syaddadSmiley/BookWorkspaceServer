@@ -1,9 +1,9 @@
 query = `
-CREATE TABLE IF NOT EXISTS workingspaces (
+CREATE TABLE IF NOT EXISTS workspaces (
     id VARCHAR(50) NOT NULL PRIMARY KEY,
-    id_service VARCHAR(50) NOT NULL ,
-    id_type VARCHAR(50) NOT NULL ,
-    id_url VARCHAR(50) NOT NULL ,
+    id_service VARCHAR(50),
+    id_type VARCHAR(50),
+    id_url VARCHAR(50),
     email VARCHAR(100) NOT NULL UNIQUE,
     name VARCHAR(50) NOT NULL,
     address VARCHAR(150) NOT NULL,

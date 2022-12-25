@@ -24,10 +24,10 @@ const tokenList = {};
 class AuthController extends BaseController {
 	static async login(req, res) {
 		try {
-			const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g,'');
-			const cleanedUid = req.body.uid.replace(/[^a-zA-Z0-9_-]/g, '');
-			const cleanedEmail = req.body.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
-			console.log(cleanedEmail, cleanedUid);
+			// const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g,'');
+			// const cleanedUid = req.body.uid.replace(/[^a-zA-Z0-9_-]/g, '');
+			// const cleanedEmail = req.body.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
+			// console.log(cleanedEmail, cleanedUid);
 			// logger.log(cleanedUserAgent, 'warn');
 			const schema = {
 				email: Joi.string().email().required(),
@@ -35,12 +35,15 @@ class AuthController extends BaseController {
 				user_agent: Joi.string().required(),
 			};
 			const { error } = Joi.validate({
-				email: cleanedEmail,
-				uid: cleanedUid,
-				user_agent: cleanedUserAgent,
+				email: req.body.email,
+				uid: req.body.uid,
+				user_agent: req.headers['user-agent'],
 			}, schema);
 			// logger.log("DIsini kaj", 'warn');
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+			const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g,'');
+			const cleanedUid = req.body.uid.replace(/[^a-zA-Z0-9_-]/g, '');
+			const cleanedEmail = req.body.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
 			const options = {
 				where: { uid: cleanedUid },
 			};
