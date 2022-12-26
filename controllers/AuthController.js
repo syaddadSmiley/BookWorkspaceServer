@@ -31,21 +31,21 @@ class AuthController extends BaseController {
 			// logger.log(cleanedUserAgent, 'warn');
 			const schema = {
 				email: Joi.string().email().required(),
-				uid: Joi.string().required(),
+				id: Joi.string().required(),
 				user_agent: Joi.string().required(),
 			};
 			const { error } = Joi.validate({
 				email: req.body.email,
-				uid: req.body.uid,
+				id: req.body.id,
 				user_agent: req.headers['user-agent'],
 			}, schema);
 			// logger.log("DIsini kaj", 'warn');
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g,'');
-			const cleanedUid = req.body.uid.replace(/[^a-zA-Z0-9_-]/g, '');
+			const cleanedId = req.body.id.replace(/[^a-zA-Z0-9_-]/g, '');
 			const cleanedEmail = req.body.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
 			const options = {
-				where: { uid: cleanedUid },
+				where: { id: cleanedId },
 			};
 			// var x = String(cleanedUserAgent).includes("Dart");
 			// logger.log(x, 'warn');
@@ -98,7 +98,7 @@ class AuthController extends BaseController {
 			req.params.id = user.id;
 			await super.updateById(req, 'users', data);
 			
-			const payload = _.omit(user.dataValues, ['createdAt', 'updatedAt', 'uid', 'mobile_number', 'verified']);
+			const payload = _.omit(user.dataValues, ['createdAt', 'updatedAt', 'mobile_number', 'verified']);
 			logger.log(config.auth.jwt_secret, 'warn')
 			const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 			const refreshToken = jwt.sign({
@@ -122,29 +122,29 @@ class AuthController extends BaseController {
 		try {
 			const data = req.body;
 			const schema = {
-				uid: Joi.string().required(),
+				id: Joi.string().required(),
 				email: Joi.string().email().required(),
 				name: Joi.string().required(),
 				mobile_number: Joi.number().required(),
 			};
 			logger.log("sampai0", 'warn');
 			console.log("ENTAH DIMANAAA");
-			const { error } = Joi.validate({ uid: data.uid, email: data.email, name: data.name , mobile_number: data.mobile_number}, schema);
+			const { error } = Joi.validate({ id: data.id, email: data.email, name: data.name , mobile_number: data.mobile_number}, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			const options = { where: { uid: data.uid } };
+			const options = { where: { id: data.id } };
 			const user = await super.getByCustomOptions(req, 'users', options);
 			
 			if (user) {
 				requestHandler.throwError(400, 'bad request', 'invalid, account already existed')();
 			}
 
-			const cleanedUid = data.uid.replace(/[^a-zA-Z0-9_-]/g, '');
+			const cleanedId = data.id.replace(/[^a-zA-Z0-9_-]/g, '');
 			const cleanedEmail = data.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
 			const cleanedName = data.name.replace(/[^a-zA-Z]/g, '');
 			const cleanedMobileNumber = data.mobile_number.replace(/[^0-9]/g, '');
 
 			const payload = {
-				uid: cleanedUid,
+				id: cleanedId,
 				email: cleanedEmail,
 				name: cleanedName,
 				mobile_number: cleanedMobileNumber,
@@ -180,11 +180,11 @@ class AuthController extends BaseController {
 			const createdUser = await super.create(req, 'users', payload);
 			if (!(_.isNull(createdUser))) {
 				const options = {
-					where: { uid: data.uid },
+					where: { id: data.id },
 				};
 				const user = await super.getByCustomOptions(req, 'users', options);
 				console.log(user.dataValues);
-				const payload = _.omit(user.dataValues, [ 'createdAt', 'updatedAt', 'uid', 'mobile_number', 'verified']);
+				const payload = _.omit(user.dataValues, [ 'createdAt', 'updatedAt', 'mobile_number', 'verified']);
 				// logger.log(config.auth.jwt_secret, 'warn')
 				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 				const refreshToken = jwt.sign({

@@ -41,7 +41,7 @@ class UsersController extends BaseController {
 
 	static async deleteById(req, res) {
 		try {
-			const result = await super.deleteById(req, 'Users');
+			const result = await super.deleteById(req, 'users');
 			return requestHandler.sendSuccess(res, 'User Deleted Successfully')({ result });
 		} catch (err) {
 			return requestHandler.sendError(req, res, err);
@@ -50,12 +50,15 @@ class UsersController extends BaseController {
 
 	static async getProfile(req, res) {
 		try {
+			logger.log(req, 'warn');
 			const tokenFromHeader = auth.getJwtToken(req);
+			// logger.log(`TOKEN`,'warn');
 			const user = jwt.decode(tokenFromHeader);
+			// logger.log(`USER ${user.payload.id}`,'warn');
 			const options = {
 				where: { id: user.payload.id },
 			};
-			const userProfile = await super.getByCustomOptions(req, 'Users', options);
+			const userProfile = await super.getByCustomOptions(req, 'users', options);
 			const profile = _.omit(userProfile.dataValues, ['createdAt', 'updatedAt', 'last_login_date', 'password']);
 			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ profile });
 		} catch (err) {

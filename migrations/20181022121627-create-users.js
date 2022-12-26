@@ -1,6 +1,6 @@
 
 query = `CREATE TABLE IF NOT EXISTS users (
-    uid VARCHAR(50) NOT NULL PRIMARY KEY,
+    id VARCHAR(50) NOT NULL PRIMARY KEY,
     email VARCHAR(100) NOT NULL UNIQUE,
     name VARCHAR(50) NOT NULL,
     verified BOOLEAN NOT NULL DEFAULT 0,
@@ -10,7 +10,7 @@ query = `CREATE TABLE IF NOT EXISTS users (
 	updated_at DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP,
     deleted_status enum('0','1') NOT NULL DEFAULT '0'
     );
-    `
+`
 
 module.exports = {
 	up: query,

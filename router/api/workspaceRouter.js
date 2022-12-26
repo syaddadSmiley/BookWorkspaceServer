@@ -5,6 +5,8 @@ const auth = require('../../utils/auth');
 router.get('/pagination', WorkspaceController.getAllWorkspaces);
 router.get('/:id', WorkspaceController.getWsById);
 
+router.delete('/:id', WorkspaceController.deleteWsById);
+
 router.post('/create', WorkspaceController.createWorkspaces);
 
 module.exports = router;

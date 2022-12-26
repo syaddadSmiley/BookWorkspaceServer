@@ -1,21 +1,13 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-	const Users = sequelize.define('workspaces', {
+	const Workspaces = sequelize.define('workspaces', {
 		id: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			primaryKey: true,
 		},
-		id_service: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		id_type: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		id_url: {
+		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
@@ -58,12 +50,12 @@ module.exports = (sequelize, DataTypes) => {
 		},
 
 	}, {});
-	Users.associate = function (models) {
-		Users.hasMany(models.Roles, {
+	Workspaces.associate = function (models) {
+		Workspaces.hasMany(models.Roles, {
 			foreignKey: 'id_service',
             foreignKey: 'id_type',
             foreignKey: 'id_url',
 		});
 	};
-	return Users;
+	return Workspaces;
 };

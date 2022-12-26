@@ -10,4 +10,6 @@ router.use('/', require('./authRouter'));
 
 router.use('/ws', require('./workspaceRouter'));
 
+router.use('/type_ws', require('./typeWsRouter'))
+
 module.exports = router;

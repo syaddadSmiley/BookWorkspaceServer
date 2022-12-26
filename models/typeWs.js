@@ -1,30 +1,27 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-	const Users = sequelize.define('users', {
+	const TypeWs = sequelize.define('type_ws', {
 		id: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			primaryKey: true,
 		},
-		email: {
+		id_ws: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		name: {
-			type: DataTypes.STRING,
+		kapasitas: {
+			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
-		verified: {
-			type: DataTypes.BOOLEAN,
-			allowNull: true,
-		},
-		mobile_number: {
+        harga: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+		type: {
 			type: DataTypes.STRING,
-		},
-		user_img: {
-			type: DataTypes.STRING,
-			allowNull: true,
+			allowNull: false,
 		},
 		createdAt:
 		{
@@ -33,14 +30,12 @@ module.exports = (sequelize, DataTypes) => {
 		updatedAt: {
 			type: DataTypes.DATE, field: 'updated_at',
 		},
-		deleted_status: {
-			type: DataTypes.STRING,
-		},
 
 	}, {});
-	Users.associate = function (models) {
-		Users.hasMany(models.Roles, {
+	TypeWs.associate = function (models) {
+		TypeWs.hasMany(models.Roles, {
+			foreignKey: 'id_ws',
 		});
 	};
-	return Users;
+	return TypeWs;
 };

@@ -48,7 +48,8 @@ class BaseController {
 	}
 
 	static async deleteById(req, modelName) {
-		const reqParam = req.params.id;
+		// const reqParam = req.params.id;
+		const reqParam = req.params.id.replace(/[^a-zA-Z0-9_-]/g, '');
 		let result;
 		try {
 			result = await req.app.get('db')[modelName].destroy({

@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
 const EntryChecker = require('../utils/checkBeforeEntry');
+
 const BaseController = require('../controllers/BaseController');
 const { UUID } = require('sequelize');
 const uuid = require('uuid');
@@ -72,7 +73,11 @@ class WorkspaceController extends BaseController {
                 latitude: body.latitude,
             }
 
-            if (String(cleanedUserAgent).includes("Mozilla") ||  String(cleanedUserAgent).includes("Chrome") || String(cleanedUserAgent).includes("Dart")) {
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
+
+            if (EntryChecker(check)) {
                 var result = await super.create(req, 'workspaces', data);
                 if (!(_.isNull(result))) {
                     requestHandler.sendSuccess(res, 'workspaces created')({ result });
@@ -91,8 +96,7 @@ class WorkspaceController extends BaseController {
 
     static async getWsById(req, res) {
         try{
-            const body = req.body;
-            const reqId = req.params.id;
+
 
             const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
             
@@ -101,11 +105,10 @@ class WorkspaceController extends BaseController {
             }
 
             if (EntryChecker(check)) {
-                var result = await super.getById(req, 'workspaces');
-                if (!(_.isNull(result))) {
-                    console.log(result);
-                    const filteredWorkspaceData = _.omit(result.dataValues, ['createdAt', 'updatedAt', 'password']);
-                    requestHandler.sendSuccess(res, 'success')({ filteredWorkspaceData });
+                var resultRaw = await super.getById(req, 'workspaces');
+                if (!(_.isNull(resultRaw))) {
+                    const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt', 'password']);
+                    requestHandler.sendSuccess(res, 'success')({ result });
                 } else {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
                 }
@@ -115,6 +118,26 @@ class WorkspaceController extends BaseController {
 
         }catch(error){
             requestHandler.sendError(req, res, error);
+        }
+    }
+
+    static async deleteWsById(req, res) {
+        try{
+            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
+            if(EntryChecker(check)) {
+                var result = await super.deleteById(req, 'workspaces');
+                if(!(_.isNull(result))) {
+                    requestHandler.sendSuccess(res, 'deleted')({result})
+                }
+            } else {
+                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+            }
+        }catch (error){
+            requestHandler.sendError(req, res, error)
         }
     }
 
