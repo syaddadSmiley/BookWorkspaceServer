@@ -86,7 +86,7 @@ router.delete('/:id', UsersController.deleteById);
  *         schema:
  *           $ref: '#/definitions/users'
  */
-router.get('/profileX', auth.isAuthunticated, UsersController.getProfile);
+router.get('/profile/details', auth.isAuthunticated, UsersController.getProfile);
 
 
 module.exports = router;

@@ -4,6 +4,7 @@ const auth = require('../../utils/auth');
 
 router.get('/pagination', WorkspaceController.getAllWorkspaces);
 router.get('/:id', WorkspaceController.getWsById);
+router.get('/types/detail', WorkspaceController.getTypeWs);
 
 router.delete('/:id', WorkspaceController.deleteWsById);
 

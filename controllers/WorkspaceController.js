@@ -190,6 +190,46 @@ class WorkspaceController extends BaseController {
             requestHandler.sendError(req, res, error);
         }
     }
+
+    static async getTypeWs(req, res) {
+        try {
+            const body = req.body;
+            const schema = {
+                id: Joi.string().max(50).required(),
+                user_agent: Joi.string().max(150).required(),
+            };
+
+            const { error } = Joi.validate({
+                id: body.id,
+                user_agent: req.headers['user-agent'],
+            }, schema);
+            requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+
+            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+            const cleanedId = body.id.replace(/[^a-zA-Z0-9_-]/g, '');
+
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
+
+            if(EntryChecker(check)){
+                const options = {
+                    where: {id_ws: cleanedId}
+                }
+                const result = await super.getList(req, 'type_ws', options);
+                if (!(_.isNull(result))) {
+                    requestHandler.sendSuccess(res, 'success')({ result });
+                } else {
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+                }
+                
+            }else{
+                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+            }
+        }catch (error) {
+            requestHandler.sendError(req, res, error);
+        }
+    }
 }
 
 module.exports = WorkspaceController;
