@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS workspaces (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP,
     deleted_status enum('0','1') NOT NULL DEFAULT '0'
-    );
+);
     `
 
 module.exports = {

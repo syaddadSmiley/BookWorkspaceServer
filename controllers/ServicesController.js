@@ -19,7 +19,7 @@ const tokenList = {};
 class ServicesController extends BaseController {
 
     //TOKEN ADMIN SHOULD REQUIRED
-    static async createTypeWs(req, res) {
+    static async createServices(req, res) {
         try {
             const body = req.body;
             const schema = {

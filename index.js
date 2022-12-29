@@ -1,4 +1,7 @@
 const express = require('express');
+const helmet = require('helmet');
+const csurf = require('csurf');
+const rateLimit = require('express-rate-limit');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -12,14 +15,23 @@ const logger = new Logger();
 const app = express();
 
 app.set('config', config); // the system configrationsx
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('method-override')());
+
 
 app.use(compression());
 app.use(cors());
+
 const swagger = require('./utils/swagger');
+const { use } = require('./router');
 
 
+app.use(rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // limit each IP to 100 requests per windowMs
+	message: 'Too many requests from this IP, please try again after 15 minutes',
+}));
 process.on('SIGINT', () => {
 	logger.log('stopping the server', 'info');
 	process.exit();
@@ -50,7 +62,8 @@ app.use((req, res, next) => {
 	logger.log(logString, 'info');
 	next(err);
 });
-
+app.use(csurf({ cookie: true }));
+app.use(helmet());
 /**
  * Create HTTP server.
  */
