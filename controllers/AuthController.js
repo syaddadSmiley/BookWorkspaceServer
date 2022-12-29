@@ -60,10 +60,18 @@ class AuthController extends BaseController {
 			// var x = String(cleanedUserAgent).includes("Dart");
 			// logger.log(x, 'warn');
 			// const user = await super.getByCustomOptions(req, 'users', options);
-			const user = await req.app.get('db').query(
-				`SELECT * FROM users WHERE id = '${cleanedId}'`,
-	
-			);
+			const user = await req.app.get('db').sequelize.query(`SELECT
+			users.id,
+			users.email,
+			users.name,
+			roles.role AS roles,
+			users.mobile_number,
+			users.user_img,
+			users.verified,
+			users.updated_at
+				FROM users
+				INNER JOIN roles ON roles.id_user = users.id 
+			WHERE users.id = '${cleanedId}'`, { type: req.app.get('db').sequelize.QueryTypes.SELECT });
 			console.log("awadwadwawa0", user);
 			if (!user) {
 				requestHandler.throwError(400, 'bad request', 'invalid')();
