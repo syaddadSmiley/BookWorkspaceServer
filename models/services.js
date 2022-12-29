@@ -1,7 +1,7 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-    const TypeWs = sequelize.define('services', {
+    const Services = sequelize.define('services', {
         id: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -29,12 +29,17 @@ module.exports = (sequelize, DataTypes) => {
         },
 
     }, {});
-    TypeWs.associate = function (models) {
-        TypeWs.hasMany(models.Roles, {
-            foreignKey: 'id_ws',
-            foreignKey: 'id_type_ws',
+    Services.associate = function (models) {
+        // // console.log(models.workspaces);
+        Services.belongsTo(models.users, {
             foreignKey: 'id_user',
         });
+        Services.belongsTo(models.workspaces, {
+            foreignKey: 'id_ws',
+        });
+        Services.hasMany(models.type_ws, {
+            foreignKey: 'id_type_ws',
+        });
     };
-    return TypeWs;
+    return Services;
 };

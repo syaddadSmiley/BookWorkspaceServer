@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS booking_ws (
     status enum('waiting','on_place','done') NOT NULL DEFAULT 'waiting',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_ws) REFERENCES workspaces(id),
-    FOREIGN KEY (id_user) REFERENCES users(id),
-    FOREIGN KEY (id_service) REFERENCES services(id)
+    FOREIGN KEY (id_ws) REFERENCES workspaces(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_service) REFERENCES services(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 `
 

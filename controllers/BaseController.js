@@ -38,7 +38,6 @@ class BaseController {
 
 	static async getByCustomOptions(req, modelName, options) {
 		let result;
-		// console.log(req, modelName, options)
 		try {
 			result = await req.app.get('db')[modelName].findOne(options);
 		} catch (err) {

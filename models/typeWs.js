@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	}, {});
 	TypeWs.associate = function (models) {
-		TypeWs.hasMany(models.Roles, {
+		TypeWs.hasMany(models.workspaces, {
 			foreignKey: 'id_ws',
 		});
 	};

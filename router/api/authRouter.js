@@ -115,7 +115,7 @@ router.post('/login', AuthController.login);
   *       200:
   *         description: a new jwt token with a new expiry date is issued
   */
-router.post('/refreshToken', auth.isAuthunticated, AuthController.refreshToken);
+router.post('/refreshToken', auth.isAuthenticated, AuthController.refreshToken);
 
 /**
  * @swagger
@@ -150,6 +150,6 @@ router.post('/refreshToken', auth.isAuthunticated, AuthController.refreshToken);
  *         schema:
  *           $ref: '#/definitions/users'
  */
-router.post('/logout', auth.isAuthunticated, AuthController.logOut);
+router.post('/logout', auth.isAuthenticated, AuthController.logOut);
 
 module.exports = router;

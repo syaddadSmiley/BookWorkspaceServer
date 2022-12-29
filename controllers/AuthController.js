@@ -14,6 +14,9 @@ const auth = require('../utils/auth');
 const config = require('../config/appconfig');
 const { join } = require('lodash');
 const { decrypt, decryptX } = require('../utils/CryptoX');
+const { UUID } = require('sequelize');
+const uuid = require('uuid');
+const {Roles} = require('../models/roles');
 
 var sanitize = require('validator').sanitize
 
@@ -45,14 +48,27 @@ class AuthController extends BaseController {
 			const cleanedId = req.body.id.replace(/[^a-zA-Z0-9_-]/g, '');
 			const cleanedEmail = req.body.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
 			const options = {
-				where: { id: cleanedId },
+				includes: [
+					{
+						model: Roles,	
+						where: { id_user: cleanedId },
+						required: true,
+						attributes: ['id', 'role'],
+					},
+				],
 			};
 			// var x = String(cleanedUserAgent).includes("Dart");
 			// logger.log(x, 'warn');
-			const user = await super.getByCustomOptions(req, 'users', options);
+			// const user = await super.getByCustomOptions(req, 'users', options);
+			const user = await req.app.get('db').query(
+				`SELECT * FROM users WHERE id = '${cleanedId}'`,
+	
+			);
+			console.log("awadwadwawa0", user);
 			if (!user) {
 				requestHandler.throwError(400, 'bad request', 'invalid')();
 			} 
+			
 			// var logString = "User Agent "+cleanedUserAgent
 			// logger.log(logString, 'warn');
 			if (String(cleanedUserAgent).includes("Mozilla") ||  String(cleanedUserAgent).includes("Chrome") || String(cleanedUserAgent).includes("Dart")) {
@@ -127,13 +143,12 @@ class AuthController extends BaseController {
 				name: Joi.string().required(),
 				mobile_number: Joi.number().required(),
 			};
-			logger.log("sampai0", 'warn');
-			console.log("ENTAH DIMANAAA");
+			// logger.log("sampai0", 'warn');
+			// console.log("ENTAH DIMANAAA");
 			const { error } = Joi.validate({ id: data.id, email: data.email, name: data.name , mobile_number: data.mobile_number}, schema);
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			const options = { where: { id: data.id } };
 			const user = await super.getByCustomOptions(req, 'users', options);
-			
 			if (user) {
 				requestHandler.throwError(400, 'bad request', 'invalid, account already existed')();
 			}
@@ -149,7 +164,7 @@ class AuthController extends BaseController {
 				name: cleanedName,
 				mobile_number: cleanedMobileNumber,
 			}
-			console.log(payload);
+			// console.log(payload);
 
 			logger.log("sampai1", 'warn')
 
@@ -184,6 +199,12 @@ class AuthController extends BaseController {
 				};
 				const user = await super.getByCustomOptions(req, 'users', options);
 				console.log(user.dataValues);
+				const payloadRole = {
+					id: uuid(),
+					id_user: user.dataValues.id,
+					role: 'user',
+				}
+				const setRole = await super.create(req, 'roles', payloadRole);
 				const payload = _.omit(user.dataValues, [ 'createdAt', 'updatedAt', 'mobile_number', 'verified']);
 				// logger.log(config.auth.jwt_secret, 'warn')
 				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
@@ -203,6 +224,7 @@ class AuthController extends BaseController {
 				requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
 			}
 		} catch (err) {
+			console.log(err);
 			requestHandler.sendError(req, res, err);
 		}
 	}

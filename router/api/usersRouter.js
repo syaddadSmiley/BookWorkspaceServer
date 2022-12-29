@@ -43,7 +43,7 @@ const auth = require('../../utils/auth');
  *         schema:
  *           $ref: '#/definitions/users'
  */
-router.get('/:id', auth.isAuthunticated, UsersController.getUserById);
+router.get('/:id', auth.isAuthenticatedAdmin, UsersController.getUserById);
 
 /**
  * @swagger
@@ -86,7 +86,7 @@ router.delete('/:id', UsersController.deleteById);
  *         schema:
  *           $ref: '#/definitions/users'
  */
-router.get('/profile/details', auth.isAuthunticated, UsersController.getProfile);
+router.get('/profile/details', auth.isAuthenticated, UsersController.getProfile);
 
 
 module.exports = router;

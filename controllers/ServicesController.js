@@ -19,16 +19,16 @@ const tokenList = {};
 class ServicesController extends BaseController {
 
     //TOKEN ADMIN SHOULD REQUIRED
-    static async createServices(req, res) {
+    static async createBooking(req, res) {
         try {
             const body = req.body;
-            const schema = {
-                id_ws: Joi.string().max(50).required(),
-                kapasitas: Joi.number(),
-                type: Joi.string().max(50).required(),
-                harga: Joi.number().required(),
-                user_agent: Joi.string().required()
-            };
+            // const schema = {
+            //     id_ws: Joi.string().max(50).required(),
+            //     id_type_ws: Joi.string().max(50).required(),
+            //     id_user: Joi.string().max(50).required(),
+            //     st
+            //     user_agent: Joi.string().required()
+            // };
 
             const { error } = Joi.validate({
                 id_ws: body.id_ws,
@@ -71,6 +71,61 @@ class ServicesController extends BaseController {
             requestHandler.sendError(req, res, error);
         }
 
+    }
+
+    static async createServices(req, res) {
+        try {
+            const body = req.body;
+            const schema = {
+                id_ws: Joi.string().max(50).required(),
+                id_type_ws: Joi.string().max(50).required(),
+                id_user: Joi.string().max(50).required(),
+                start_date: Joi.date().required(),
+                finish_date: Joi.date().required(),
+                user_agent: Joi.string().required()
+            };
+            
+            const { error } = Joi.validate({
+                id_ws: body.id_ws,
+                id_type_ws: body.id_type_ws,
+                id_user: body.id_user,
+                start_date: body.start_date,
+                finish_date: body.finish_date,
+                user_agent: req.headers['user-agent'],
+            }, schema);
+
+            requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+
+            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+            const sanitized = _.omit(body, ['user_agent']);
+            console.log(sanitized);
+            requestHandler.sendError(req, res, sanitized);
+
+            const id_services = uuid();
+            const data = {
+                id: id_services,
+                id_ws: body.id_ws,
+                id_type_ws: body.id_type_ws,
+                id_user: body.id_user,
+                start_date: body.start_date,
+                finish_date: body.finish_date,
+            }
+
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
+
+            if(EntryChecker(check)) {
+                var result = await super.create(req, 'services', data);
+                if (!(_.isNull(result))) {
+                    requestHandler.sendSuccess(res, 'services added')({ result });
+                } else {
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+                }
+            }
+        } catch (error) {
+            requestHandler.sendError(req, res, error);
+        }
     }
 
     static async getTypeWsById(req, res) {

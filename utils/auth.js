@@ -36,7 +36,7 @@ function verifyToken(req, res, next) {
 		// verifies secret and checks exp
 		jwt.verify(token, config.auth.jwt_secret, (err, decoded) => {
 			if (err) {
-				requestHandler.throwError(401, 'Unauthorized', 'please provide a vaid token ,your token might be expired')();
+				requestHandler.throwError(401, 'Unauthorized', 'please provide a valid token ,your token might be expired')();
 			}
 			req.decoded = decoded;
 			next();
@@ -46,5 +46,40 @@ function verifyToken(req, res, next) {
 	}
 }
 
+function verifyTokenAdmin(req, res, next) {
+	try {
+		if (_.isUndefined(req.headers.authorization)) {
+			requestHandler.throwError(401, 'Unauthorized', 'Not Authorized to access this resource!')();
+		}
+		const Bearer = req.headers.authorization.split(' ')[0];
 
-module.exports = { getJwtToken: getTokenFromHeader, isAuthunticated: verifyToken };
+		if (!Bearer || Bearer !== 'Bearer') {
+			requestHandler.throwError(401, 'Unauthorized', 'Not Authorized to access this resource!')();
+		}
+
+		const token = req.headers.authorization.split(' ')[1];
+
+		if (!token) {
+			requestHandler.throwError(401, 'Unauthorized', 'Not Authorized to access this resource!')();
+		}
+
+		// verifies secret and checks exp
+		jwt.verify(token, config.auth.jwt_secret, (err, decoded) => {
+			if (err) {
+				requestHandler.throwError(401, 'Unauthorized', 'please provide a valid token ,your token might be expired')();
+			}
+			
+			if(decoded.role !== 'admin' || decoded.role !== 'superadmin'){
+				requestHandler.throwError(401, 'Unauthorized', 'Kamu bukan admin mas ~')();
+			}else{
+				req.decoded = decoded;
+				next();
+			}
+		});
+	} catch (err) {
+		requestHandler.sendError(req, res, err);
+	}
+}
+
+
+module.exports = { getJwtToken: getTokenFromHeader, isAuthenticated: verifyToken, isAuthenticatedAdmin : verifyTokenAdmin };

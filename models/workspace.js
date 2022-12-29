@@ -51,11 +51,6 @@ module.exports = (sequelize, DataTypes) => {
 
 	}, {});
 	Workspaces.associate = function (models) {
-		Workspaces.hasMany(models.Roles, {
-			foreignKey: 'id_service',
-            foreignKey: 'id_type',
-            foreignKey: 'id_url',
-		});
 	};
 	return Workspaces;
 };
