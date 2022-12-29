@@ -68,8 +68,8 @@ function verifyTokenAdmin(req, res, next) {
 			if (err) {
 				requestHandler.throwError(401, 'Unauthorized', 'please provide a valid token ,your token might be expired')();
 			}
-			
-			if(decoded.role !== 'admin' || decoded.role !== 'superadmin'){
+			console.log(decoded.payload.role);
+			if (decoded.payload.role !== 'admin' && decoded.payload.role !== 'super_admin'){
 				requestHandler.throwError(401, 'Unauthorized', 'Kamu bukan admin mas ~')();
 			}else{
 				req.decoded = decoded;

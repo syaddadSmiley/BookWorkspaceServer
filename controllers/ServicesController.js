@@ -97,16 +97,16 @@ class ServicesController extends BaseController {
             requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
             const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
-            const sanitized = _.omit(body, ['user_agent']);
-            console.log(sanitized);
-            requestHandler.sendError(req, res, sanitized);
+            const sanitizedIdWs = body.id_ws.replace(/[^a-zA-Z0-9_-]/g, '');
+            const sanitizedIdTypeWs = body.id_type_ws.replace(/[^a-zA-Z0-9_-]/g, '');
+            const sanitizedIdUser = body.id_user.replace(/[^a-zA-Z0-9_-]/g, '');
 
             const id_services = uuid();
             const data = {
                 id: id_services,
-                id_ws: body.id_ws,
-                id_type_ws: body.id_type_ws,
-                id_user: body.id_user,
+                id_ws: sanitizedIdWs,
+                id_type_ws: sanitizedIdTypeWs,
+                id_user: sanitizedIdUser,
                 start_date: body.start_date,
                 finish_date: body.finish_date,
             }
@@ -114,7 +114,7 @@ class ServicesController extends BaseController {
             const check = {
                 user_agent: cleanedUserAgent,
             }
-
+            
             if(EntryChecker(check)) {
                 var result = await super.create(req, 'services', data);
                 if (!(_.isNull(result))) {
@@ -122,7 +122,10 @@ class ServicesController extends BaseController {
                 } else {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
                 }
+            }else{
+                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
             }
+
         } catch (error) {
             requestHandler.sendError(req, res, error);
         }

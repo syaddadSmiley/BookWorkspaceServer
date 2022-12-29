@@ -27,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: false
         },
+        createdAt: {
+            type: DataTypes.DATE, field: 'created_at',
+        },
+        updatedAt: {
+            type: DataTypes.DATE, field: 'updated_at',
+        },
 
     }, {});
     Services.associate = function (models) {
@@ -37,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         Services.belongsTo(models.workspaces, {
             foreignKey: 'id_ws',
         });
-        Services.hasMany(models.type_ws, {
+        Services.belongsTo(models.type_ws, {
             foreignKey: 'id_type_ws',
         });
     };

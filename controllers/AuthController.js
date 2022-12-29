@@ -17,6 +17,7 @@ const { decrypt, decryptX } = require('../utils/CryptoX');
 const { UUID } = require('sequelize');
 const uuid = require('uuid');
 const {Roles} = require('../models/roles');
+const { query } = require('express');
 
 var sanitize = require('validator').sanitize
 
@@ -47,51 +48,39 @@ class AuthController extends BaseController {
 			const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g,'');
 			const cleanedId = req.body.id.replace(/[^a-zA-Z0-9_-]/g, '');
 			const cleanedEmail = req.body.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
-			const options = {
-				includes: [
-					{
-						model: Roles,	
-						where: { id_user: cleanedId },
-						required: true,
-						attributes: ['id', 'role'],
-					},
-				],
-			};
+			
 			// var x = String(cleanedUserAgent).includes("Dart");
 			// logger.log(x, 'warn');
 			// const user = await super.getByCustomOptions(req, 'users', options);
-			const user = await req.app.get('db').sequelize.query(`SELECT
-			users.id,
-			users.email,
-			users.name,
-			roles.role AS roles,
-			users.mobile_number,
-			users.user_img,
-			users.verified,
-			users.updated_at
-				FROM users
-				INNER JOIN roles ON roles.id_user = users.id 
-			WHERE users.id = '${cleanedId}'`, { type: req.app.get('db').sequelize.QueryTypes.SELECT });
-			console.log("awadwadwawa0", user);
-			if (!user) {
-				requestHandler.throwError(400, 'bad request', 'invalid')();
-			} 
 			
 			// var logString = "User Agent "+cleanedUserAgent
 			// logger.log(logString, 'warn');
 			if (String(cleanedUserAgent).includes("Mozilla") ||  String(cleanedUserAgent).includes("Chrome") || String(cleanedUserAgent).includes("Dart")) {
-				
-				const find = {
-					where: {
-						user_id: user.id,
-					},
-				};
+				const user = await req.app.get('db').sequelize.query(`SELECT
+				users.id,
+				users.email,
+				users.name,
+				roles.role AS role,
+				users.mobile_number,
+				users.user_img,
+				users.verified,
+				users.updated_at FROM users INNER JOIN roles ON roles.id_user = users.id 
+				WHERE users.id = '${cleanedId}'`, { type: req.app.get('db').sequelize.QueryTypes.SELECT });
+				// console.log("awadwadwawa0", user);
+				if (!user) {
+					requestHandler.throwError(400, 'bad request', 'invalid')();
+				} 
+				// const find = {
+				// 	where: {
+				// 		user_id: user.id,
+				// 	},
+				// };
 
 				// const fcmToken = await super.getByCustomOptions(req, 'UserTokens', find);
-				const data = {
-					userId: user.id,
-					platform: req.headers.platform,
-				};
+				// const data = {
+				// 	userId: user.id,
+				// 	platform: req.headers.platform,
+				// };
 
 				// if (fcmToken) {
 				// 	req.params.id = fcmToken.id;
@@ -99,44 +88,43 @@ class AuthController extends BaseController {
 				// } else {
 				// 	await super.create(req, 'UserTokens', data);
 				// }
+				console.log("REQUEST", req.headers.authorization);
+				console.log(user.email, cleanedEmail);
+				// await bcrypt
+				// 	.compare(cleanedEmail, user.email)
+				// 	.then(
+				// 		requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials'),
+				// 		requestHandler.throwError(500, 'bcrypt error'),
+				// 	);
+				if (cleanedEmail !== user.email) {
+					requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials');
+					requestHandler.throwError(500, 'bcrypt error');
+				}
+
+				// const data = {
+				// 	last_login_date: new Date(),
+				// };
+				// req.params.id = user.id;
+				// await super.updateById(req, 'users', data);
+
+				const payload = _.omit(user[0]);
+				logger.log(config.auth.jwt_secret, 'warn')
+				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
+				const refreshToken = jwt.sign({
+					payload,
+				}, config.auth.refresh_token_secret, {
+					expiresIn: config.auth.refresh_token_expiresin,
+				});
+				const response = {
+					status: 'Logged in',
+					token,
+					refreshToken,
+				};
+				tokenList[refreshToken] = response;
+				requestHandler.sendSuccess(res, 'User logged in Successfully')({ token, refreshToken });
 			}else {
 				requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
 			}
-
-			console.log("REQUEST", req.headers.authorization);
-			console.log(user.email, cleanedEmail);
-			// await bcrypt
-			// 	.compare(cleanedEmail, user.email)
-			// 	.then(
-			// 		requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials'),
-			// 		requestHandler.throwError(500, 'bcrypt error'),
-			// 	);
-			if (cleanedEmail !== user.email) {
-				requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials');
-				requestHandler.throwError(500, 'bcrypt error');
-			}
-			
-			const data = {
-				last_login_date: new Date(),
-			};
-			req.params.id = user.id;
-			await super.updateById(req, 'users', data);
-			
-			const payload = _.omit(user.dataValues, ['createdAt', 'updatedAt', 'mobile_number', 'verified']);
-			logger.log(config.auth.jwt_secret, 'warn')
-			const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
-			const refreshToken = jwt.sign({
-				payload,
-			}, config.auth.refresh_token_secret, {
-				expiresIn: config.auth.refresh_token_expiresin,
-			});
-			const response = {
-				status: 'Logged in',
-				token,
-				refreshToken,
-			};
-			tokenList[refreshToken] = response;
-			requestHandler.sendSuccess(res, 'User logged in Successfully')({ token, refreshToken });
 		} catch (error) {
 			requestHandler.sendError(req, res, error);
 		}
@@ -152,68 +140,64 @@ class AuthController extends BaseController {
 				mobile_number: Joi.number().required(),
 			};
 			// logger.log("sampai0", 'warn');
-			// console.log("ENTAH DIMANAAA");
-			const { error } = Joi.validate({ id: data.id, email: data.email, name: data.name , mobile_number: data.mobile_number}, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
-			const options = { where: { id: data.id } };
-			const user = await super.getByCustomOptions(req, 'users', options);
-			if (user) {
-				requestHandler.throwError(400, 'bad request', 'invalid, account already existed')();
-			}
-
 			const cleanedId = data.id.replace(/[^a-zA-Z0-9_-]/g, '');
 			const cleanedEmail = data.email.replace(/[^a-zA-Z0-9_@.-]/g, '');
 			const cleanedName = data.name.replace(/[^a-zA-Z]/g, '');
 			const cleanedMobileNumber = data.mobile_number.replace(/[^0-9]/g, '');
+			// console.log("ENTAH DIMANAAA");
+			const { error } = Joi.validate({ id: data.id, email: data.email, name: data.name , mobile_number: data.mobile_number}, schema);
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+
+			const options = { where: { id: cleanedId } };
+			const user = await super.getByCustomOptions(req, 'users', options);
+			if (user) {
+				requestHandler.throwError(400, 'bad request', 'invalid, account already existed')();
+			}
 
 			const payload = {
 				id: cleanedId,
 				email: cleanedEmail,
 				name: cleanedName,
 				mobile_number: cleanedMobileNumber,
-			}
-			// console.log(payload);
-
-			logger.log("sampai1", 'warn')
-
-			// async.parallel([
-			// 	function one(callback) {
-			// 		email.sendEmail(
-			// 			callback,
-			// 			config.sendgrid.from_email,
-			// 			[data.email],
-			// 			' iLearn Microlearning ',
-			// 			`please consider the following as your password${randomString}`,
-			// 			`<p style="font-size: 32px;">Hello ${data.name}</p>  please consider the following as your password: ${randomString}`,
-			// 		);
-			// 	},
-			// ], (err, results) => {
-			// 	if (err) {
-			// 		requestHandler.throwError(500, 'internal Server Error', 'failed to send password email')();
-			// 	} else {
-			// 		logger.log(`an email has been sent at: ${new Date()} to : ${data.email} with the following results ${results}`, 'info');
-			// 	}
-			// });
-
-			logger.log("sampai2", 'warn')
-
-			// const hashedEmail = bcrypt.hashSync(data.email, config.auth.saltRounds);
-			// data.email = hashedEmail;
-			// console.log(data.email);
+			};
 			const createdUser = await super.create(req, 'users', payload);
-			if (!(_.isNull(createdUser))) {
-				const options = {
-					where: { id: data.id },
-				};
-				const user = await super.getByCustomOptions(req, 'users', options);
-				console.log(user.dataValues);
+			if (!(_.isNull(createdUser))) {		
+
 				const payloadRole = {
 					id: uuid(),
-					id_user: user.dataValues.id,
+					id_user: cleanedId,
 					role: 'user',
 				}
 				const setRole = await super.create(req, 'roles', payloadRole);
-				const payload = _.omit(user.dataValues, [ 'createdAt', 'updatedAt', 'mobile_number', 'verified']);
+				if(_.isNull(setRole)){
+					req.params.id = cleanedId;
+					const deleteUser = await super.deleteById(req, 'users');
+					console.log(deleteUser);
+					requestHandler.throwError(500, 'internal Server Error', 'failed to set role')();
+				}
+				
+				const querySelect = `SELECT
+				users.id,
+					users.email,
+					users.name,
+					roles.role AS role,
+					users.mobile_number,
+					users.user_img,
+					users.verified,
+					users.updated_at
+				FROM users
+				INNER JOIN roles ON roles.id_user = users.id 
+				WHERE users.id = '${cleanedId}'`
+				const user = await super.customSelectQuery(req, querySelect);
+
+				if(_.isNull(user)){
+					req.params.id = cleanedId;
+					const deleteUser = await super.deleteById(req, 'users');
+					console.log(deleteUser);
+					requestHandler.throwError(500, 'internal Server Error', 'failed to register')();
+				}
+
+				const payload = _.omit(user[0]);
 				// logger.log(config.auth.jwt_secret, 'warn')
 				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 				const refreshToken = jwt.sign({

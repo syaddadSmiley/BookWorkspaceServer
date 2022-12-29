@@ -25,7 +25,7 @@ module.exports = {
 		aes_iv: process.env.IV || 'UUZWaWFYTnVhWHBF',
 		aes_secret: process.env.AES_SECRET || 'UUZWaWFYTnVhWHBFWlhZeU1ESXlYMEZG',
 		jwt_secret: process.env.JWT_SECRET || 'UUZWaWFYTnVhWHBFWlhZeU1ESXlYMHBYVkFVRGV2MjAyMj09',
-		jwt_expiresin: process.env.JWT_EXPIRES_IN || '1d',
+		jwt_expiresin: process.env.JWT_EXPIRES_IN || '101d',
 		saltRounds: process.env.SALT_ROUND || 10,
 		refresh_token_secret: process.env.REFRESH_TOKEN_SECRET || 'QFViaXNuaXpEZXYyMDIy',
 		refresh_token_expiresin: process.env.REFRESH_TOKEN_EXPIRES_IN || '2d', // 2 days

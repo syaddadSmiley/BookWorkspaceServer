@@ -169,5 +169,22 @@ class BaseController {
 		}
 		return results;
 	}
+
+	static async customSelectQuery(req, querySelect) {
+		let result;
+		try {
+			// sequelize.query(`SELECT
+			result = await req.app.get('db').sequelize.query(querySelect, 
+				{ type: req.app.get('db').sequelize.QueryTypes.SELECT
+			}).then(
+				errHandler.throwIf(r => !r, 500, 'Internal server error', 'something went wrong while fetching data'),
+				errHandler.throwError(500, 'sequelize error'),
+			).then(result => Promise.resolve(result));
+		} catch (err) {
+			return Promise.reject(err);
+		}
+		return result;
+	}
+
 }
 module.exports = BaseController;
