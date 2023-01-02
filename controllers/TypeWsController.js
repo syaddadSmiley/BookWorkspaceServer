@@ -117,6 +117,28 @@ class TypeWsController extends BaseController {
         }
     }
 
+    static async getListTypeWsByIdWs(req, res) {
+        try{
+            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+            const sanitizedIdWs = req.params.id_ws.replace(/[^a-zA-Z0-9_-]/g, '');
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
+            if(EntryChecker(check)) {
+                const query = `SELECT * FROM type_ws WHERE id_ws = '${sanitizedIdWs}'`;
+                var result = await super.customSelectQuery(req, query);
+                if(!(_.isNull(result))) {
+                    requestHandler.sendSuccess(res, 'success')({result})
+                }
+            } else {
+                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+            }
+        }catch (error) {
+            requestHandler.sendError(req, res, error);
+        }
+    }
+
+
 }
 
 module.exports = TypeWsController;

@@ -6,6 +6,7 @@ const auth = require('../../utils/auth');
 router.post('/create', isAuthenticatedAdmin, TypeWsController.createTypeWs);
 
 router.get('/:id', isAuthenticatedAdmin, TypeWsController.getTypeWsById);
+// router.get('/getListTypeWsByIdWs/:id_ws', isAuthenticatedAdmin, TypeWsController.getListTypeWsByIdWs);
 
 router.delete('/:id', isAuthenticatedAdmin, TypeWsController.deleteTypeWsById);
 

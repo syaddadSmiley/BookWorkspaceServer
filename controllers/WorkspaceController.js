@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
 const EntryChecker = require('../utils/checkBeforeEntry');
+const auth = require('../utils/auth');
 
 const BaseController = require('../controllers/BaseController');
 const { UUID } = require('sequelize');
@@ -24,9 +25,6 @@ class WorkspaceController extends BaseController {
 
             const body = req.body;
             const schema = {
-                id_service: Joi.string().max(50),
-                id_type: Joi.string().max(50),
-                id_url: Joi.string().max(50),
                 email: Joi.string().email().max(50).required(),
                 name: Joi.string().max(50).required(),
                 address: Joi.string().max(150).required(),
@@ -39,9 +37,6 @@ class WorkspaceController extends BaseController {
             };
             
             const { error } = Joi.validate({
-                id_service: body.id_service,
-                id_type: body.id_type,
-                id_url: body.id_url,
                 email: body.email,
                 name: body.name,
                 address: body.address,
@@ -58,11 +53,21 @@ class WorkspaceController extends BaseController {
 
             const id_workspace = uuid();
 
+            let userProfile;
+            try {
+                const tokenFromHeader = auth.getJwtToken(req);
+                const user = jwt.decode(tokenFromHeader);
+                const options = {
+                    where: { id: user.payload.id },
+                };
+                userProfile = await super.getByCustomOptions(req, 'users', options);
+            } catch (error) {
+                requestHandler.throwError(422, 'Unprocessable Entity', error)();
+            }
+
             const data = {
                 id: id_workspace,
-                id_service: body.id_service,
-                id_type: body.id_type,
-                id_url: body.id_url,
+                id_user: userProfile.dataValues.id,
                 email: body.email,
                 name: body.name,
                 address: body.address,
@@ -78,8 +83,9 @@ class WorkspaceController extends BaseController {
             }
 
             if (EntryChecker(check)) {
-                var result = await super.create(req, 'workspaces', data);
-                if (!(_.isNull(result))) {
+                var resultRaw = await super.create(req, 'workspaces', data);
+                if (!(_.isNull(resultRaw))) {
+                    const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt', 'password', 'id_user']);
                     requestHandler.sendSuccess(res, 'workspaces created')({ result });
                 }else{
                     requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();

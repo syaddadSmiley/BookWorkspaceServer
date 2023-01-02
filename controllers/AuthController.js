@@ -58,13 +58,14 @@ class AuthController extends BaseController {
 			if (String(cleanedUserAgent).includes("Mozilla") ||  String(cleanedUserAgent).includes("Chrome") || String(cleanedUserAgent).includes("Dart")) {
 				const user = await req.app.get('db').sequelize.query(`SELECT
 				users.id,
-				users.email,
-				users.name,
-				roles.role AS role,
-				users.mobile_number,
-				users.user_img,
-				users.verified,
-				users.updated_at FROM users INNER JOIN roles ON roles.id_user = users.id 
+					users.email,
+					users.name,
+					users.roles,
+					users.mobile_number,
+					users.user_img,
+					users.verified,
+					users.updated_at
+				FROM users
 				WHERE users.id = '${cleanedId}'`, { type: req.app.get('db').sequelize.QueryTypes.SELECT });
 				// console.log("awadwadwawa0", user);
 				if (!user) {
@@ -162,31 +163,38 @@ class AuthController extends BaseController {
 			};
 			const createdUser = await super.create(req, 'users', payload);
 			if (!(_.isNull(createdUser))) {		
-
-				const payloadRole = {
-					id: uuid(),
-					id_user: cleanedId,
-					role: 'user',
-				}
-				const setRole = await super.create(req, 'roles', payloadRole);
-				if(_.isNull(setRole)){
-					req.params.id = cleanedId;
-					const deleteUser = await super.deleteById(req, 'users');
-					console.log(deleteUser);
-					requestHandler.throwError(500, 'internal Server Error', 'failed to set role')();
-				}
+				// try{
+				// 	const payloadRole = {
+				// 		id: uuid(),
+				// 		id_user: cleanedId,
+				// 		role: 'user',
+				// 	}
+				// 	const setRole = await super.create(req, 'roles', payloadRole);
+				// 	if (_.isNull(setRole)) {
+				// 		req.params.id = cleanedId;
+				// 		const deleteUser = await super.deleteById(req, 'users');
+				// 		console.log(deleteUser);
+				// 		requestHandler.throwError(500, 'internal Server Error', 'failed to set role')();
+				// 	}
+				// }catch(error){
+				// 	requestHandler.throwError(500, 'internal Server Error', 'failed to set role')();
+				// 	req.params.id = cleanedId;
+				// 	const deleteUser = await super.deleteById(req, 'users');
+				// 	console.log(deleteUser);
+				// 	requestHandler.throwError(500, 'internal Server Error', 'failed to set role')();
+				// }
+				
 				
 				const querySelect = `SELECT
 				users.id,
 					users.email,
 					users.name,
-					roles.role AS role,
+					users.roles,
 					users.mobile_number,
 					users.user_img,
 					users.verified,
 					users.updated_at
 				FROM users
-				INNER JOIN roles ON roles.id_user = users.id 
 				WHERE users.id = '${cleanedId}'`
 				const user = await super.customSelectQuery(req, querySelect);
 
