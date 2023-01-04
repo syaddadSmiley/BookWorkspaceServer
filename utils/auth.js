@@ -69,7 +69,7 @@ function verifyTokenAdmin(req, res, next) {
 				requestHandler.throwError(401, 'Unauthorized', 'please provide a valid token ,your token might be expired')();
 			}
 			// console.log("DISNI", decoded.payload);
-			if (decoded.payload.roles !== 'admin' && decoded.payload.roles !== 'super_admin'){
+			if (decoded.payload.role !== 'admin' && decoded.payload.role !== 'super_admin'){
 				requestHandler.throwError(401, 'Unauthorized', 'Kamu bukan admin mas ~')();
 			}else{
 				req.decoded = decoded;

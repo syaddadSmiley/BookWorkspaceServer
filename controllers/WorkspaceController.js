@@ -25,8 +25,8 @@ class WorkspaceController extends BaseController {
 
             const body = req.body;
             const schema = {
-                email: Joi.string().email().max(50).required(),
-                name: Joi.string().max(50).required(),
+                email: Joi.string().email().max(120).required(),
+                name: Joi.string().max(120).required(),
                 address: Joi.string().max(150).required(),
                 password: Joi.string().max(100).required(),
                 mobile_number: Joi.number().required(),
@@ -199,20 +199,20 @@ class WorkspaceController extends BaseController {
 
     static async getTypeWs(req, res) {
         try {
-            const body = req.body;
+            const reqParamsId = req.params.id;
             const schema = {
-                id: Joi.string().max(50).required(),
+                id: Joi.string().max(120).required(),
                 user_agent: Joi.string().max(150).required(),
             };
 
             const { error } = Joi.validate({
-                id: body.id,
+                id: reqParamsId,
                 user_agent: req.headers['user-agent'],
             }, schema);
             requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
             const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
-            const cleanedId = body.id.replace(/[^a-zA-Z0-9_-]/g, '');
+            const cleanedId = reqParamsId.replace(/[^a-zA-Z0-9_-]/g, '');
 
             const check = {
                 user_agent: cleanedUserAgent,

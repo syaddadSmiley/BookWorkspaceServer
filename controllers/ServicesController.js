@@ -24,14 +24,15 @@ class ServicesController extends BaseController {
         try {
             const body = req.body;
             const schema = {
-                id_ws: Joi.string().max(50).required(),
-                id_service: Joi.string().max(50).required(),
-                jenis_pembayaran: Joi.string().max(50).required(),
+                id_ws: Joi.string().max(120).required(),
+                id_service: Joi.string().max(120).required(),
+                jenis_pembayaran: Joi.string().max(120).required(),
                 start_date: Joi.date().required(),
                 end_date: Joi.date().required(),
                 user_agent: Joi.string().required()
             };
             //JSON Request body
+            
 
             const { error } = Joi.validate({
                 id_ws: body.id_ws,
@@ -132,9 +133,8 @@ class ServicesController extends BaseController {
         try {
             const body = req.body;
             const schema = {
-                id_ws: Joi.string().max(50).required(),
-                id_type_ws: Joi.string().max(50).required(),
-                id_user: Joi.string().max(50).required(),
+                id_ws: Joi.string().max(120).required(),
+                id_type_ws: Joi.string().max(120).required(),
                 start_date: Joi.date().required(),
                 finish_date: Joi.date().required(),
                 user_agent: Joi.string().required()
@@ -143,7 +143,6 @@ class ServicesController extends BaseController {
             const { error } = Joi.validate({
                 id_ws: body.id_ws,
                 id_type_ws: body.id_type_ws,
-                id_user: body.id_user,
                 start_date: body.start_date,
                 finish_date: body.finish_date,
                 user_agent: req.headers['user-agent'],
@@ -154,14 +153,38 @@ class ServicesController extends BaseController {
             const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
             const sanitizedIdWs = body.id_ws.replace(/[^a-zA-Z0-9_-]/g, '');
             const sanitizedIdTypeWs = body.id_type_ws.replace(/[^a-zA-Z0-9_-]/g, '');
-            const sanitizedIdUser = body.id_user.replace(/[^a-zA-Z0-9_-]/g, '');
 
             const id_services = uuid();
+            let userProfile
+            try{
+                const tokenFromHeader = auth.getJwtToken(req);
+                const user = jwt.decode(tokenFromHeader);
+                const options = {
+                    where: { id: user.payload.id },
+                };
+                userProfile = await super.getByCustomOptions(req, 'users', options);
+            }catch(error){
+                requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+            }
+	
+            try{
+                const getTypeWsById = await super.getByCustomOptions(req, 'type_ws', { id: sanitizedIdTypeWs });
+                if(!getTypeWsById){
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'type_ws not found')();
+                }
+                console.log("HEYY", getTypeWsById)
+                if(getTypeWsById.dataValues.id_ws != sanitizedIdWs){
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'type_ws not found')();
+                }
+            }catch(error){
+                requestHandler.throwError(422, 'Unprocessable Entity', error)();
+            }
+
             const data = {
                 id: id_services,
                 id_ws: sanitizedIdWs,
                 id_type_ws: sanitizedIdTypeWs,
-                id_user: sanitizedIdUser,
+                id_user: userProfile.dataValues.id,
                 start_date: body.start_date,
                 finish_date: body.finish_date,
             }
