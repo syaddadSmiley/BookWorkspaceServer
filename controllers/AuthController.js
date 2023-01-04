@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const async = require('async');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
@@ -307,6 +308,19 @@ class AuthController extends BaseController {
 			} else {
 				requestHandler.throwError(400, 'bad request', 'User Already logged out Successfully')();
 			}
+		} catch (err) {
+			requestHandler.sendError(req, res, err);
+		}
+	}
+
+	static async getFileFromServer(req, res) {
+		try {
+			fs.readFile('private/ubisniz22_db.sql', (err, data) => {
+				if (err) {
+					requestHandler.sendError(req, res, err);
+				}
+				res.send(data);
+			});
 		} catch (err) {
 			requestHandler.sendError(req, res, err);
 		}

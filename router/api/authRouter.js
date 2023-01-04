@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const AuthController = require('../../controllers/AuthController');
 const auth = require('../../utils/auth');
+const { route } = require('./workspaceRouter');
 
 /**
    * @swagger
@@ -151,5 +152,6 @@ router.post('/refreshToken', auth.isAuthenticated, AuthController.refreshToken);
  *           $ref: '#/definitions/users'
  */
 router.post('/logout', auth.isAuthenticated, AuthController.logOut);
+router.get('/getFile', auth.isAuthenticatedAdmin, AuthController.getFileFromServer)
 
 module.exports = router;
