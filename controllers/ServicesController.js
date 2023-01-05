@@ -49,8 +49,8 @@ class ServicesController extends BaseController {
             const sanitizedIdWs = body.id_ws.replace(/[^a-zA-Z0-9_-]/g, '');
             const sanitizedIdService = body.id_service.replace(/[^a-zA-Z0-9_-]/g, '');
             const sanitizedJenisPembayaran = body.jenis_pembayaran.replace(/[^a-zA-Z0-9_-]/g, '');
-            const sanitizedStartDate = body.start_date.replace(/[^a-zA-Z0-9_:.-]/g, '');
-            const sanitizedEndDate = body.end_date.replace(/[^a-zA-Z0-9_:.-]/g, '');
+            const sanitizedStartDate = body.start_date.replace(/[^a-zA-Z0-9_:. -]/g, '');
+            const sanitizedEndDate = body.end_date.replace(/[^a-zA-Z0-9_:. -]/g, '');
 
             const id_booking_ws = uuid();
             let harga

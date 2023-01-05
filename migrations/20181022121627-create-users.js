@@ -5,7 +5,7 @@ query = `CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(120) NOT NULL,
     verified BOOLEAN NOT NULL DEFAULT 0,
     mobile_number VARCHAR(20) NOT NULL,
-    roles ENUM('user','admin','super_admin') NOT NULL DEFAULT 'user',
+    role ENUM('user','admin','super_admin') NOT NULL DEFAULT 'user',
     user_img LONGBLOB,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at DATETIME NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -14,7 +14,7 @@ query = `CREATE TABLE IF NOT EXISTS users (
 `
 
 query2 = `ALTER TABLE users
-ADD role ENUM('user','admin','super_admin') NOT NULL DEFAULT 'user';
+ADD role ENUM('user','admin','super_admin') NOT NULL DEFAULT 'user' AFTER mobile_number;
 `
 
 module.exports = {

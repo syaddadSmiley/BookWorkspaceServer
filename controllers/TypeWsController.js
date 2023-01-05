@@ -23,9 +23,9 @@ class TypeWsController extends BaseController {
         try{
             const body = req.body;
             const schema = {
-                id_ws: Joi.string().max(50).required(),
+                id_ws: Joi.string().max(120).required(),
                 kapasitas: Joi.number(),
-                type: Joi.string().max(50).required(),
+                type: Joi.string().max(120).required(),
                 harga: Joi.number().required(),
                 user_agent: Joi.string().required()
             };

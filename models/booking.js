@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         start_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false
         },
         end_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false
         },
         jenis_pembayaran: {

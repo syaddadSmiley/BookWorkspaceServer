@@ -5,8 +5,8 @@ const auth = require('../../utils/auth');
 
 
 router.get('/:id', ServicesController.getTypeWsById);
-router.post('/booking', isAuthenticated, ServicesController.createBooking);
 
+router.post('/booking', isAuthenticated, ServicesController.createBooking);
 router.post('/admin/create', isAuthenticatedAdmin, ServicesController.createServices);
 
 

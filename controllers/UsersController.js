@@ -66,6 +66,25 @@ class UsersController extends BaseController {
 		}
 	}
 
+	static async getBookingByIdUser(req, res) {
+        try {
+            const tokenFromHeader = auth.getJwtToken(req);
+            const user = jwt.decode(tokenFromHeader);
+            const options = {
+                where: { id_user: user.payload.id },
+            };
+            const resultRaw = await super.getByCustomOptions(req, 'booking_ws', options);
+            if (!(_.isNull(resultRaw))) {
+                const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
+                requestHandler.sendSuccess(res, 'workspaces created')({ result });
+            } else {
+                requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+            }
+        } catch (error) {
+            requestHandler.sendError(req, res, error);
+        }
+    }
+
 }
 
 module.exports = UsersController;
