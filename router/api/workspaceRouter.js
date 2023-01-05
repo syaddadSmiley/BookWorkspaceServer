@@ -6,6 +6,7 @@ const auth = require('../../utils/auth');
 router.get('/pagination', WorkspaceController.getAllWorkspaces);
 router.get('/:id', WorkspaceController.getWsById);
 router.get('/types/:id', WorkspaceController.getTypeWs);
+router.get('/:id/services', WorkspaceController.getServicesByIdWs);
 
 router.delete('/:id', isAuthenticatedAdmin, WorkspaceController.deleteWsById);
 
