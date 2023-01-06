@@ -222,7 +222,11 @@ class WorkspaceController extends BaseController {
                 const options = {
                     where: {id_ws: cleanedId}
                 }
-                const result = await super.getList(req, 'type_ws', options);
+                const result = await super.customSelectQuery(req, `
+                    SELECT * FROM type_ws INNER JOIN
+                    services ON type_ws.id = services.id_type_ws WHERE type_ws.id_ws = '${cleanedId}'
+                `)
+                console.log(result)
                 if (!(_.isNull(result))) {
                     requestHandler.sendSuccess(res, 'success')({ result });
                 } else {
