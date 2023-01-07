@@ -59,7 +59,8 @@ class UsersController extends BaseController {
 				where: { id: user.payload.id },
 			};
 			const userProfile = await super.getByCustomOptions(req, 'users', options);
-			const profile = _.omit(userProfile.dataValues, ['createdAt', 'updatedAt', 'last_login_date', 'password']);
+			const payload = _.omit(userProfile.dataValues, ['createdAt', 'updatedAt', 'last_login_date', 'password']);
+			const profile = jwt.sign({ payload } , config.auth.jwt_secret, {expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512'});
 			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ profile });
 		} catch (err) {
 			return requestHandler.sendError(req, res, err);
@@ -76,9 +77,9 @@ class UsersController extends BaseController {
             const resultRaw = await super.getByCustomOptions(req, 'booking_ws', options);
             if (!(_.isNull(resultRaw))) {
                 const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
-                requestHandler.sendSuccess(res, 'workspaces created')({ result });
+                requestHandler.sendSuccess(res, 'success')({ result });
             } else {
-                requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+                requestHandler.throwError(422, 'Unprocessable Entity', 'there\'s no history booking here')();
             }
         } catch (error) {
             requestHandler.sendError(req, res, error);
