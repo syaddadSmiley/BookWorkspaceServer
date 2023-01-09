@@ -142,7 +142,12 @@ class BaseController {
 			if (parseInt(page, 10)) {
 				if (page === 0) {
 					options = _.extend({}, options, {});
-				} else {
+				} 
+				if (!_.isUndefined(options.limit) || !_.isEmpty(options.limit)) {
+					options = _.extend({}, options, {
+						offset: options.limit * (page - 1),
+					});
+				}else {
 					options = _.extend({}, options, {
 						offset: limit * (page - 1),
 						limit: limit,

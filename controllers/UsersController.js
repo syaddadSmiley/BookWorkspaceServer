@@ -6,9 +6,11 @@ const config = require('../config/appconfig')
 const CryptoX = require('../utils/CryptoX')
 const BaseController = require('../controllers/BaseController');
 const RequestHandler = require('../utils/RequestHandler');
+const EntryChecker = require('../utils/checkBeforeEntry');
 const Logger = require('../utils/logger');
 const auth = require('../utils/auth');
 const { json } = require('body-parser');
+const checkBeforeEntry = require('../utils/checkBeforeEntry');
 
 
 const logger = new Logger();
@@ -69,18 +71,66 @@ class UsersController extends BaseController {
 
 	static async getBookingByIdUser(req, res) {
         try {
-            const tokenFromHeader = auth.getJwtToken(req);
-            const user = jwt.decode(tokenFromHeader);
-            const options = {
-                where: { id_user: user.payload.id },
-            };
-            const resultRaw = await super.getList(req, 'booking_ws', options);
-            if (!(_.isNull(resultRaw))) {
-                const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
-                requestHandler.sendSuccess(res, 'success')({ result });
-            } else {
-                requestHandler.throwError(422, 'Unprocessable Entity', 'there\'s no history booking here')();
-            }
+			const schema = {
+				page: Joi.number(),
+				perPage: Joi.number(),
+				user_agent: Joi.string().required(),
+			};
+			const { error } = Joi.validate({
+				page: req.query.page,
+				perPage: req.query.per_page,
+				user_agent: req.headers['user-agent'],
+			}, schema);
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+
+			//CLEANING BODY
+			const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+			const check = {
+				user_agent: cleanedUserAgent,
+			}
+			if(EntryChecker(check)){
+				const tokenFromHeader = auth.getJwtToken(req);
+				const user = jwt.decode(tokenFromHeader);
+				// const data = {
+				// 	perPage: parseInt(req.query.per_page, 10),
+				// 	page: parseInt(req.query.page, 10),
+				// 	offset: 0,
+				// 	status: "noAll",
+				// 	where: { id_user: user.payload.id },
+				// 	innerJoin: [
+				// 		{
+				// 			model: 'users',
+				// 			as: 'users',
+				// 			attributes: ['id', 'name', 'email', 'phone', 'address'],
+				// 		},
+				// 		{
+				// 			model: 'type_ws',
+				// 			as: 'booking_ws',
+							
+				// 	limit: 10,
+				// }
+
+				const resultRaw = await super.customSelectQuery(req, `
+				SELECT booking_ws.*, workspaces.name AS workspaces_name, type_ws.type
+				FROM booking_ws
+				LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id
+				LEFT JOIN type_ws ON (SELECT services.id_type_ws FROM services WHERE services.id_ws = workspaces.id LIMIT 1) = type_ws.id
+				WHERE booking_ws.id_user = '${user.payload.id}' LIMIT 0, 10;
+				`)
+				console.log({resultRaw})
+				if (!(_.isNull(resultRaw))) {
+					for(let i = 0; i < resultRaw.length; i++){
+						resultRaw[i] = _.omit(resultRaw[i], ['createdAt', 'updatedAt']);
+					}
+					// const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
+					requestHandler.sendSuccess(res, 'success')({ resultRaw });
+				} else {
+					requestHandler.throwError(422, 'Unprocessable Entity', 'there\'s no history booking here')();
+				}
+			}else{
+				requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+			}
+            
         } catch (error) {
             requestHandler.sendError(req, res, error);
         }
