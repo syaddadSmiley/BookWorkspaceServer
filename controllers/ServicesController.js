@@ -55,7 +55,7 @@ class ServicesController extends BaseController {
             const id_booking_ws = uuid();
             let typeWs
             try{
-                const getHarga = await super.getByCustomOptions(req, 'type_ws', { id: sanitizedIdService });
+                const getHarga = await super.getByCustomOptions(req, 'type_ws', { where:{id: sanitizedIdService} });
                 typeWs = getHarga.dataValues;
                 if(_.isUndefined(typeWs) || _.isEmpty(typeWs)){
                     requestHandler.throwError(422, 'Unprocessable Entity', 'services not found')();
@@ -81,7 +81,7 @@ class ServicesController extends BaseController {
             }
 
             try{
-                const getServices = await super.getByCustomOptions(req, 'services', { id_ws: sanitizedIdWs });
+                const getServices = await super.getByCustomOptions(req, 'services', { where:{id_ws: sanitizedIdWs} });
                 if (_.isUndefined(getServices) || _.isEmpty(getServices)) {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'services not found')();
                 }
@@ -187,10 +187,11 @@ class ServicesController extends BaseController {
             }
 	
             try{
-                const getTypeWsById = await super.getByCustomOptions(req, 'type_ws', { id: sanitizedIdTypeWs });
+                const getTypeWsById = await super.getByCustomOptions(req, 'type_ws', { where :{id: sanitizedIdTypeWs} });
                 if(!getTypeWsById){
                     requestHandler.throwError(422, 'Unprocessable Entity', 'type_ws not found')();
                 }
+                console.log({getTypeWsById})
                 if(getTypeWsById.dataValues.id_ws != sanitizedIdWs){
                     requestHandler.throwError(422, 'Unprocessable Entity', 'type_ws not found')();
                 }

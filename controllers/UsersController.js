@@ -113,8 +113,8 @@ class UsersController extends BaseController {
 				const resultRaw = await super.customSelectQuery(req, `
 				SELECT booking_ws.*, workspaces.name AS workspaces_name, type_ws.type
 				FROM booking_ws
-				LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id
-				LEFT JOIN type_ws ON (SELECT services.id_type_ws FROM services WHERE services.id_ws = workspaces.id LIMIT 1) = type_ws.id
+				LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id 
+				LEFT JOIN type_ws ON (SELECT services.id_type_ws FROM services WHERE services.id_type_ws = type_ws.id LIMIT 1) = type_ws.id
 				WHERE booking_ws.id_user = '${user.payload.id}' LIMIT 0, 10;
 				`)
 				console.log({resultRaw})
