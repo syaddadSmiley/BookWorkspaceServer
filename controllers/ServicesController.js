@@ -68,10 +68,11 @@ class ServicesController extends BaseController {
             }catch(error){
                 requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
             }
-
+            
             let services
             try{
-                services = await super.getByCustomOptions(req, 'services', { where:{id_ws: sanitizedIdWs} });
+                services = await super.getByCustomOptions(req, 'services', { where:{id: sanitizedIdService} });
+                console.log({services})
                 if (_.isUndefined(services) || _.isEmpty(services)) {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'services not found')();
                 }
@@ -84,7 +85,18 @@ class ServicesController extends BaseController {
                 const getHarga = await super.getByCustomOptions(req, 'type_ws', { where: { id: services.dataValues.id_type_ws } });
                 typeWs = getHarga.dataValues;
                 if (_.isUndefined(typeWs) || _.isEmpty(typeWs)) {
-                    requestHandler.throwError(422, 'Unprocessable Entity', 'services not found')();
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'type workspaces not found')();
+                }
+            } catch (error) {
+                requestHandler.throwError(422, 'Unprocessable Entity', error)();
+            }
+
+            let workspaces
+            try{
+                const getWorkspaces = await super.getByCustomOptions(req, 'workspaces', { where: { id: services.dataValues.id_ws } });
+                workspaces = getWorkspaces.dataValues;
+                if (_.isUndefined(workspaces) || _.isEmpty(workspaces)) {
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'workspaces not found')();
                 }
             } catch (error) {
                 requestHandler.throwError(422, 'Unprocessable Entity', error)();
