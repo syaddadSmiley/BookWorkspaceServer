@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        id_type_ws: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         start_date: {
             type: DataTypes.STRING,
             allowNull: false
