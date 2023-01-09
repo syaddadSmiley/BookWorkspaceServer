@@ -74,7 +74,7 @@ class UsersController extends BaseController {
             const options = {
                 where: { id_user: user.payload.id },
             };
-            const resultRaw = await super.getByCustomOptions(req, 'booking_ws', options);
+            const resultRaw = await super.getList(req, 'booking_ws', options);
             if (!(_.isNull(resultRaw))) {
                 const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
                 requestHandler.sendSuccess(res, 'success')({ result });
