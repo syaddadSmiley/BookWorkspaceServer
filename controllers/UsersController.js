@@ -110,20 +110,20 @@ class UsersController extends BaseController {
 				// 	limit: 10,
 				// }
 
-				const resultRaw = await super.customSelectQuery(req, `
+				const result = await super.customSelectQuery(req, `
 				SELECT booking_ws.*, workspaces.name AS workspaces_name, type_ws.type
 				FROM booking_ws
 				LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id 
 				LEFT JOIN type_ws ON (SELECT services.id_type_ws FROM services LIMIT 1) = type_ws.id
 				WHERE booking_ws.id_user = '${user.payload.id}' LIMIT 0, 10;
 				`)
-				console.log({resultRaw})
-				if (!(_.isNull(resultRaw))) {
-					for(let i = 0; i < resultRaw.length; i++){
-						resultRaw[i] = _.omit(resultRaw[i], ['createdAt', 'updatedAt']);
+				console.log({result})
+				if (!(_.isNull(result))) {
+					for(let i = 0; i < result.length; i++){
+						result[i] = _.omit(result[i], ['createdAt', 'updatedAt']);
 					}
 					// const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
-					requestHandler.sendSuccess(res, 'success')({ resultRaw });
+					requestHandler.sendSuccess(res, 'success')({ result });
 				} else {
 					requestHandler.throwError(422, 'Unprocessable Entity', 'there\'s no history booking here')();
 				}
