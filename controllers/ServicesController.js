@@ -53,18 +53,7 @@ class ServicesController extends BaseController {
             const sanitizedEndDate = body.end_date.replace(/[^a-zA-Z0-9_:. -]/g, '');
 
             const id_booking_ws = uuid();
-            let typeWs
-            try{
-                const getHarga = await super.getByCustomOptions(req, 'type_ws', { where:{id: sanitizedIdService} });
-                typeWs = getHarga.dataValues;
-                if(_.isUndefined(typeWs) || _.isEmpty(typeWs)){
-                    requestHandler.throwError(422, 'Unprocessable Entity', 'services not found')();
-                }
-                console.log("TYPE WS", typeWs);
-            } catch (error) {
-                requestHandler.throwError(422, 'Unprocessable Entity', error)();
-            }
-
+            
             let userProfile
             try{
                 const tokenFromHeader = auth.getJwtToken(req);
@@ -80,12 +69,24 @@ class ServicesController extends BaseController {
                 requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
             }
 
+            let services
             try{
-                const getServices = await super.getByCustomOptions(req, 'services', { where:{id_ws: sanitizedIdWs} });
-                if (_.isUndefined(getServices) || _.isEmpty(getServices)) {
+                services = await super.getByCustomOptions(req, 'services', { where:{id_ws: sanitizedIdWs} });
+                if (_.isUndefined(services) || _.isEmpty(services)) {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'services not found')();
                 }
             }   catch (error) {
+                requestHandler.throwError(422, 'Unprocessable Entity', error)();
+            }
+
+            let typeWs
+            try {
+                const getHarga = await super.getByCustomOptions(req, 'type_ws', { where: { id: services.dataValues.id_type_ws } });
+                typeWs = getHarga.dataValues;
+                if (_.isUndefined(typeWs) || _.isEmpty(typeWs)) {
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'services not found')();
+                }
+            } catch (error) {
                 requestHandler.throwError(422, 'Unprocessable Entity', error)();
             }
 
@@ -96,7 +97,6 @@ class ServicesController extends BaseController {
                     AND start_date = '${sanitizedStartDate}' 
                     AND end_date = '${sanitizedEndDate}' 
                     AND status != 'done'`);
-                console.log("DIMANA", checkBooking.length, typeWs.kapasitas);
 
                 if(checkBooking.length > 0){
                     if(checkBooking.length >= typeWs.kapasitas){
@@ -126,7 +126,6 @@ class ServicesController extends BaseController {
             }
             if (EntryChecker(check)) {
                 var resultRaw = await super.create(req, 'booking_ws', data);
-                
                 if (!(_.isNull(resultRaw))) {
                     const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
                     
