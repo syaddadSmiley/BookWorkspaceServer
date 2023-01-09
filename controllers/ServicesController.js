@@ -124,6 +124,7 @@ class ServicesController extends BaseController {
                 id_ws: sanitizedIdWs,
                 id_user: userProfile.dataValues.id,
                 id_service: sanitizedIdService,
+                id_type_ws: typeWs.id,
                 start_date: sanitizedStartDate,
                 end_date: sanitizedEndDate,
                 jenis_pembayaran: sanitizedJenisPembayaran,
