@@ -68,7 +68,7 @@ class AuthController extends BaseController {
 					users.updated_at
 				FROM users
 				WHERE users.id = '${cleanedId}'`, { type: req.app.get('db').sequelize.QueryTypes.SELECT });
-				// console.log("awadwadwawa0", user);
+				console.log("awadwadwawa0", {user});
 				if (!user) {
 					requestHandler.throwError(400, 'bad request', 'invalid')();
 				} 
@@ -91,14 +91,14 @@ class AuthController extends BaseController {
 				// 	await super.create(req, 'UserTokens', data);
 				// }
 				console.log("REQUEST", req.headers.authorization);
-				console.log(user.email, cleanedEmail);
+				console.log(user[0].email, cleanedEmail);
 				// await bcrypt
 				// 	.compare(cleanedEmail, user.email)
 				// 	.then(
 				// 		requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials'),
 				// 		requestHandler.throwError(500, 'bcrypt error'),
 				// 	);
-				if (cleanedEmail !== user.email) {
+				if (cleanedEmail !== user[0].email) {
 					requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials');
 					requestHandler.throwError(500, 'bcrypt error');
 				}
@@ -108,6 +108,16 @@ class AuthController extends BaseController {
 				// };
 				// req.params.id = user.id;
 				// await super.updateById(req, 'users', data);
+				const getWorkspacesByUserId = await super.customSelectQuery(req, `
+				SELECT
+					workspaces.id
+				FROM workspaces
+				WHERE workspaces.id_user = '${user[0].id}'
+				`);
+
+				const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
+
+				user[0].workspaces = workspaces;
 
 				const payload = _.omit(user[0]);
 				logger.log(config.auth.jwt_secret, 'warn')
