@@ -72,55 +72,29 @@ class AuthController extends BaseController {
 				if (!user) {
 					requestHandler.throwError(400, 'bad request', 'invalid')();
 				} 
-				// const find = {
-				// 	where: {
-				// 		user_id: user.id,
-				// 	},
-				// };
-
-				// const fcmToken = await super.getByCustomOptions(req, 'UserTokens', find);
-				// const data = {
-				// 	userId: user.id,
-				// 	platform: req.headers.platform,
-				// };
-
-				// if (fcmToken) {
-				// 	req.params.id = fcmToken.id;
-				// 	await super.updateById(req, 'UserTokens', data);
-				// } else {
-				// 	await super.create(req, 'UserTokens', data);
-				// }
 				console.log("REQUEST", req.headers.authorization);
 				console.log(user[0].email, cleanedEmail);
-				// await bcrypt
-				// 	.compare(cleanedEmail, user.email)
-				// 	.then(
-				// 		requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials'),
-				// 		requestHandler.throwError(500, 'bcrypt error'),
-				// 	);
+				
 				if (cleanedEmail !== user[0].email) {
 					requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials');
 					requestHandler.throwError(500, 'bcrypt error');
 				}
 
-				// const data = {
-				// 	last_login_date: new Date(),
-				// };
-				// req.params.id = user.id;
-				// await super.updateById(req, 'users', data);
+				const cleanedId2 = user[0].id.replace(/[^a-zA-Z0-9_-]/g, '');
+
 				const getWorkspacesByUserId = await super.customSelectQuery(req, `
 				SELECT
 					workspaces.id
 				FROM workspaces
-				WHERE workspaces.id_user = '${user[0].id}'
+				WHERE workspaces.id_user = '${cleanedId2}'
 				`);
 
 				const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
-
+				// console.log(workspaces);
 				user[0].workspaces = workspaces;
-
+				// console.log(user[0]);
 				const payload = _.omit(user[0]);
-				logger.log(config.auth.jwt_secret, 'warn')
+				// logger.log(config.auth.jwt_secret, 'warn')
 				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 				const refreshToken = jwt.sign({
 					payload,

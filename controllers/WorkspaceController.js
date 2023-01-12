@@ -280,6 +280,59 @@ class WorkspaceController extends BaseController {
             requestHandler.sendError(req, res, error);
         }
     }
+
+    static async getBookingByIdWs(req, res) {
+        try{
+            const id_ws = req.params.id.replace(/[^a-zA-Z0-9_-]/g, '');
+            const tokenFromHeader = auth.getJwtToken(req);
+            const user = jwt.decode(tokenFromHeader);
+            const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
+            const schema = {
+                id_ws: Joi.string().max(120).required(),
+                user_agent: Joi.string().required()
+            };
+
+            const { error } = Joi.validate({
+                id_ws: id_ws,
+                user_agent: req.headers['user-agent'],
+            }, schema);
+
+            requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+            const check = {
+                user_agent: req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, ''),
+            }
+            if(!EntryChecker(check)){
+                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+            }
+            //check if user own the workspace
+            console.log(user.payload);
+            if(_.isUndefined(user.payload.workspaces)){
+                requestHandler.throwError(401, 'Unauthorized', 'you dont have access to this resources')();
+            }
+           
+            if(user.payload.workspaces.indexOf(id_ws) === -1){
+                requestHandler.throwError(401, 'Unauthorized', 'you dont have access to this resources')();
+            }
+            //////////////////////////////////
+
+            const page = req.query.page.replace(/[^0-9_-]/g, '');
+            const perPage = 10;
+            const offset = (page - 1) * perPage;
+
+            const getDaBooking = await super.customSelectQuery(req, `
+                SELECT * FROM booking_ws WHERE id_user = '${cleanedId}'
+                LIMIT ${perPage} OFFSET ${offset}
+            `);
+            console.log(getDaBooking);
+
+            const result = getDaBooking;
+            requestHandler.sendSuccess(res, 'success')({ result });
+        }catch(error){
+            requestHandler.sendError(req, res, error);
+        }
+    }
+
+
 }
 
 module.exports = WorkspaceController;

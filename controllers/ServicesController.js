@@ -278,6 +278,51 @@ class ServicesController extends BaseController {
         }
     }
 
+    static async getBookingById(req, res) {
+        try{
+            const tokenFromHeader = auth.getJwtToken(req);
+            const user = jwt.decode(tokenFromHeader);
+            const reqParamsId = req.params.id;
+            const schema = {
+                id_ws: Joi.string().max(120).required(),
+                user_agent: Joi.string().required()
+            };
+            
+            const { error } = Joi.validate({
+                id_ws: reqParamsId,
+                user_agent: req.headers['user-agent'],
+            }, schema);
+
+            requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+
+            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+
+            const check = {
+                user_agent: cleanedUserAgent,
+            }
+            
+            if(EntryChecker(check)) {
+                var result = await super.getById(req, 'booking_ws');
+                
+                //check if user is the owner of the booking
+                if(result.dataValues.id_user != user.payload.id){
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'you dont have acces to this resources')();
+                }
+
+                if (!(_.isNull(result))) {
+                    requestHandler.sendSuccess(res, 'success')({ result });
+                } else {
+                    requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+                }
+            }else{
+                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+            }
+
+        } catch (error){
+            requestHandler.sendError(req, res, error);
+        }
+    }
+
 
 }
 

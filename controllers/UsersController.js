@@ -53,17 +53,22 @@ class UsersController extends BaseController {
 	static async getProfile(req, res) {
 		try {
 			logger.log(req, 'warn');
-			const tokenFromHeader = auth.getJwtToken(req);
-			// logger.log(`TOKEN`,'warn');
-			const user = jwt.decode(tokenFromHeader);
-			// logger.log(`USER ${user.payload.id}`,'warn');
-			const options = {
-				where: { id: user.payload.id },
-			};
-			const userProfile = await super.getByCustomOptions(req, 'users', options);
-			const payload = _.omit(userProfile.dataValues, ['createdAt', 'updatedAt', 'last_login_date', 'password']);
-			const profile = jwt.sign({ payload } , config.auth.jwt_secret, {expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512'});
-			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ profile });
+			const check = {
+				user_agent: cleanedUserAgent,
+			}
+			if (EntryChecker(check)) {
+				const tokenFromHeader = auth.getJwtToken(req);
+				// logger.log(`TOKEN`,'warn');
+				const user = jwt.decode(tokenFromHeader);
+				// logger.log(`USER ${user.payload.id}`,'warn');
+				const options = {
+					where: { id: user.payload.id },
+				};
+				const userProfile = await super.getByCustomOptions(req, 'users', options);
+				const payload = _.omit(userProfile.dataValues, ['createdAt', 'updatedAt', 'last_login_date', 'password']);
+				const profile = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
+				return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ profile });
+			}
 		} catch (err) {
 			return requestHandler.sendError(req, res, err);
 		}
@@ -109,13 +114,14 @@ class UsersController extends BaseController {
 							
 				// 	limit: 10,
 				// }
+				const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
 
 				const result = await super.customSelectQuery(req, `
 				SELECT booking_ws.*, workspaces.name AS workspaces_name, type_ws.type
 				FROM booking_ws
 				LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id 
 				LEFT JOIN type_ws ON booking_ws.id_type_ws = type_ws.id
-				WHERE booking_ws.id_user = '${user.payload.id}' LIMIT 0, 10;
+				WHERE booking_ws.id_user = '${cleanedId}' LIMIT 0, 10;
 				`)
 				console.log({result})
 				if (!(_.isNull(result))) {
@@ -135,6 +141,36 @@ class UsersController extends BaseController {
             requestHandler.sendError(req, res, error);
         }
     }
+
+	static async getBookingByIdUser(req, res) {
+		try{
+			const page = req.query.page.replace(/[^0-9_-]/g, '');
+			const tokenFromHeader = auth.getJwtToken(req);
+			const user = jwt.decode(tokenFromHeader);
+			const sanitizedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
+
+			const perPage = 10;
+			const offset = (page - 1) * perPage;
+
+			const result = await super.customSelectQuery(req, `
+			SELECT booking_ws.*, workspaces.name AS workspaces_name, type_ws.type
+			FROM booking_ws
+			LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id
+			LEFT JOIN type_ws ON booking_ws.id_type_ws = type_ws.id
+			WHERE booking_ws.id_user = '${sanitizedId}' LIMIT ${perPage} OFFSET ${offset};
+			`);
+
+			if (!(_.isNull(result))) {
+				for(let i = 0; i < result.length; i++){
+					result[i] = _.omit(result[i], []);
+				}
+				requestHandler.sendSuccess(res, 'success')({ result });
+			}
+
+		}catch (error) {	
+			requestHandler.sendError(req, res, error);
+		}
+	}
 
 }
 
