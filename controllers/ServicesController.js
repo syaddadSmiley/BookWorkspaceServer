@@ -301,7 +301,7 @@ class ServicesController extends BaseController {
                 user_agent: cleanedUserAgent,
             }
 
-            const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
+            const cleanedId = reqParamsId.replace(/[^a-zA-Z0-9_-]/g, '');
             
             if(EntryChecker(check)) {
                 var result = await super.customSelectQuery(req, `
@@ -309,7 +309,7 @@ class ServicesController extends BaseController {
                     FROM booking_ws
                     LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id
                     LEFT JOIN type_ws ON booking_ws.id_type_ws = type_ws.id
-                    WHERE booking_ws.id_user = '${cleanedId}' LIMIT 1;
+                    WHERE booking_ws.id = '${cleanedId}' LIMIT 1;
                 `)
                 
                 //check if user is the owner of the booking
