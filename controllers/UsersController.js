@@ -74,79 +74,83 @@ class UsersController extends BaseController {
 		}
 	}
 
-	static async getBookingByIdUser(req, res) {
-        try {
-			const schema = {
-				page: Joi.number(),
-				perPage: Joi.number(),
-				user_agent: Joi.string().required(),
-			};
-			const { error } = Joi.validate({
-				page: req.query.page,
-				perPage: req.query.per_page,
-				user_agent: req.headers['user-agent'],
-			}, schema);
-			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+	// static async getBookingByIdUser(req, res) {
+    //     try {
+	// 		const schema = {
+	// 			page: Joi.number(),
+	// 			perPage: Joi.number(),
+	// 			user_agent: Joi.string().required(),
+	// 		};
+	// 		const { error } = Joi.validate({
+	// 			page: req.query.page,
+	// 			perPage: req.query.per_page,
+	// 			user_agent: req.headers['user-agent'],
+	// 		}, schema);
+	// 		requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
-			//CLEANING BODY
-			const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
-			const check = {
-				user_agent: cleanedUserAgent,
-			}
-			if(EntryChecker(check)){
-				const tokenFromHeader = auth.getJwtToken(req);
-				const user = jwt.decode(tokenFromHeader);
-				// const data = {
-				// 	perPage: parseInt(req.query.per_page, 10),
-				// 	page: parseInt(req.query.page, 10),
-				// 	offset: 0,
-				// 	status: "noAll",
-				// 	where: { id_user: user.payload.id },
-				// 	innerJoin: [
-				// 		{
-				// 			model: 'users',
-				// 			as: 'users',
-				// 			attributes: ['id', 'name', 'email', 'phone', 'address'],
-				// 		},
-				// 		{
-				// 			model: 'type_ws',
-				// 			as: 'booking_ws',
+	// 		//CLEANING BODY
+	// 		console.log('TESSSS')
+	// 		console.log(req.headers['user-agent'])
+	// 		const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
+	// 		const check = {
+	// 			user_agent: cleanedUserAgent,
+	// 		}
+	// 		if(EntryChecker(check)){
+	// 			const tokenFromHeader = auth.getJwtToken(req);
+	// 			const user = jwt.decode(tokenFromHeader);
+	// 			// const data = {
+	// 			// 	perPage: parseInt(req.query.per_page, 10),
+	// 			// 	page: parseInt(req.query.page, 10),
+	// 			// 	offset: 0,
+	// 			// 	status: "noAll",
+	// 			// 	where: { id_user: user.payload.id },
+	// 			// 	innerJoin: [
+	// 			// 		{
+	// 			// 			model: 'users',
+	// 			// 			as: 'users',
+	// 			// 			attributes: ['id', 'name', 'email', 'phone', 'address'],
+	// 			// 		},
+	// 			// 		{
+	// 			// 			model: 'type_ws',
+	// 			// 			as: 'booking_ws',
 							
-				// 	limit: 10,
-				// }
-				const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
+	// 			// 	limit: 10,
+	// 			// }
+	// 			console.log({user});
+	// 			const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
 
-				const result = await super.customSelectQuery(req, `
-				SELECT booking_ws.*, workspaces.name AS workspaces_name, type_ws.type
-				FROM booking_ws
-				LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id 
-				LEFT JOIN type_ws ON booking_ws.id_type_ws = type_ws.id
-				WHERE booking_ws.id_user = '${cleanedId}' LIMIT 0, 10;
-				`)
-				console.log({result})
-				if (!(_.isNull(result))) {
-					for(let i = 0; i < result.length; i++){
-						result[i] = _.omit(result[i], ['createdAt', 'updatedAt']);
-					}
-					// const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
-					requestHandler.sendSuccess(res, 'success')({ result });
-				} else {
-					requestHandler.throwError(422, 'Unprocessable Entity', 'there\'s no history booking here')();
-				}
-			}else{
-				requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
-			}
+	// 			const result = await super.customSelectQuery(req, `
+	// 			SELECT booking_ws.*, workspaces.name AS workspaces_name, type_ws.type
+	// 			FROM booking_ws
+	// 			LEFT JOIN workspaces ON booking_ws.id_ws = workspaces.id 
+	// 			LEFT JOIN type_ws ON booking_ws.id_type_ws = type_ws.id
+	// 			WHERE booking_ws.id_user = '${cleanedId}' LIMIT 0, 10;
+	// 			`)
+	// 			console.log({result})
+	// 			if (!(_.isNull(result))) {
+	// 				for(let i = 0; i < result.length; i++){
+	// 					result[i] = _.omit(result[i], ['createdAt', 'updatedAt']);
+	// 				}
+	// 				// const result = _.omit(resultRaw.dataValues, ['createdAt', 'updatedAt']);
+	// 				requestHandler.sendSuccess(res, 'success')({ result });
+	// 			} else {
+	// 				requestHandler.throwError(422, 'Unprocessable Entity', 'there\'s no history booking here')();
+	// 			}
+	// 		}else{
+	// 			requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+	// 		}
             
-        } catch (error) {
-            requestHandler.sendError(req, res, error);
-        }
-    }
+    //     } catch (error) {
+    //         requestHandler.sendError(req, res, error);
+    //     }
+    // }
 
 	static async getBookingByIdUser(req, res) {
 		try{
 			const page = req.query.page.replace(/[^0-9_-]/g, '');
 			const tokenFromHeader = auth.getJwtToken(req);
 			const user = jwt.decode(tokenFromHeader);
+			console.log(user)
 			const sanitizedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
 
 			const perPage = 10;
