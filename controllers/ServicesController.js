@@ -301,7 +301,7 @@ class ServicesController extends BaseController {
                 user_agent: cleanedUserAgent,
             }
 
-            const cleanedId = reqParamsId.replace(/[^a-zA-Z0-9_-]/g, '');
+            const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
             
             if(EntryChecker(check)) {
                 var result = await super.customSelectQuery(req, `
