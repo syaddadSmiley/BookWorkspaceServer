@@ -311,9 +311,9 @@ class ServicesController extends BaseController {
                     LEFT JOIN type_ws ON booking_ws.id_type_ws = type_ws.id
                     WHERE booking_ws.id = '${cleanedId}' LIMIT 1;
                 `)
-                
+                console.log(result)
                 //check if user is the owner of the booking
-                if(result.dataValues.id_user != user.payload.id){
+                if(result[0].id_user != user.payload.id){
                     requestHandler.throwError(422, 'Unprocessable Entity', 'you dont have acces to this resources')();
                 }
 
