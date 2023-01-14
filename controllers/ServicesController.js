@@ -190,6 +190,9 @@ class ServicesController extends BaseController {
             try{
                 const tokenFromHeader = auth.getJwtToken(req);
                 const user = jwt.decode(tokenFromHeader);
+                if (user.payload.workspaces.indexOf(id_ws) === -1) {
+                    requestHandler.throwError(401, 'Unauthorized', 'you dont have access to this resources')();
+                }
                 const options = {
                     where: { id: user.payload.id },
                 };

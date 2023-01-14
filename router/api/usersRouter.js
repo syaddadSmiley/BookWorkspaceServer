@@ -5,7 +5,7 @@ const auth = require('../../utils/auth');
 router.get('/:id', auth.isAuthenticatedAdmin, UsersController.getUserById);
 router.get('/booking/history', auth.isAuthenticated, UsersController.getBookingByIdUser);
 
-router.delete('/:id', UsersController.deleteById);
+router.delete('/:id', auth.isAuthenticatedSuAdmin, UsersController.deleteById);
 
 router.get('/profile/details', auth.isAuthenticated, UsersController.getProfile);
 

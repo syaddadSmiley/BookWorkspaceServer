@@ -40,23 +40,27 @@ class TypeWsController extends BaseController {
             
             requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 
-            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g,'');
-
-            const id_type_ws = uuid();
-
-            const data = {
-                id: id_type_ws,
-                id_ws: body.id_ws,
-                kapasitas: body.kapasitas,
-                type: body.type,
-                harga: body.harga,
-            }
-
+            const cleanedUserAgent = req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, '');
             const check = {
                 user_agent: cleanedUserAgent,
             }
+            if (EntryChecker(check)) {      
+                const tokenFromHeader = auth.getJwtToken(req);
+                const user = jwt.decode(tokenFromHeader);
+                if (user.payload.workspaces.indexOf(id_ws) === -1) {
+                    requestHandler.throwError(401, 'Unauthorized', 'you dont have access to this resources')();
+                }
+                      
+                const id_type_ws = uuid();
 
-            if (EntryChecker(check)) {
+                const data = {
+                    id: id_type_ws,
+                    id_ws: body.id_ws,
+                    kapasitas: body.kapasitas,
+                    type: body.type,
+                    harga: body.harga,
+                }
+
                 var result = await super.create(req, 'type_ws', data);
                 if (!(_.isNull(result))) {
                     requestHandler.sendSuccess(res, 'type workspace added')({ result });
