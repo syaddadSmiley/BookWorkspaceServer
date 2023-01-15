@@ -44,7 +44,7 @@ app.use('/api/docs', swagger.router);
 
 app.use((req, res, next) => {
 	req.identifier = uuid();
-	const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body)}`;
+	const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body).slice(0, 150) }`;
 	logger.log(logString, 'info');
 	next();
 });
@@ -58,7 +58,7 @@ app.use((req, res, next) => {
 	res.status(err.status).json({ type: 'error', message: 'the url you are trying to reach is not hosted on our server T_T' });
 
 	req.identifier = uuid();
-	const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body)}`;
+	const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body).slice(0, 150)}`;
 	logger.log(logString, 'info');
 	next(err);
 });

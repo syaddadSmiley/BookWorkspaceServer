@@ -20,8 +20,6 @@ const uuid = require('uuid');
 const {Roles} = require('../models/roles');
 const { query } = require('express');
 
-var sanitize = require('validator').sanitize
-
 const logger = new Logger();
 const requestHandler = new RequestHandler(logger);
 const tokenList = {};
@@ -57,30 +55,22 @@ class AuthController extends BaseController {
 			// var logString = "User Agent "+cleanedUserAgent
 			// logger.log(logString, 'warn');
 			if (String(cleanedUserAgent).includes("Mozilla") ||  String(cleanedUserAgent).includes("Chrome") || String(cleanedUserAgent).includes("Dart")) {
-				const user = await req.app.get('db').sequelize.query(`SELECT
-				users.id,
-					users.email,
-					users.name,
-					users.role,
-					users.mobile_number,
-					users.user_img,
-					users.verified,
-					users.updated_at
-				FROM users
-				WHERE users.id = '${cleanedId}'`, { type: req.app.get('db').sequelize.QueryTypes.SELECT });
-				console.log("awadwadwawa0", {user});
+				const options = {
+					where: { id: cleanedId },
+				};
+				const user = await super.getByCustomOptions(req, 'users', options);
 				if (!user) {
 					requestHandler.throwError(400, 'bad request', 'invalid')();
 				} 
-				console.log("REQUEST", req.headers.authorization);
-				console.log(user[0].email, cleanedEmail);
+				// console.log("REQUEST", req.headers.authorization);
+				console.log(user.dataValues.email, cleanedEmail);
 				
-				if (cleanedEmail !== user[0].email) {
+				if (cleanedEmail !== user.dataValues.email) {
 					requestHandler.throwIf(r => !r, 400, 'incorrect', 'failed to login bad credentials');
 					requestHandler.throwError(500, 'bcrypt error');
 				}
 
-				const cleanedId2 = user[0].id.replace(/[^a-zA-Z0-9_-]/g, '');
+				const cleanedId2 = user.dataValues.id.replace(/[^a-zA-Z0-9_-]/g, '');
 
 				const getWorkspacesByUserId = await super.customSelectQuery(req, `
 				SELECT
@@ -91,9 +81,9 @@ class AuthController extends BaseController {
 
 				const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
 				// console.log(workspaces);
-				user[0].workspaces = workspaces;
+				user.dataValues.workspaces = workspaces;
 				// console.log(user[0]);
-				const payload = _.omit(user[0]);
+				const payload = _.omit(user.dataValues, ['user_img']);
 				// logger.log(config.auth.jwt_secret, 'warn')
 				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 				const refreshToken = jwt.sign({
@@ -190,7 +180,20 @@ class AuthController extends BaseController {
 					requestHandler.throwError(500, 'internal Server Error', 'failed to register')();
 				}
 
-				const payload = _.omit(user[0]);
+				const cleanedId2 = user[0].id.replace(/[^a-zA-Z0-9_-]/g, '');
+
+				const getWorkspacesByUserId = await super.customSelectQuery(req, `
+				SELECT
+					workspaces.id
+				FROM workspaces
+				WHERE workspaces.id_user = '${cleanedId2}'
+				`);
+
+				const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
+				// console.log(workspaces);
+				user[0].workspaces = workspaces;
+
+				const payload = _.omit(user[0], ['user_img']);
 				// logger.log(config.auth.jwt_secret, 'warn')
 				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 				const refreshToken = jwt.sign({
@@ -227,6 +230,19 @@ class AuthController extends BaseController {
 			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
 			const tokenFromHeader = auth.getJwtToken(req);
 			const user = jwt.decode(tokenFromHeader);
+
+			const cleanedId2 = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
+
+			const getWorkspacesByUserId = await super.customSelectQuery(req, `
+				SELECT
+					workspaces.id
+				FROM workspaces
+				WHERE workspaces.id_user = '${cleanedId2}'
+				`);
+
+			const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
+			// console.log(workspaces);
+			user.payload.workspaces = workspaces;
 
 			if ((data.refreshToken) && (data.refreshToken in tokenList)) {
 				const token = jwt.sign({ user }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });

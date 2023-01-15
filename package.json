@@ -21,6 +21,7 @@
   "dependencies": {
     "async": "^2.6.4",
     "bcrypt": "^5.0.0",
+    "blob-util": "^2.0.2",
     "body-parser": "^1.18.3",
     "canvas": "^2.0.1",
     "compression": "^1.7.3",
