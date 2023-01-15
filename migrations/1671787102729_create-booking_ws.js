@@ -29,6 +29,10 @@ ADD end_date DATETIME NOT NULL AFTER start_date;
 ALTER TABLE booking_ws
 ADD id_type_ws VARCHAR(120) NOT NULL REFERENCES type_ws(id) ON DELETE CASCADE ON UPDATE CASCADE
 AFTER id_service;
+
+ALTER TABLE booking_ws
+ADD list_guest VARCHAR(250) NOT NULL
+AFTER end_date;
 `
 
 module.exports = {

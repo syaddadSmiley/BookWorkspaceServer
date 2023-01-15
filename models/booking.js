@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        list_guest: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         jenis_pembayaran: {
             type: DataTypes.STRING,
             allowNull: false

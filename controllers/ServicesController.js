@@ -29,6 +29,7 @@ class ServicesController extends BaseController {
                 jenis_pembayaran: Joi.string().max(120).required(),
                 start_date: Joi.date().required(),
                 end_date: Joi.date().required(),
+                list_guest: Joi.string().required(),
                 user_agent: Joi.string().required()
             };
             //JSON Request body
@@ -40,6 +41,7 @@ class ServicesController extends BaseController {
                 jenis_pembayaran: body.jenis_pembayaran,
                 start_date: body.start_date,
                 end_date: body.end_date,
+                list_guest : body.list_guest,
                 user_agent: req.headers['user-agent'],
             }, schema);
 
@@ -51,6 +53,7 @@ class ServicesController extends BaseController {
             const sanitizedJenisPembayaran = body.jenis_pembayaran.replace(/[^a-zA-Z0-9_-]/g, '');
             const sanitizedStartDate = body.start_date.replace(/[^a-zA-Z0-9_:. -]/g, '');
             const sanitizedEndDate = body.end_date.replace(/[^a-zA-Z0-9_:. -]/g, '');
+            const sanitizedListGuest = body.list_guest.replace(/[^a-zA-Z0-9_, -]/g, '');
 
             const id_booking_ws = uuid();
             
@@ -127,6 +130,7 @@ class ServicesController extends BaseController {
                 id_type_ws: typeWs.id,
                 start_date: sanitizedStartDate,
                 end_date: sanitizedEndDate,
+                list_guest: sanitizedListGuest,
                 jenis_pembayaran: sanitizedJenisPembayaran,
                 status: 'waiting',
                 total_pembayaran: typeWs.harga.toString(),
