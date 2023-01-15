@@ -4,6 +4,7 @@ const _ = require('lodash');
 const async = require('async');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const path = require('path');
 
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
@@ -130,11 +131,35 @@ class AuthController extends BaseController {
 				requestHandler.throwError(400, 'bad request', 'invalid, account already existed')();
 			}
 
+			//Default Image
+			const readImage = fs.statSync(path.join(__dirname, '../assets/noPP.png'));
+			if(readImage.size/(1024 * 1024) > 3){
+				requestHandler.throwError(400, 'bad request', 'image size too large')();
+
+			}
+			//check extension format
+			const ext = path.extname(path.join(__dirname, '../assets/noPP.png'));
+			if(ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg'){
+				requestHandler.throwError(400, 'bad request', 'invalid image format')();
+			}
+
+			const getImage = fs.readFileSync(path.join(__dirname, '../assets/noPP.png'));
+			
+			var base64Image
+			if(ext === '.png')
+			 	base64Image = 'data:image/png;base64,';
+			else if(ext === '.jpg' || ext === '.jpeg'){
+				base64Image = 'data:image/jpeg;base64,';
+			}
+			base64Image += new Buffer.from(getImage, 'binary').toString('base64');
+			const user_img = base64Image;
+
 			const payload = {
 				id: cleanedId,
 				email: cleanedEmail,
 				name: cleanedName,
 				mobile_number: cleanedMobileNumber,
+				user_img:  user_img,
 			};
 			const createdUser = await super.create(req, 'users', payload);
 			if (!(_.isNull(createdUser))) {		
