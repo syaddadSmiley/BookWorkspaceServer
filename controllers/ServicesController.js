@@ -29,7 +29,7 @@ class ServicesController extends BaseController {
                 jenis_pembayaran: Joi.string().max(120).required(),
                 start_date: Joi.date().required(),
                 end_date: Joi.date().required(),
-                list_guest: Joi.string().required(),
+                list_guest: Joi.string(),
                 user_agent: Joi.string().required()
             };
             //JSON Request body
@@ -53,7 +53,11 @@ class ServicesController extends BaseController {
             const sanitizedJenisPembayaran = body.jenis_pembayaran.replace(/[^a-zA-Z0-9_-]/g, '');
             const sanitizedStartDate = body.start_date.replace(/[^a-zA-Z0-9_:. -]/g, '');
             const sanitizedEndDate = body.end_date.replace(/[^a-zA-Z0-9_:. -]/g, '');
-            const sanitizedListGuest = body.list_guest.replace(/[^a-zA-Z0-9_, -]/g, '');
+            var sanitizedListGuest
+            console.log(body.list_guest)
+            if(body.list_guest !== undefined){
+                sanitizedListGuest = body.list_guest.replace(/[^a-zA-Z0-9_, -]/g, '');
+            }
 
             const id_booking_ws = uuid();
             

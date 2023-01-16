@@ -15,6 +15,9 @@ query = `CREATE TABLE IF NOT EXISTS users (
 
 query2 = `ALTER TABLE users
 ADD role ENUM('user','admin','super_admin') NOT NULL DEFAULT 'user' AFTER mobile_number;
+
+ALTER TABLE users
+ADD password VARCHAR(255) NOT NULL AFTER name;
 `
 
 module.exports = {

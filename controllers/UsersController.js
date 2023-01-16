@@ -79,7 +79,7 @@ class UsersController extends BaseController {
 				// console.log(workspaces);
 				console.log()
 				userProfile.dataValues.workspaces = workspaces;
-				const payload = _.omit(userProfile.dataValues, ['user_img']);
+				const payload = _.omit(userProfile.dataValues, ['user_img', 'password']);
 				const profile = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 				return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ profile });
 			}else {
@@ -123,7 +123,7 @@ class UsersController extends BaseController {
 					where: { id: user.payload.id },
 				};
 				const userProfile = await super.getByCustomOptions(req, 'users', options);
-				const payload = _.omit(userProfile.dataValues, ['user_img']);
+				const payload = _.omit(userProfile.dataValues, ['user_img', 'password']);
 				const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
 				
 				return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')( {token, user_img : userProfile.dataValues.user_img.toString()} );

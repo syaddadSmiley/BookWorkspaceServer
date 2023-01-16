@@ -191,5 +191,35 @@ class BaseController {
 		return result;
 	}
 
+	static async customUpdateQuery(req, query) {
+		let result;
+		try {
+			result = await req.app.get('db').sequelize.query(query, 
+				{ type: req.app.get('db').sequelize.QueryTypes.UPDATE
+			}).then(
+				errHandler.throwIf(r => !r, 500, 'Internal server error', 'something went wrong while fetching data'),
+				errHandler.throwError(500, 'sequelize error'),
+			).then(result => Promise.resolve(result));
+		} catch (err) {
+			return Promise.reject(err);
+		}
+		return result;
+	}
+
+	static async customDeleteQuery(req, query) {
+		let result;
+		try {
+			result = await req.app.get('db').sequelize.query(query, 
+				{ type: req.app.get('db').sequelize.QueryTypes.DELETE
+			}).then(
+				errHandler.throwIf(r => !r, 500, 'Internal server error', 'something went wrong while fetching data'),
+				errHandler.throwError(500, 'sequelize error'),
+			).then(result => Promise.resolve(result));
+		} catch (err) {
+			return Promise.reject(err);
+		}
+		return result;
+	}
+
 }
 module.exports = BaseController;
