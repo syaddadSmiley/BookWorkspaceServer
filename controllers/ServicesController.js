@@ -41,7 +41,6 @@ class ServicesController extends BaseController {
                 jenis_pembayaran: body.jenis_pembayaran,
                 start_date: body.start_date,
                 end_date: body.end_date,
-                list_guest : body.list_guest,
                 user_agent: req.headers['user-agent'],
             }, schema);
 
