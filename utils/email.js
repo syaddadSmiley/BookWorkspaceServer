@@ -4,9 +4,25 @@ const config = require('../config/appconfig');
 const sg = require('sendgrid')(config.sendgrid.api_key);
 const Logger = require('../utils/logger');
 
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(config.sendgrid.api_key);
+
 const logger = new Logger();
 
 module.exports = {
+
+	async sendEmailVerification(to, codeOTP){
+
+		const msg = {
+			to: to,
+			from: config.sendgrid.from_email,
+			subject: 'Email Verification',
+			html: '<p>Please click the link below to verify your email address:</p>' +
+				`<p><a href="http://localhost:3000/verify?token=${codeOTP}">http://localhost:3000/verify?token=${codeOTP}</a></p>`,
+		};
+
+		return sgMail.send(msg);
+	},
 
 	sendEmail(
 		parentCallback,

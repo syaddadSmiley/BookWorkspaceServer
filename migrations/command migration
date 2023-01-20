@@ -6,3 +6,6 @@ node migration.js run 1671786046665_create-url_ws.js up "&"
 node migration.js run 1671784704886_create-type_ws.js up "&" 
 node migration.js run 1671784230350_create-services.js up "&" 
 node migration.js run 1671787102729_create-booking_ws.js up
+
+//command add new migration mysql migrations
+node migration.js add migration create-otp 

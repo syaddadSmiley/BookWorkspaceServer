@@ -31,9 +31,9 @@ module.exports = {
 		refresh_token_expiresin: process.env.REFRESH_TOKEN_EXPIRES_IN || '2d', // 2 days
 	},
 	sendgrid: {
-		api_key: process.env.SEND_GRID_API_KEY,
-		api_user: process.env.USERNAME,
-		from_email: process.env.FROM_EMAIL || '.......@gmail.com',
+		api_key: process.env.SEND_GRID_API_KEY || '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',
+		api_user: process.env.USERNAME || 'apikey',
+		from_email: process.env.FROM_EMAIL || 'syaddad.snfa@gmail.com',
 	},
 
 };

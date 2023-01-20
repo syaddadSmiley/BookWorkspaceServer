@@ -5,6 +5,7 @@ const async = require('async');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const moment = require('moment');
 
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
@@ -21,6 +22,8 @@ const uuid = require('uuid');
 const {Roles} = require('../models/roles');
 const { query } = require('express');
 const { _init } = require('joi/lib/types/lazy');
+const { sendEmailVerification } = require('../utils/email');
+const { contentSecurityPolicy } = require('helmet');
 
 const logger = new Logger();
 const requestHandler = new RequestHandler(logger);
@@ -371,7 +374,7 @@ class AuthController extends BaseController {
 			}
 			base64Image += new Buffer.from(getImage, 'binary').toString('base64');
 			const user_img = base64Image;
-			const encryptedPassword = await bcrypt.hash(data.password, 10);
+			const encryptedPassword = bcrypt.hashSync(data.password, 10);
 			console.log(encryptedPassword);
 			const payload = {
 				id: uuid(),
@@ -381,8 +384,9 @@ class AuthController extends BaseController {
 				mobile_number: cleanedPhoneNumber,
 				user_img:  user_img,
 			};
+			
 			const createdUser = await super.create(req, 'users', payload);
-			if (!(_.isNull(createdUser))) {		
+			if (!(_.isNull(createdUser))) {	
 				
 				const querySelect = `SELECT
 				users.id,
@@ -404,6 +408,29 @@ class AuthController extends BaseController {
 				}
 
 				const cleanedId2 = user[0].id.replace(/[^a-zA-Z0-9_-]/g, '');
+
+				//generate otp code
+				const otpCode = Math.floor(100000 + Math.random() * 900000);
+				const otpPayload = {
+					id: uuid(),
+					email: cleanedEmail,
+					otp: otpCode,
+					expired_at: moment().add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
+				};
+				const createdOtp = await super.create(req, 'otps', otpPayload);
+				if (_.isNull(createdOtp)) {
+					const deleteUser = await super.customDeleteQuery(req, `DELETE FROM users WHERE users.email = '${cleanedEmail}'`);
+					console.log(deleteUser);
+					requestHandler.throwError(500, 'internal Server Error', 'failed to register')();
+				}
+
+				var responseEmail = await sendEmailVerification(cleanedEmail, otpCode).catch(err => {
+					console.log(err.response.body);
+					super.customDeleteQuery(req, `DELETE FROM users WHERE users.email = '${cleanedEmail}'`);
+					requestHandler.throwError(500, 'internal Server Error', 'failed to register')();
+				});
+
+				console.log(responseEmail);
 
 				const getWorkspacesByUserId = await super.customSelectQuery(req, `
 				SELECT
