@@ -24,6 +24,9 @@ const { query } = require('express');
 const { _init } = require('joi/lib/types/lazy');
 const { sendEmailVerification } = require('../utils/email');
 const { contentSecurityPolicy } = require('helmet');
+const checkBeforeEntry = require('../utils/checkBeforeEntry');
+const e = require('express');
+const { getJwtToken } = require('../utils/auth');
 
 const logger = new Logger();
 const requestHandler = new RequestHandler(logger);
@@ -104,7 +107,7 @@ class AuthController extends BaseController {
 	// 			tokenList[refreshToken] = response;
 	// 			requestHandler.sendSuccess(res, 'User logged in Successfully')({ token, refreshToken });
 	// 		}else {
-	// 			requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+	// 			requestHandler.throwError(400, 'bad request', 'please provide the required request')();
 	// 		}
 	// 	} catch (error) {
 	// 		requestHandler.sendError(req, res, error);
@@ -183,7 +186,7 @@ class AuthController extends BaseController {
 				tokenList[refreshToken] = response;
 				requestHandler.sendSuccess(res, 'User logged in Successfully')({ token, refreshToken });
 			}else {
-				requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+				requestHandler.throwError(400, 'bad request', 'please provide the required request')();
 			}
 		} catch (error) {
 			requestHandler.sendError(req, res, error);
@@ -413,8 +416,9 @@ class AuthController extends BaseController {
 				const otpCode = Math.floor(100000 + Math.random() * 900000);
 				const otpPayload = {
 					id: uuid(),
-					email: cleanedEmail,
+					id_user: cleanedId2,
 					otp: otpCode,
+					limit: 5,
 					expired_at: moment().add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
 				};
 				const createdOtp = await super.create(req, 'otps', otpPayload);
@@ -464,6 +468,188 @@ class AuthController extends BaseController {
 		} catch (err) {
 			console.log(err);
 			requestHandler.sendError(req, res, err);
+		}
+	}
+
+	static async verifyOtp(req, res) {
+		try {
+			const data = req.body;
+			if (_.isNull(data)) {
+				requestHandler.throwError(400, 'bad request', 'please provide the otp code in request body')();
+			}
+			const schema = {
+				otp: Joi.number().required(),
+			};
+			const { error } = Joi.validate({ otp: req.body.otp }, schema);
+			if(data.otp.length > 6){
+				requestHandler.throwError(400, 'bad request', 'otp code must be 6 digits')();
+			}
+
+			requestHandler.validateJoi(error, 400, 'bad Request', error ? error.details[0].message : '');
+			const tokenFromHeader = auth.getJwtToken(req);
+			const user = jwt.decode(tokenFromHeader);
+
+			const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9_-]/g, '');
+			const cleanedOtp = data.otp.replace(/[^a-zA-Z0-9_-]/g, '');
+
+			const check = {
+				user_agent: req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, ''),
+			}
+			if(checkBeforeEntry(check)){
+				const getOtp = await super.customSelectQuery(req, `
+					SELECT
+						otps.id,
+						otps.otp,
+						otps.limit,
+						otps.expired_at
+					FROM otps
+					WHERE otps.id_user = '${cleanedId}'
+				`);
+				console.log(getOtp)
+				if (getOtp.length > 0) {
+					if (moment(getOtp[0].expired_at).format('YYYY-MM-DD HH:mm:ss') < moment().format('YYYY-MM-DD HH:mm:ss')) {
+						requestHandler.throwError(400, 'bad request', 'otp code has been expired')();
+					}
+					if (getOtp[0].limit > 0) {
+						if (getOtp[0].otp == cleanedOtp) {
+							const updateOtp = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 1 WHERE otps.id = '${getOtp[0].id}'`);
+							if (updateOtp) {
+								const updateUser = await super.customUpdateQuery(req, `UPDATE users SET users.is_verified = 1 WHERE users.id = '${cleanedId}'`);
+								if (updateUser) {
+									const getWorkspacesByUserId = await super.customSelectQuery(req, `
+								SELECT
+									workspaces.id
+								FROM workspaces
+								WHERE workspaces.id_user = '${cleanedId}'
+								`);
+
+									const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
+									// console.log(workspaces);
+									user.payload.workspaces = workspaces;
+									const payload = _.omit(user.payload, ['user_img', 'password']);
+									// logger.log(config.auth.jwt_secret, 'warn
+									const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
+									const refreshToken = jwt.sign({
+										payload,
+									}, config.auth.refresh_token_secret, {
+										expiresIn: config.auth.refresh_token_expiresin,
+									});
+									const response = {
+										status: 'Registered',
+										token,
+										refreshToken,
+									};
+									tokenList[refreshToken] = response;
+									requestHandler.sendSuccess(res, 'Register Successfully')({ token, refreshToken });
+								} else {
+									requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+								}
+							} else {
+								requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+							}
+						} else {
+							requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is wrong')();
+						}
+					} else {
+						requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is expired')();
+					}
+				} else {
+					requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is wrong')();
+				}
+			}else{
+				requestHandler.throwError(422, 'Unprocessable Entity', 'please provide the required request')();
+			}
+			
+
+		} catch (err) {
+			requestHandler.sendError(req, res, err);
+		}
+	}
+
+	static async resendOtp(req, res) {
+		try {
+			const tokenFromHeader = auth.getJwtToken(req);
+			const user = jwt.decode(tokenFromHeader);
+			const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9@.]/g, '');
+			const getUser = await super.customSelectQuery(req, `
+			SELECT
+				users.id,
+				users.email,
+				users.verified
+			FROM users
+			WHERE users.id = '${cleanedId}'
+			`);
+			if (getUser.length > 0) {
+				if (getUser[0].verified == 0) {
+					const getOtp = await super.customSelectQuery(req, `
+					SELECT
+						otps.id,
+						otps.otp_code,
+						otps.expired_at
+					FROM otps
+					WHERE otps.id_user = '${getUser[0].id}'
+					`);
+					if (getOtp.length > 0) {
+						const cleanedId = getOtp[0].id.replace(/[^a-zA-Z0-9_-]/g, '');
+						const otpCode = Math.floor(100000 + Math.random() * 900000);
+						const expiredAt = moment().add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+						const updateOtp = await super.customUpdateQuery(req, `
+						UPDATE otps
+						SET otp = '${otpCode}',
+						expired_at = '${expiredAt}'
+						WHERE otps.id = '${cleanedId}'
+						`);
+						if (updateOtp) {
+							const mailOptions = {
+								from: config.sendgrid.from_email,
+								to: cleanedEmail,
+								subject: 'OTP Code',
+								html: `
+								<p>Hi ${cleanedEmail},</p>
+								<p>Your OTP Code is ${otpCode}</p>
+								`,
+							};
+							sendMail(mailOptions);
+							requestHandler.sendSuccess(res, 'OTP Code has been sent')();
+						} else {
+							requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+						}
+					} else {
+						const otpCode = Math.floor(100000 + Math.random() * 900000);
+						const expiredAt = moment().add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+						const insertOtp = await super.customInsertQuery(req, `
+						INSERT INTO otps
+
+						(id_user, otp_code, expired_at)
+
+						VALUES
+
+						('${getUser[0].id}', '${otpCode}', '${expiredAt}')
+						`);
+						if (insertOtp) {
+							const mailOptions = {
+								from: config.sendgrid.from_email,
+								to: cleanedEmail,
+								subject: 'OTP Code',
+								html: `
+								<p>Hi ${cleanedEmail},</p>
+								<p>Your OTP Code is ${otpCode}</p>
+								`,
+							};
+							mail.sendMail(mailOptions);
+							requestHandler.sendSuccess(res, 'OTP Code has been sent')();
+						} else {
+							requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+						}
+					}
+				} else {
+					requestHandler.throwError(422, 'Unprocessable Entity', 'email has been verified')();
+				}
+			} else {
+				requestHandler.throwError(404, 'Not Found', 'email not found')();
+			}
+		} catch (error) {
+			requestHandler.sendError(res, error)();
 		}
 	}
 

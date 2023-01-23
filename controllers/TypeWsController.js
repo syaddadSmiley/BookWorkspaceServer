@@ -68,7 +68,7 @@ class TypeWsController extends BaseController {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
                 }
             }else{
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
 
         }catch (error) {
@@ -94,7 +94,7 @@ class TypeWsController extends BaseController {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
                 }
             } else {
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
         }catch (error) {
             requestHandler.sendError(req, res, error)
@@ -114,7 +114,7 @@ class TypeWsController extends BaseController {
                     requestHandler.sendSuccess(res, 'deleted')({result})
                 }
             } else {
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
         }catch (error) {
             requestHandler.sendError(req, res, error);
@@ -135,7 +135,7 @@ class TypeWsController extends BaseController {
                     requestHandler.sendSuccess(res, 'success')({result})
                 }
             } else {
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
         }catch (error) {
             requestHandler.sendError(req, res, error);

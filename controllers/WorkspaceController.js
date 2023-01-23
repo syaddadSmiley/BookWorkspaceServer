@@ -91,7 +91,7 @@ class WorkspaceController extends BaseController {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
                 }
             }else{
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
 
         }catch (error) {
@@ -119,7 +119,7 @@ class WorkspaceController extends BaseController {
                     requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
                 }
             } else {
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
 
         }catch(error){
@@ -140,7 +140,7 @@ class WorkspaceController extends BaseController {
                     requestHandler.sendSuccess(res, 'deleted')({result})
                 }
             } else {
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
         }catch (error){
             requestHandler.sendError(req, res, error)
@@ -190,7 +190,7 @@ class WorkspaceController extends BaseController {
                 const workspaces = await super.getList(req, "workspaces", data);
                 requestHandler.sendSuccess(res, 'success')({ workspaces });
             }else {
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
         }catch (error){
             requestHandler.sendError(req, res, error);
@@ -234,7 +234,7 @@ class WorkspaceController extends BaseController {
                 }
                 
             }else{
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
         }catch (error) {
             requestHandler.sendError(req, res, error);
@@ -274,7 +274,7 @@ class WorkspaceController extends BaseController {
                 }
 
             } else {
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
         } catch (error) {
             requestHandler.sendError(req, res, error);
@@ -302,7 +302,7 @@ class WorkspaceController extends BaseController {
                 user_agent: req.headers['user-agent'].replace(/[^a-zA-Z0-9_-]/g, ''),
             }
             if(!EntryChecker(check)){
-                requestHandler.throwError(400, 'bad request', 'please provide all required headers')();
+                requestHandler.throwError(400, 'bad request', 'please provide the required request')();
             }
             //check if user own the workspace
             console.log(user.payload);

@@ -8,7 +8,7 @@ router.post('/signUp', AuthController.signUp);
 router.post('/login', AuthController.login);
 
 router.post('/refreshToken', auth.isAuthenticated, AuthController.refreshToken);
-
+router.post('/verifyOtp', auth.isAuthenticated ,AuthController.verifyOtp);
 router.post('/logout', auth.isAuthenticated, AuthController.logOut);
 router.get('/getFile', auth.isAuthenticatedSuAdmin, AuthController.getFileFromServer)
 

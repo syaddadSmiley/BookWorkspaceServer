@@ -6,11 +6,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true,
         },
-        email: {
+        id_user: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         otp: {
+            type: DataTypes.NUMBER,
+            allowNull: true,
+        },
+        limit: {
             type: DataTypes.NUMBER,
             allowNull: false,
         },
@@ -27,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
     Otp.associate = function (models) {
         Otp.belongsTo(models.users, {
-            foreignKey: 'email',
+            foreignKey: 'id_user',
         });
         // associations can be defined here
     };
