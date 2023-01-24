@@ -179,6 +179,7 @@ class BaseController {
 		let result;
 		try {
 			// sequelize.query(`SELECT
+			console.log("INI 2");
 			result = await req.app.get('db').sequelize.query(querySelect, 
 				{ type: req.app.get('db').sequelize.QueryTypes.SELECT
 			}).then(

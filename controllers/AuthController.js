@@ -22,7 +22,7 @@ const uuid = require('uuid');
 const {Roles} = require('../models/roles');
 const { query } = require('express');
 const { _init } = require('joi/lib/types/lazy');
-const { sendEmailVerification } = require('../utils/email');
+const { sendEmailVerification, sendEmail } = require('../utils/email');
 const { contentSecurityPolicy } = require('helmet');
 const checkBeforeEntry = require('../utils/checkBeforeEntry');
 const e = require('express');
@@ -428,14 +428,19 @@ class AuthController extends BaseController {
 					requestHandler.throwError(500, 'internal Server Error', 'failed to register')();
 				}
 
-				var responseEmail = await sendEmailVerification(cleanedEmail, otpCode).catch(err => {
-					console.log(err.response.body);
-					super.customDeleteQuery(req, `DELETE FROM users WHERE users.email = '${cleanedEmail}'`);
-					requestHandler.throwError(500, 'internal Server Error', 'failed to register')();
+				const htmlContent = await email.otpContent(cleanedName, otpCode);
+				async.parallel([	
+					function one(callback){
+						sendEmail(callback, cleanedEmail, 'Verification Email', '', htmlContent);
+					},
+				], (err, results) => {
+					if(err){
+						logger.log(err, 'error');
+					}else{
+						logger.log(results.toString(), 'warn');
+					}
 				});
-
-				console.log(responseEmail);
-
+				//console.log(" 3") ;	
 				const getWorkspacesByUserId = await super.customSelectQuery(req, `
 				SELECT
 					workspaces.id
@@ -505,60 +510,59 @@ class AuthController extends BaseController {
 					FROM otps
 					WHERE otps.id_user = '${cleanedId}'
 				`);
-				console.log(moment(getOtp[0].expired_at).format('YYYY-MM-DD HH:mm:ss') , moment().format('YYYY-MM-DD HH:mm:ss'))
-				console.log(moment(getOtp[0].expired_at).format('YYYY-MM-DD HH:mm:ss') > moment().format('YYYY-MM-DD HH:mm:ss'))
+				
 				if (getOtp.length > 0) {
-					if (moment(getOtp[0].expired_at).format('YYYY-MM-DD HH:mm:ss') < moment().format('YYYY-MM-DD HH:mm:ss')) {
-						requestHandler.throwError(400, 'bad request', 'otp code has been expired')();
-					}
-					if (getOtp[0].limit > 0) {
-						if (getOtp[0].otp == cleanedOtp) {
-							const updateOtp = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 5 WHERE otps.id = '${getOtp[0].id}'`);
-							if (updateOtp) {
-								const updateUser = await super.customUpdateQuery(req, `UPDATE users SET users.verified = 1 WHERE users.id = '${cleanedId}'`);
-								if (updateUser) {
-									const getWorkspacesByUserId = await super.customSelectQuery(req, `
-									SELECT
-										workspaces.id
-									FROM workspaces
-									WHERE workspaces.id_user = '${cleanedId}'
-									`);
-									
-									const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
-									// console.log(workspaces);
-									user.payload.verified = 1;
-									user.payload.workspaces = workspaces;
-									const payload = _.omit(user.payload, ['user_img', 'password']);
-									// logger.log(config.auth.jwt_secret, 'warn
-									const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
-									const refreshToken = jwt.sign({
-										payload,
-									}, config.auth.refresh_token_secret, {
-										expiresIn: config.auth.refresh_token_expiresin,
-									});
-									const response = {
-										status: 'Registered',
-										token,
-										refreshToken,
-									};
-									tokenList[refreshToken] = response;
-									requestHandler.sendSuccess(res, 'Register Successfully')({ token, refreshToken });
+					if (moment(getOtp[0].expired_at).isAfter(moment())) {					
+						if (getOtp[0].limit > 0) {
+							if (getOtp[0].otp == cleanedOtp) {
+								const updateOtp = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 5 WHERE otps.id = '${getOtp[0].id}'`);
+								if (updateOtp) {
+									const updateUser = await super.customUpdateQuery(req, `UPDATE users SET users.verified = 1 WHERE users.id = '${cleanedId}'`);
+									if (updateUser) {
+										const getWorkspacesByUserId = await super.customSelectQuery(req, `
+										SELECT
+											workspaces.id
+										FROM workspaces
+										WHERE workspaces.id_user = '${cleanedId}'
+										`);
+										
+										const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
+										// console.log(workspaces);
+										user.payload.verified = 1;
+										user.payload.workspaces = workspaces;
+										const payload = _.omit(user.payload, ['user_img', 'password']);
+										// logger.log(config.auth.jwt_secret, 'warn
+										const token = jwt.sign({ payload }, config.auth.jwt_secret, { expiresIn: config.auth.jwt_expiresin, algorithm: 'HS512' });
+										const refreshToken = jwt.sign({
+											payload,
+										}, config.auth.refresh_token_secret, {
+											expiresIn: config.auth.refresh_token_expiresin,
+										});
+										const response = {
+											status: 'Registered',
+											token,
+											refreshToken,
+										};
+										tokenList[refreshToken] = response;
+										requestHandler.sendSuccess(res, 'Register Successfully')({ token, refreshToken });
+									} else {
+										requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+									}
 								} else {
 									requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
 								}
 							} else {
-								requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+								const updateLimit = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 1 WHERE otps.id = '${getOtp[0].id}'`);
+								requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is wrong')();
 							}
 						} else {
-							const updateLimit = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 1 WHERE otps.id = '${getOtp[0].id}'`);
-							requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is wrong')();
+							requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is expired')();
 						}
 					} else {
-						requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is expired')();
+						requestHandler.throwError(400, 'bad request', 'otp code has been expired')();
 					}
 				} else {
-					const updateLimit = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 1 WHERE otps.id = '${getOtp[0].id}'`);
-					requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is wrong')();
+					requestHandler.throwError(422, 'Unprocessable Entity', 'user not found')();
 				}
 			}else{
 				requestHandler.throwError(422, 'Unprocessable Entity', 'please provide the required request')();
