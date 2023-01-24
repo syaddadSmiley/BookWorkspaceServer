@@ -510,7 +510,7 @@ class AuthController extends BaseController {
 					FROM otps
 					WHERE otps.id_user = '${cleanedId}'
 				`);
-				
+
 				if (getOtp.length > 0) {
 					if (moment(getOtp[0].expired_at).isAfter(moment())) {					
 						if (getOtp[0].limit > 0) {
@@ -580,6 +580,7 @@ class AuthController extends BaseController {
 			const user = jwt.decode(tokenFromHeader);
 			const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9.-]/g, '');
 			const cleanedEmail = user.payload.email.replace(/[^a-zA-Z0-9@.]/g, '');
+			const cleanedName = user.payload.name.replace(/[^a-zA-Z0-9@.]/g, '');
 
 			const check = {
 				user_agent: req.headers['user-agent'].replace(/[^a-zA-Z0-9@.]/g, ''),
@@ -616,7 +617,18 @@ class AuthController extends BaseController {
 							WHERE otps.id = '${cleanedId}'
 							`);
 							if (updateOtp) {
-								email.sendEmailVerification(cleanedEmail, otpCode);
+								const htmlContent = await email.otpContent(cleanedName, otpCode);
+								async.parallel([
+									function one(callback) {
+										sendEmail(callback, cleanedEmail, 'Verification Email', '', htmlContent);
+									},
+								], (err, results) => {
+									if (err) {
+										logger.log(err, 'error');
+									} else {
+										logger.log(results.toString(), 'warn');
+									}
+								});
 								requestHandler.sendSuccess(res, 'OTP Code has been sent')();
 							} else {
 								requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();

@@ -5,3 +5,4 @@ contekan
 package-lock.json
 .git
 private/*
+.vscode/*

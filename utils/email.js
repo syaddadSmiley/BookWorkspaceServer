@@ -25,7 +25,7 @@ module.exports = {
 					<p>Thank you for registering to our application. Please use this code to verify your account.</p>
 					<p>Code: <b>${otpCode}</b></p>
 					<p>Regards,</p>
-					<p>Team</p>
+					<p>Ubisniz Team</p>
 				</body>
 				</html>
 				`;

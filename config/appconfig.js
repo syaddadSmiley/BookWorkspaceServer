@@ -39,7 +39,7 @@ module.exports = {
 		host: process.env.OFFICE365_HOST || 'smtp.office365.com',
 		port: process.env.OFFICE365_PORT || 587,
 		secure: process.env.OFFICE365_SECURE || false,
-		from: process.env.OFFICE365_FROM || '"SYADDAD AULIARAHMAN" <syaddad.auliarahman@binus.ac.id>',
+		from: process.env.OFFICE365_FROM || '"Ubisniz" <syaddad.auliarahman@binus.ac.id>',
 		auth: {
 			user: 'syaddad.auliarahman@binus.ac.id',
 			pass: '137102Snf42725',
