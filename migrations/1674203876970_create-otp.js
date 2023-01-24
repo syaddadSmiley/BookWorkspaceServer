@@ -16,6 +16,8 @@ query2 = `
 ALTER TABLE otps 
 add `limit` INTEGER NOT NULL DEFAULT 0 
 after otp
+
+ALTER TABLE `otps` CHANGE `expired_at` `expired_at` TIMESTAMP NULL DEFAULT NULL;
 `
 
 

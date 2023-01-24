@@ -505,26 +505,28 @@ class AuthController extends BaseController {
 					FROM otps
 					WHERE otps.id_user = '${cleanedId}'
 				`);
-				console.log(getOtp)
+				console.log(moment(getOtp[0].expired_at).format('YYYY-MM-DD HH:mm:ss') , moment().format('YYYY-MM-DD HH:mm:ss'))
+				console.log(moment(getOtp[0].expired_at).format('YYYY-MM-DD HH:mm:ss') > moment().format('YYYY-MM-DD HH:mm:ss'))
 				if (getOtp.length > 0) {
 					if (moment(getOtp[0].expired_at).format('YYYY-MM-DD HH:mm:ss') < moment().format('YYYY-MM-DD HH:mm:ss')) {
 						requestHandler.throwError(400, 'bad request', 'otp code has been expired')();
 					}
 					if (getOtp[0].limit > 0) {
 						if (getOtp[0].otp == cleanedOtp) {
-							const updateOtp = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 1 WHERE otps.id = '${getOtp[0].id}'`);
+							const updateOtp = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 5 WHERE otps.id = '${getOtp[0].id}'`);
 							if (updateOtp) {
-								const updateUser = await super.customUpdateQuery(req, `UPDATE users SET users.is_verified = 1 WHERE users.id = '${cleanedId}'`);
+								const updateUser = await super.customUpdateQuery(req, `UPDATE users SET users.verified = 1 WHERE users.id = '${cleanedId}'`);
 								if (updateUser) {
 									const getWorkspacesByUserId = await super.customSelectQuery(req, `
-								SELECT
-									workspaces.id
-								FROM workspaces
-								WHERE workspaces.id_user = '${cleanedId}'
-								`);
-
+									SELECT
+										workspaces.id
+									FROM workspaces
+									WHERE workspaces.id_user = '${cleanedId}'
+									`);
+									
 									const workspaces = getWorkspacesByUserId.map(workspace => workspace.id);
 									// console.log(workspaces);
+									user.payload.verified = 1;
 									user.payload.workspaces = workspaces;
 									const payload = _.omit(user.payload, ['user_img', 'password']);
 									// logger.log(config.auth.jwt_secret, 'warn
@@ -548,12 +550,14 @@ class AuthController extends BaseController {
 								requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
 							}
 						} else {
+							const updateLimit = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 1 WHERE otps.id = '${getOtp[0].id}'`);
 							requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is wrong')();
 						}
 					} else {
 						requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is expired')();
 					}
 				} else {
+					const updateLimit = await super.customUpdateQuery(req, `UPDATE otps SET otps.limit = otps.limit - 1 WHERE otps.id = '${getOtp[0].id}'`);
 					requestHandler.throwError(422, 'Unprocessable Entity', 'otp code is wrong')();
 				}
 			}else{
@@ -570,86 +574,79 @@ class AuthController extends BaseController {
 		try {
 			const tokenFromHeader = auth.getJwtToken(req);
 			const user = jwt.decode(tokenFromHeader);
-			const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9@.]/g, '');
-			const getUser = await super.customSelectQuery(req, `
-			SELECT
-				users.id,
-				users.email,
-				users.verified
-			FROM users
-			WHERE users.id = '${cleanedId}'
-			`);
-			if (getUser.length > 0) {
-				if (getUser[0].verified == 0) {
-					const getOtp = await super.customSelectQuery(req, `
-					SELECT
-						otps.id,
-						otps.otp_code,
-						otps.expired_at
-					FROM otps
-					WHERE otps.id_user = '${getUser[0].id}'
-					`);
-					if (getOtp.length > 0) {
-						const cleanedId = getOtp[0].id.replace(/[^a-zA-Z0-9_-]/g, '');
-						const otpCode = Math.floor(100000 + Math.random() * 900000);
-						const expiredAt = moment().add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss');
-						const updateOtp = await super.customUpdateQuery(req, `
-						UPDATE otps
-						SET otp = '${otpCode}',
-						expired_at = '${expiredAt}'
-						WHERE otps.id = '${cleanedId}'
+			const cleanedId = user.payload.id.replace(/[^a-zA-Z0-9.-]/g, '');
+			const cleanedEmail = user.payload.email.replace(/[^a-zA-Z0-9@.]/g, '');
+
+			const check = {
+				user_agent: req.headers['user-agent'].replace(/[^a-zA-Z0-9@.]/g, ''),
+			}
+			if(checkBeforeEntry(check)){
+
+				const getUser = await super.customSelectQuery(req, `
+				SELECT
+					users.id,
+					users.email,
+					users.verified
+				FROM users
+				WHERE users.id = '${cleanedId}'
+				`);
+				if (getUser.length > 0) {
+					if (getUser[0].verified == 0) {
+						const getOtp = await super.customSelectQuery(req, `
+						SELECT
+							otps.id,
+							otps.otp,
+							otps.expired_at
+						FROM otps
+						WHERE otps.id_user = '${getUser[0].id}'
 						`);
-						if (updateOtp) {
-							const mailOptions = {
-								from: config.sendgrid.from_email,
-								to: cleanedEmail,
-								subject: 'OTP Code',
-								html: `
-								<p>Hi ${cleanedEmail},</p>
-								<p>Your OTP Code is ${otpCode}</p>
-								`,
-							};
-							sendMail(mailOptions);
-							requestHandler.sendSuccess(res, 'OTP Code has been sent')();
+						if (getOtp.length > 0) {
+							const cleanedId = getOtp[0].id.replace(/[^a-zA-Z0-9_-]/g, '');
+							const otpCode = Math.floor(100000 + Math.random() * 900000);
+							const expiredAt = moment().add(5, 'minutes').subtract(7, "hours").format('YYYY-MM-DD HH:mm:ss');
+							const updateOtp = await super.customUpdateQuery(req, `
+							UPDATE otps
+							SET otp = '${otpCode}',
+							otps.limit = 5,
+							expired_at = '${expiredAt}'
+							WHERE otps.id = '${cleanedId}'
+							`);
+							if (updateOtp) {
+								email.sendEmailVerification(cleanedEmail, otpCode);
+								requestHandler.sendSuccess(res, 'OTP Code has been sent')();
+							} else {
+								requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+							}
 						} else {
-							requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+							const otpCode = Math.floor(100000 + Math.random() * 900000);
+							const expiredAt = moment().add(5, 'minutes').subtract(7, "hours").format('YYYY-MM-DD HH:mm:ss');
+							const insertOtp = await super.customInsertQuery(req, `
+							INSERT INTO otps
+
+							(id_user, otp_code, expired_at)
+
+							VALUES
+
+							('${getUser[0].id}', '${otpCode}', '${expiredAt}')
+							`);
+							if (insertOtp) {
+								email.sendEmailVerification(cleanedEmail, otpCode);
+								requestHandler.sendSuccess(res, 'OTP Code has been sent')();
+							} else {
+								requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
+							}
 						}
 					} else {
-						const otpCode = Math.floor(100000 + Math.random() * 900000);
-						const expiredAt = moment().add(5, 'minutes').format('YYYY-MM-DD HH:mm:ss');
-						const insertOtp = await super.customInsertQuery(req, `
-						INSERT INTO otps
-
-						(id_user, otp_code, expired_at)
-
-						VALUES
-
-						('${getUser[0].id}', '${otpCode}', '${expiredAt}')
-						`);
-						if (insertOtp) {
-							const mailOptions = {
-								from: config.sendgrid.from_email,
-								to: cleanedEmail,
-								subject: 'OTP Code',
-								html: `
-								<p>Hi ${cleanedEmail},</p>
-								<p>Your OTP Code is ${otpCode}</p>
-								`,
-							};
-							mail.sendMail(mailOptions);
-							requestHandler.sendSuccess(res, 'OTP Code has been sent')();
-						} else {
-							requestHandler.throwError(422, 'Unprocessable Entity', 'unable to process the contained instructions')();
-						}
+						requestHandler.throwError(422, 'Unprocessable Entity', 'email has been verified')();
 					}
 				} else {
-					requestHandler.throwError(422, 'Unprocessable Entity', 'email has been verified')();
+					requestHandler.throwError(404, 'Not Found', 'user not found')();
 				}
 			} else {
-				requestHandler.throwError(404, 'Not Found', 'email not found')();
+				requestHandler.throwError(422, 'Unprocessable Entity', 'please provide the required request')();
 			}
 		} catch (error) {
-			requestHandler.sendError(res, error)();
+			requestHandler.sendError(req, res, error);
 		}
 	}
 
