@@ -151,15 +151,15 @@ class AuthController extends BaseController {
 					requestHandler.throwError(400, 'bad request', 'invalid')();
 				}
 				//check password
-				console.log("heyy", user.dataValues.password, req.body.password)
-				// const isMatch = await bcrypt.compare(req.body.password, user.dataValues.password);
-				// if (!isMatch) {
-				// 	requestHandler.throwError(400, 'bad request', 'invalid email or password')();
-				// }
-				console.log(user.dataValues.password.toString() === req.body.password.toString())
-				if(user.dataValues.password.toString() !== req.body.password.toString()){
+				// console.log("heyy", user.dataValues.password, req.body.password)
+				const isMatch = await bcrypt.compare(req.body.password, user.dataValues.password);
+				if (!isMatch) {
 					requestHandler.throwError(400, 'bad request', 'invalid email or password')();
 				}
+				// console.log(user.dataValues.password.toString()+req.body.password.toString())
+				// if(user.dataValues.password.toString() !== req.body.password.toString()){
+				// 	requestHandler.throwError(400, 'bad request', 'invalid email or password')();
+				// }
 
 				const cleanedId2 = user.dataValues.id.replace(/[^a-zA-Z0-9_-]/g, '');
 
@@ -382,13 +382,13 @@ class AuthController extends BaseController {
 			base64Image += new Buffer.from(getImage, 'binary').toString('base64');
 			const user_img = base64Image;
 			console.log(data.password)
-			// const encryptedPassword = await bcrypt.hash(data.password, 10);
+			const encryptedPassword = await bcrypt.hash(data.password, 10);
 			// console.log(encryptedPassword);
 			const payload = {
 				id: uuid(),
 				email: cleanedEmail,
 				name: cleanedName,
-				password: data.password,
+				password: encryptedPassword,
 				mobile_number: cleanedPhoneNumber,
 				user_img:  user_img,
 			};

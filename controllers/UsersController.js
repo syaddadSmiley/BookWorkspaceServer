@@ -145,7 +145,7 @@ class UsersController extends BaseController {
 			};
 			const userProfile = await super.getByCustomOptions(req, 'users', options);
 			console.log(userProfile)
-			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')( {user_img : userProfile.dataValues.user_img.toString(), name: userProfile.dataValues.name} );
+			return requestHandler.sendSuccess(res, 'User Profile fetched Successfully')({ name: userProfile.dataValues.name, user_img : userProfile.dataValues.user_img.toString() } );
 		} catch (err) {
 			return requestHandler.sendError(req, res, err);
 		}
