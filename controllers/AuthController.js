@@ -350,7 +350,7 @@ class AuthController extends BaseController {
 				WHERE users.email = '${cleanedEmail}'
 				OR users.mobile_number = '${cleanedPhoneNumber}'
 			`);
-			console.log(user);
+			
 			if(user.length > 0){
 				requestHandler.throwError(400, 'bad Request', 'email or phone number already registered')();
 			}
