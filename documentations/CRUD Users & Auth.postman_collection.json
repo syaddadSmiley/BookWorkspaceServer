@@ -1,1354 +1,1354 @@
 {
-  "info": {
-    "_postman_id": "122b0ffc-effc-4a25-a365-b338a0809b22",
-    "name": "CRUD Users & Auth",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "20413015"
-  },
-  "item": [
-    {
-      "name": "Register",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "id": "69420IDUSER1",
-            "email": "aku@gmail.com",
-            "password": "aku123",
-            "name": "ubisClay",
-            "mobile_number": "622323224331",
-            "roles": "super_admin"
-          },
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/signUp",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "signUp"
-          ]
-        }
-      },
-      "response": [
+    "info": {
+        "_postman_id": "122b0ffc-effc-4a25-a365-b338a0809b22",
+        "name": "CRUD Users & Auth",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": 20413015
+    },
+    "item": [
         {
-          "name": "Register",
-          "originalRequest": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": {
-                "id": "69420IDUSER1",
-                "email": "claynomercy@gmail.com",
-                "password": "userCLay",
-                "name": "ubisClay",
-                "mobile_number": "622342344431",
-                "roles": "super_admin"
-              },
-              "options": {
-                "raw": {
-                  "language": "json"
+            "name": "Register",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": {
+                        "id": "69420IDUSER1",
+                        "email": "aku@gmail.com",
+                        "password": "aku123",
+                        "name": "ubisClay",
+                        "mobile_number": 622323224331,
+                        "roles": "super_admin"
+                    },
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/signUp",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "signUp"
+                    ]
                 }
-              }
             },
-            "url": {
-              "raw": "localhost:3000/api/v1/signUp",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "signUp"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
-            },
-            {
-              "key": "Vary",
-              "value": "X-HTTP-Method-Override, Accept-Encoding"
-            },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "99"
-            },
-            {
-              "key": "Date",
-              "value": "Tue, 24 Jan 2023 23:30:56 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1674603949"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "975"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"3cf-VknLgYoXwfainTzfT2qFAybf37Y\""
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "Register Successfully",
-            "data": {
-              "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjAzMDU2LCJleHAiOjE2NzQ2ODk0NTZ9.Il5QaM4SYv8H2xP9t3uO-cZf_qTuvo0SiyMEz6D8oOZEgACtqbbUxOlK9VOLBvMtcHAwe0TaOI3T3Fhnug3ahg",
-              "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjAzMDU2LCJleHAiOjE2NzQ3NzU4NTZ9.NfG3mq0uDqzg1GmW3pCAPyYed-IgXrb9G48eDcrHafg"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "VerifyOTP",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNGE3Mjk1ZDEtNjhlNi00NjU5LThiYjMtNWMwMDgxNTc3ZGY1IiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjVUMDA6MDY6NTEuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA1MjEyLCJleHAiOjE2NzQ2OTE2MTJ9.SGixvyHNpH1jaJNgxlMBBhBhQ7VNgfbuYn1qsvNCE034rMGr5CJqwb_067NCJuA9Ycl3N_ViO1ZRYI6s2M6J-g",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [
-          {
-            "key": "User-Agent",
-            "value": "Dart",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "otp": "633427"
-          },
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/verifyOtp",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "verifyOtp"
-          ]
-        }
-      },
-      "response": [
-        {
-          "name": "VerifyOTP",
-          "originalRequest": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "User-Agent",
-                "value": "Dart",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": {
-                "otp": "442017"
-              },
-              "options": {
-                "raw": {
-                  "language": "json"
+            "response": [
+                {
+                    "name": "Register",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "id": "69420IDUSER1",
+                                "email": "claynomercy@gmail.com",
+                                "password": "userCLay",
+                                "name": "ubisClay",
+                                "mobile_number": 622342344431,
+                                "roles": "super_admin"
+                            },
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "localhost:3000/api/v1/signUp",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "signUp"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "X-HTTP-Method-Override, Accept-Encoding"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 99
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 24 Jan 2023 23:30:56 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1674603949
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 975
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"3cf-VknLgYoXwfainTzfT2qFAybf37Y\""
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "Register Successfully",
+                        "data": {
+                            "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjAzMDU2LCJleHAiOjE2NzQ2ODk0NTZ9.Il5QaM4SYv8H2xP9t3uO-cZf_qTuvo0SiyMEz6D8oOZEgACtqbbUxOlK9VOLBvMtcHAwe0TaOI3T3Fhnug3ahg",
+                            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjAzMDU2LCJleHAiOjE2NzQ3NzU4NTZ9.NfG3mq0uDqzg1GmW3pCAPyYed-IgXrb9G48eDcrHafg"
+                        }
+                    }
                 }
-              }
-            },
-            "url": {
-              "raw": "localhost:3000/api/v1//verifyOtp",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "",
-                "verifyOtp"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
-            },
-            {
-              "key": "Vary",
-              "value": "X-HTTP-Method-Override, Accept-Encoding"
-            },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "98"
-            },
-            {
-              "key": "Date",
-              "value": "Tue, 24 Jan 2023 23:53:43 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1674605053"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "975"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"3cf-GOer4gpM2wdxu0ZFJITLvCIZ4n4\""
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "Register Successfully",
-            "data": {
-              "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MSwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA0NDIzLCJleHAiOjE2NzQ2OTA4MjN9.51o2fT-guPL6jjoWqdnTSmFpAm_Yl6Yb3FBQzFzamQ41nRGMoxfVGF0qUruSkVEZy8C9TC_p2x6CXKI9fXW9mw",
-              "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MSwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA0NDIzLCJleHAiOjE2NzQ3NzcyMjN9.4XbBjuIH1Z2tcKvgLNfj5E3beaL52Szu4T1uxa3cpVI"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "ResendOTP",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNGE3Mjk1ZDEtNjhlNi00NjU5LThiYjMtNWMwMDgxNTc3ZGY1IiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjVUMDA6MDY6NTEuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA1MjEyLCJleHAiOjE2NzQ2OTE2MTJ9.SGixvyHNpH1jaJNgxlMBBhBhQ7VNgfbuYn1qsvNCE034rMGr5CJqwb_067NCJuA9Ycl3N_ViO1ZRYI6s2M6J-g",
-              "type": "string"
-            }
-          ]
+            ]
         },
-        "method": "GET",
-        "header": [
-          {
-            "key": "User-Agent",
-            "value": "Dart",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/resendOtp",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "resendOtp"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "ResendOTP",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "User-Agent",
-                "value": "Dart",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
+            "name": "VerifyOTP",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNGE3Mjk1ZDEtNjhlNi00NjU5LThiYjMtNWMwMDgxNTc3ZGY1IiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjVUMDA6MDY6NTEuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA1MjEyLCJleHAiOjE2NzQ2OTE2MTJ9.SGixvyHNpH1jaJNgxlMBBhBhQ7VNgfbuYn1qsvNCE034rMGr5CJqwb_067NCJuA9Ycl3N_ViO1ZRYI6s2M6J-g",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "User-Agent",
+                        "value": "Dart",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": {
+                        "otp": 633427
+                    },
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/verifyOtp",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "verifyOtp"
+                    ]
                 }
-              }
             },
-            "url": {
-              "raw": "localhost:3000/api/v1//resendOtp",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "",
-                "resendOtp"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
-            },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "99"
-            },
-            {
-              "key": "Date",
-              "value": "Tue, 24 Jan 2023 23:49:25 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1674605053"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "53"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"35-L//GewKL9J9ml+AfkBeDL6jZA/g\""
-            },
-            {
-              "key": "Vary",
-              "value": "Accept-Encoding"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "OTP Code has been sent"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Login",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIzLTAxLTAyVDEyOjQ5OjU4LjAwMFoiLCJ3b3Jrc3BhY2VzIjpbImZlZWZjZjY5LWFkODEtNDZjOC04ZWQ3LWY5ZjA2ZTBjYzY2MiJdfSwiaWF0IjoxNjczNTI4OTAzLCJleHAiOjE2NzM2MTUzMDN9.Q5-0cg1eueyjaWTNG2bNabZkVKLXtSBUYZUwVIM-J1ZEXNM2EtITRaciIlDPR7HlE77AfPqeNTJC9D0xedqIAQ",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "POST",
-        "header": [
-          {
-            "key": "platform",
-            "value": "android",
-            "type": "text"
-          },
-          {
-            "key": "User-Agent",
-            "value": "Dart",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "id": "69420IDADMINUBISDEV2023",
-            "email": "claynomercy@gmail.com",
-            "password": "userCLay"
-          },
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}login",
-          "host": [
-            "{{baseUrl}}login"
-          ]
-        }
-      },
-      "response": [
-        {
-          "name": "Login",
-          "originalRequest": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "platform",
-                "value": "android",
-                "type": "text"
-              },
-              {
-                "key": "User-Agent",
-                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0 SEB",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": {
-                "id": "69420IDADMINUBISDEV2023",
-                "email": "ubizdevVanjhoreidad@gmail.com"
-              },
-              "options": {
-                "raw": {
-                  "language": "json"
+            "response": [
+                {
+                    "name": "VerifyOTP",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "User-Agent",
+                                "value": "Dart",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "otp": 442017
+                            },
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "localhost:3000/api/v1//verifyOtp",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "",
+                                "verifyOtp"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "X-HTTP-Method-Override, Accept-Encoding"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 98
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 24 Jan 2023 23:53:43 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1674605053
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 975
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"3cf-GOer4gpM2wdxu0ZFJITLvCIZ4n4\""
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "Register Successfully",
+                        "data": {
+                            "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MSwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA0NDIzLCJleHAiOjE2NzQ2OTA4MjN9.51o2fT-guPL6jjoWqdnTSmFpAm_Yl6Yb3FBQzFzamQ41nRGMoxfVGF0qUruSkVEZy8C9TC_p2x6CXKI9fXW9mw",
+                            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MSwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjRUMjM6MzA6NTYuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA0NDIzLCJleHAiOjE2NzQ3NzcyMjN9.4XbBjuIH1Z2tcKvgLNfj5E3beaL52Szu4T1uxa3cpVI"
+                        }
+                    }
                 }
-              }
-            },
-            "url": {
-              "raw": "localhost:3000/api/v1/login",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "login"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
-            },
-            {
-              "key": "Vary",
-              "value": "X-HTTP-Method-Override, Accept-Encoding"
-            },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "97"
-            },
-            {
-              "key": "Date",
-              "value": "Thu, 29 Dec 2022 21:37:56 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1672350651"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "989"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"3dd-wEJ27cTPi0jO7nuBaMFtMJ7/ook\""
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "User logged in Successfully",
-            "data": {
-              "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIyLTEyLTI5VDIwOjE1OjQ3LjAwMFoifSwiaWF0IjoxNjcyMzQ5ODc2LCJleHAiOjE2ODEwNzYyNzZ9.jsJQMeO_fFqFOOHMn6a2SyfluS4HV0L-OFDH0pTYQ8RwUOq1q5WGbR49eK0vsOC44Fcg4k0sbSjg4cSVZQ8FbA",
-              "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIyLTEyLTI5VDIwOjE1OjQ3LjAwMFoifSwiaWF0IjoxNjcyMzQ5ODc2LCJleHAiOjE2NzI1MjI2NzZ9.J6eFGbo4YihR932kjgyE1YhOWoKMFTwatkr-gkFPY4c"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Update",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{bearToken}}",
-              "type": "string"
-            }
-          ]
+            ]
         },
-        "method": "PUT",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"name\" : \"awdaw\",\r\n    \"user_img\" : {{base64img}}\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}users/profile/update",
-          "host": [
-            "{{baseUrl}}users"
-          ],
-          "path": [
-            "profile",
-            "update"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "Update",
-          "originalRequest": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"awdaw\",\r\n    \"user_img\" : \"data:image/jpeg;base64,/9j/4QC/RXhpZgAATU0AKgAAAAgABQEAAAQAAAABAAAC0AEBAAQAAAABAAAFAIdpAAQAAAABAAAAXgESAAMAAAABAAAAAAEyAAIAAAAUAAAASgAAA...\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+            "name": "ResendOTP",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNGE3Mjk1ZDEtNjhlNi00NjU5LThiYjMtNWMwMDgxNTc3ZGY1IiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsIm1vYmlsZV9udW1iZXIiOiI2MjIzNDIzNDQ0MzEiLCJ2ZXJpZmllZCI6MCwidXBkYXRlZF9hdCI6IjIwMjMtMDEtMjVUMDA6MDY6NTEuMDAwWiIsIndvcmtzcGFjZXMiOltdfSwiaWF0IjoxNjc0NjA1MjEyLCJleHAiOjE2NzQ2OTE2MTJ9.SGixvyHNpH1jaJNgxlMBBhBhQ7VNgfbuYn1qsvNCE034rMGr5CJqwb_067NCJuA9Ycl3N_ViO1ZRYI6s2M6J-g",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "User-Agent",
+                        "value": "Dart",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/resendOtp",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "resendOtp"
+                    ]
                 }
-              }
             },
-            "url": {
-              "raw": "localhost:3000/api/v1/users/profile/update",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users",
-                "profile",
-                "update"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
-            },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "99"
-            },
-            {
-              "key": "Date",
-              "value": "Sun, 15 Jan 2023 14:01:30 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1673792189"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"31dc-6D/bR22s5jTpNPLOZFqPWr/Hdq0\""
-            },
-            {
-              "key": "Vary",
-              "value": "Accept-Encoding"
-            },
-            {
-              "key": "Content-Encoding",
-              "value": "gzip"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            },
-            {
-              "key": "Transfer-Encoding",
-              "value": "chunked"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "User Profile fetched Successfully",
-            "data": {
-              "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6ImF3ZGF3Iiwicm9sZSI6InN1cGVyX2FkbWluIiwidmVyaWZpZWQiOmZhbHNlLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTI5VDIwOjE1OjQ3LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTE1VDE0OjAxOjMwLjAwMFoiLCJkZWxldGVkX3N0YXR1cyI6IjAifSwiaWF0IjoxNjczNzkxMjkwLCJleHAiOjE2NzM4Nzc2OTB9.7XlAIo4LVnl25k0baFrqMmf9oBzMmAw24ifQXaNcIdFKkU8SCcmT4EPV1BQVWPuiI-fpxMFH-Ql-tApKMlJs_w",
-              "user_img": "data:image/jpeg;base64,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"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "GetById Users",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{bearToken}}",
-              "type": "string"
-            }
-          ]
-        },
-        "method": "GET",
-        "header": [
-          {
-            "key": "User-Agent",
-            "value": "Dart",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "uid": "69420XXawxxxxwxXXXw",
-            "email": "login3@gmail.com"
-          },
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}users/69420IDUSER3",
-          "host": [
-            "{{baseUrl}}users"
-          ],
-          "path": [
-            "69420IDUSER3"
-          ]
-        }
-      },
-      "response": [
-        {
-          "name": "GetById Users",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "User-Agent",
-                "value": "Dart",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": {
-                "uid": "69420XXawxxxxwxXXXw",
-                "email": "login3@gmail.com"
-              },
-              "options": {
-                "raw": {
-                  "language": "json"
+            "response": [
+                {
+                    "name": "ResendOTP",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "User-Agent",
+                                "value": "Dart",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "localhost:3000/api/v1//resendOtp",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "",
+                                "resendOtp"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 99
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Tue, 24 Jan 2023 23:49:25 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1674605053
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 53
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"35-L//GewKL9J9ml+AfkBeDL6jZA/g\""
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "Accept-Encoding"
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "OTP Code has been sent"
+                    }
                 }
-              }
-            },
-            "url": {
-              "raw": "localhost:3000/api/v1/users/69420IDUSER3",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users",
-                "69420IDUSER3"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
-            },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "98"
-            },
-            {
-              "key": "Date",
-              "value": "Thu, 29 Dec 2022 20:48:43 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1672347751"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "413"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"19d-GVX7qkyJhOvSFoZ9Tifb6FEEMLo\""
-            },
-            {
-              "key": "Vary",
-              "value": "Accept-Encoding"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "User Data Extracted",
-            "data": {
-              "result": {
-                "iv": "UUZWaWFYTnVhWHBF",
-                "encryptedData": "goNumQP79zDspe8qyKXoq4IiI0N0HnyD6m3sfhEUmsY7Ww4KFuGgJ3b4mj6b6ORDoDdgS/6JE0K4ISbMDfXgtK6E6IzRLDPJbZXg7JvlkzIYuDb5hJBppyGb8cuG/guMEnkc4vrD4nleRSVDV9OG3xCsRH+KJgChfMQD87oUgAxs5x2tU99oF6VUcp1ysjXzlUR2ERbOj0c/TOaCy6hdVSErZCopcEiDEnFPm35OFeWJZSq3MaN09v9i2viyrCpq825ght+t7RSSl7IJmJl89PhSFQ5K3FVe4CYCsmFi0Ww="
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "getProfile",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsInZlcmlmaWVkIjp0cnVlLCJtb2JpbGVfbnVtYmVyIjoiNjIyMzQyMzQ0NDMxIiwiY3JlYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzozMDo1Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzo1Mzo0My4wMDBaIiwiZGVsZXRlZF9zdGF0dXMiOiIwIiwid29ya3NwYWNlcyI6W119LCJpYXQiOjE2NzQ2NDc0MzIsImV4cCI6MTY3NDczMzgzMn0.-b_MWaKNEeDg8wRZE-vgNvhaqSKitLX4I7Y6OJZh7VM4eARTxXolzbVCqOcsN7wXbfcEQTKusJD-fO7Jge-dzQ",
-              "type": "string"
-            }
-          ]
+            ]
         },
-        "method": "GET",
-        "header": [
-          {
-            "key": "Cookie",
-            "value": "",
-            "type": "text"
-          },
-          {
-            "key": "User-Agent",
-            "value": "Dart",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "{{baseUrl}}users/profile/details",
-          "host": [
-            "{{baseUrl}}users"
-          ],
-          "path": [
-            "profile",
-            "details"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "getProfile",
-          "originalRequest": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Cookie",
-                "value": "",
-                "type": "text"
-              },
-              {
-                "key": "User-Agent",
-                "value": "Dart",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "localhost:3000/api/v1/users/profile/details",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users",
-                "profile",
-                "details"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
+            "name": "Login",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIzLTAxLTAyVDEyOjQ5OjU4LjAwMFoiLCJ3b3Jrc3BhY2VzIjpbImZlZWZjZjY5LWFkODEtNDZjOC04ZWQ3LWY5ZjA2ZTBjYzY2MiJdfSwiaWF0IjoxNjczNTI4OTAzLCJleHAiOjE2NzM2MTUzMDN9.Q5-0cg1eueyjaWTNG2bNabZkVKLXtSBUYZUwVIM-J1ZEXNM2EtITRaciIlDPR7HlE77AfPqeNTJC9D0xedqIAQ",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "platform",
+                        "value": "android",
+                        "type": "text"
+                    },
+                    {
+                        "key": "User-Agent",
+                        "value": "Dart",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": {
+                        "id": "69420IDADMINUBISDEV2023",
+                        "email": "claynomercy@gmail.com",
+                        "password": "userCLay"
+                    },
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}login",
+                    "host": [
+                        "{{baseUrl}}login"
+                    ]
+                }
             },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "94"
-            },
-            {
-              "key": "Date",
-              "value": "Wed, 25 Jan 2023 11:54:27 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1674648151"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "633"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"279-CY2jIvXxLzz+0RSwAVpB2b6EKCM\""
-            },
-            {
-              "key": "Vary",
-              "value": "Accept-Encoding"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "User Profile fetched Successfully",
-            "data": {
-              "profile": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsInZlcmlmaWVkIjp0cnVlLCJtb2JpbGVfbnVtYmVyIjoiNjIyMzQyMzQ0NDMxIiwiY3JlYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzozMDo1Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzo1Mzo0My4wMDBaIiwiZGVsZXRlZF9zdGF0dXMiOiIwIiwid29ya3NwYWNlcyI6W119LCJpYXQiOjE2NzQ2NDc2NjcsImV4cCI6MTY3NDczNDA2N30.nXrWpnm4L14AeZLWnuEBZAZvpWMFwpB8S9xqNfD0POO3GQxqzClhbNlOWjgfAs5SDf4QrerBi8tE_6rFmm0TCA"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "DeleteById Users",
-      "request": {
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}users/69420IDUSER3",
-          "host": [
-            "{{baseUrl}}users"
-          ],
-          "path": [
-            "69420IDUSER3"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getFile from server",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIzLTAxLTA0VDExOjI4OjQzLjAwMFoifSwiaWF0IjoxNjcyODA2ODM5LCJleHAiOjE2ODE1MzMyMzl9.jqNgAgBNVWzFrmEZTp9beNOnoa7ReQk5JHWaYboRkXySpfHxfV7VmOABkRFDNqkTO8JLcBaRBKacX0BiZuTbdA",
-              "type": "string"
-            }
-          ]
+            "response": [
+                {
+                    "name": "Login",
+                    "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "platform",
+                                "value": "android",
+                                "type": "text"
+                            },
+                            {
+                                "key": "User-Agent",
+                                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0 SEB",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "id": "69420IDADMINUBISDEV2023",
+                                "email": "ubizdevVanjhoreidad@gmail.com"
+                            },
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "localhost:3000/api/v1/login",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "login"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "X-HTTP-Method-Override, Accept-Encoding"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 97
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Thu, 29 Dec 2022 21:37:56 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1672350651
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 989
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"3dd-wEJ27cTPi0jO7nuBaMFtMJ7/ook\""
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "User logged in Successfully",
+                        "data": {
+                            "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIyLTEyLTI5VDIwOjE1OjQ3LjAwMFoifSwiaWF0IjoxNjcyMzQ5ODc2LCJleHAiOjE2ODEwNzYyNzZ9.jsJQMeO_fFqFOOHMn6a2SyfluS4HV0L-OFDH0pTYQ8RwUOq1q5WGbR49eK0vsOC44Fcg4k0sbSjg4cSVZQ8FbA",
+                            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIyLTEyLTI5VDIwOjE1OjQ3LjAwMFoifSwiaWF0IjoxNjcyMzQ5ODc2LCJleHAiOjE2NzI1MjI2NzZ9.J6eFGbo4YihR932kjgyE1YhOWoKMFTwatkr-gkFPY4c"
+                        }
+                    }
+                }
+            ]
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/getFile",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "getFile"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "getFile from server",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/api/v1//getFile",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "",
-                "getFile"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "raw",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
+            "name": "Update",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{bearToken}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\" : \"awdaw\",\r\n    \"user_img\" : {{base64img}}\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}users/profile/update",
+                    "host": [
+                        "{{baseUrl}}users"
+                    ],
+                    "path": [
+                        "profile",
+                        "update"
+                    ]
+                }
             },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
-            },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "99"
-            },
-            {
-              "key": "Date",
-              "value": "Wed, 25 Jan 2023 11:55:26 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1674648384"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/octet-stream"
-            },
-            {
-              "key": "Content-Length",
-              "value": "19448"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"4bf8-a6NN7+bNVcXn2420cH+gwfJHU60\""
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": "-- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)\n--\n-- Host: localhost    Database: ubisniz22_db\n-- ------------------------------------------------------\n-- Server version\t8.0.31-0ubuntu0.20.04.2\n\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\n/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\n/*!50503 SET NAMES utf8mb4 */;\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\n/*!40103 SET TIME_ZONE='+00:00' */;\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\n/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\n/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\n\n--\n-- Table structure for table `booking_ws`\n--\n\nDROP TABLE IF EXISTS `booking_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `booking_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `id_service` varchar(120) NOT NULL,\n  `id_type_ws` varchar(120) NOT NULL,\n  `payment_status` tinyint(1) NOT NULL DEFAULT '0',\n  `jenis_pembayaran` varchar(120) NOT NULL,\n  `total_pembayaran` int NOT NULL,\n  `status` enum('waiting','on_place','done') NOT NULL DEFAULT 'waiting',\n  `start_date` datetime NOT NULL,\n  `end_date` datetime NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  KEY `id_user` (`id_user`),\n  KEY `id_service` (`id_service`),\n  CONSTRAINT `booking_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `booking_ws_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `booking_ws_ibfk_3` FOREIGN KEY (`id_service`) REFERENCES `services` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `booking_ws`\n--\n\nLOCK TABLES `booking_ws` WRITE;\n/*!40000 ALTER TABLE `booking_ws` DISABLE KEYS */;\nINSERT INTO `booking_ws` VALUES ('1559e060-8c43-4c2c-85c0-7ea2b37e1b86','a9cf6cbd-f4f9-41f0-b7d7-7365172251f4','69420IDADMINUBISDEV2023','92d0e7d5-e569-4ad0-9b21-cb8b9ead0c0e','74d05b89-b165-4653-a3be-27124bda1eae',0,'Cash',35000,'waiting','2022-12-31 00:00:00','2022-12-31 00:00:00','2023-01-09 16:04:39','2023-01-09 16:04:39'),('29168789-8fe6-48a3-81ba-27ffc5cc7ca4','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-09 00:00:00','2023-01-09 00:00:00','2023-01-09 16:02:49','2023-01-09 16:02:49'),('4912ea6f-506e-4368-96eb-f9e33baad2a2','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-17 00:00:00','2023-01-17 00:00:00','2023-01-12 06:39:23','2023-01-12 06:39:23'),('5e1ad2f9-f129-4b97-b715-7a48475675ba','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-18 00:00:00','2023-01-18 00:00:00','2023-01-12 06:19:38','2023-01-12 06:19:38'),('61689f58-e478-4786-abb6-fd05b925a3b8','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-18 00:00:00','2023-01-18 00:00:00','2023-01-12 03:45:50','2023-01-12 03:45:50'),('9899d704-ea11-4fe5-853d-574eff10b7f2','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-17 00:00:00','2023-01-17 00:00:00','2023-01-12 06:44:41','2023-01-12 06:44:41'),('e5c36c71-de67-4e95-85cd-b78369fb68e2','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','3531b490-9761-4638-ad56-6acc7c495805','38119cd2-e6fd-4caf-9480-ed922f299357',0,'Cash',150000,'waiting','2022-12-29 00:00:00','2022-12-29 00:00:00','2023-01-09 16:03:13','2023-01-09 16:03:13'),('fde7e144-eb8a-477a-ad2b-8c76d1371bc7','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-24 00:00:00','2023-01-24 00:00:00','2023-01-12 06:40:50','2023-01-12 06:40:50');\n/*!40000 ALTER TABLE `booking_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `review_ws`\n--\n\nDROP TABLE IF EXISTS `review_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `review_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `nilai` decimal(3,2) NOT NULL,\n  `komen` varchar(300) NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  KEY `id_user` (`id_user`),\n  CONSTRAINT `review_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `review_ws_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `review_ws`\n--\n\nLOCK TABLES `review_ws` WRITE;\n/*!40000 ALTER TABLE `review_ws` DISABLE KEYS */;\n/*!40000 ALTER TABLE `review_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `services`\n--\n\nDROP TABLE IF EXISTS `services`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `services` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `id_type_ws` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `start_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `finish_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  KEY `id_type_ws` (`id_type_ws`),\n  KEY `id_user` (`id_user`),\n  CONSTRAINT `services_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `services_ibfk_2` FOREIGN KEY (`id_type_ws`) REFERENCES `type_ws` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `services_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `services`\n--\n\nLOCK TABLES `services` WRITE;\n/*!40000 ALTER TABLE `services` DISABLE KEYS */;\nINSERT INTO `services` VALUES ('2d9740f3-f73a-4d54-82a2-58f82183e1f9','1a046d98-f558-4c56-803c-c85652df74eb','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b','69420IDADMINUBISDEV2023','2023-01-06 21:30:00','2023-01-29 23:30:00','2023-01-05 14:54:25','2023-01-05 14:54:25'),('3531b490-9761-4638-ad56-6acc7c495805','1a046d98-f558-4c56-803c-c85652df74eb','38119cd2-e6fd-4caf-9480-ed922f299357','69420IDADMINUBISDEV2023','2022-12-29 21:30:00','2022-12-29 23:30:00','2023-01-06 11:16:53','2023-01-06 11:16:53'),('92d0e7d5-e569-4ad0-9b21-cb8b9ead0c0e','a9cf6cbd-f4f9-41f0-b7d7-7365172251f4','74d05b89-b165-4653-a3be-27124bda1eae','69420IDADMINUBISDEV2023','2022-12-30 13:30:00','2023-01-30 15:30:00','2023-01-09 14:38:33','2023-01-09 14:38:33');\n/*!40000 ALTER TABLE `services` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `type_ws`\n--\n\nDROP TABLE IF EXISTS `type_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `type_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL DEFAULT 'NULL',\n  `kapasitas` mediumint NOT NULL,\n  `type` varchar(120) NOT NULL,\n  `harga` int NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  CONSTRAINT `type_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `type_ws`\n--\n\nLOCK TABLES `type_ws` WRITE;\n/*!40000 ALTER TABLE `type_ws` DISABLE KEYS */;\nINSERT INTO `type_ws` VALUES ('38119cd2-e6fd-4caf-9480-ed922f299357','1a046d98-f558-4c56-803c-c85652df74eb',200,'Exclusive',150000,'2023-01-05 06:55:16','2023-01-05 06:55:16'),('74d05b89-b165-4653-a3be-27124bda1eae','a9cf6cbd-f4f9-41f0-b7d7-7365172251f4',200,'Regular',35000,'2023-01-09 14:37:36','2023-01-09 14:37:36'),('89f6839b-ab2d-46b9-a932-165a72fe2da5','7a4f2c59-abeb-4978-9d23-9af4ba3c5102',200,'Regular',35000,'2023-01-09 07:13:38','2023-01-09 07:13:38'),('8ad74849-b118-44be-a258-e0975ae7661d','1a046d98-f558-4c56-803c-c85652df74eb',200,'Normal',100000,'2023-01-05 08:23:49','2023-01-05 08:23:49'),('dd1ac863-6b26-40fd-9ff5-7d15ca3f031b','1a046d98-f558-4c56-803c-c85652df74eb',200,'Luxury',200000,'2023-01-05 14:53:08','2023-01-05 14:53:08');\n/*!40000 ALTER TABLE `type_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `url_ws`\n--\n\nDROP TABLE IF EXISTS `url_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `url_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `url` varchar(255) NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  CONSTRAINT `url_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `url_ws`\n--\n\nLOCK TABLES `url_ws` WRITE;\n/*!40000 ALTER TABLE `url_ws` DISABLE KEYS */;\n/*!40000 ALTER TABLE `url_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `users`\n--\n\nDROP TABLE IF EXISTS `users`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `users` (\n  `id` varchar(120) NOT NULL,\n  `email` varchar(100) NOT NULL,\n  `name` varchar(120) NOT NULL,\n  `verified` tinyint(1) NOT NULL DEFAULT '0',\n  `mobile_number` varchar(20) NOT NULL,\n  `role` enum('user','admin','super_admin') NOT NULL DEFAULT 'user',\n  `user_img` longblob,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `deleted_status` enum('0','1') NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `email` (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `users`\n--\n\nLOCK TABLES `users` WRITE;\n/*!40000 ALTER TABLE `users` DISABLE KEYS */;\nINSERT INTO `users` VALUES ('0pBHmMh4atS1V6JJwAvOna86ADj1','evankevin68@gmail.com','EvanKevinChrystianto',0,'62895334776416','user',NULL,'2022-12-28 10:13:36','2022-12-28 10:13:36','0'),('69420IDADMINUBISDEV2023','ubizdevVanjhoreidad@gmail.com','UbisDev',0,'62812345678910','super_admin',NULL,'2022-12-29 03:41:59','2023-01-04 11:28:43','0'),('69420IDUSER1','user1@gmail.com','user',0,'62812345678','user',NULL,'2022-12-26 12:26:27','2022-12-26 12:26:27','0'),('69420IDUSER2','user2@gmail.com','user',0,'62812345678','user',NULL,'2022-12-26 12:32:37','2022-12-26 12:32:37','0'),('69420IDUSER3','user3@gmail.com','user',0,'62812345678','user',NULL,'2022-12-27 12:40:34','2022-12-27 12:40:34','0'),('69421IDADMINUBISDEV2023','ubizdevVanjhoreidad2@gmail.com','UbisDev',0,'628123456789101','user',NULL,'2023-01-05 06:15:39','2023-01-05 06:15:39','0'),('cyBo8GFD8bYF6vCyCKPcjoiefNh1','claynomercy@gmail.com','JhosuaCayaniM',0,'6282171022725','user',NULL,'2023-01-09 12:22:09','2023-01-09 12:22:09','0');\n/*!40000 ALTER TABLE `users` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `workspaces`\n--\n\nDROP TABLE IF EXISTS `workspaces`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `workspaces` (\n  `id` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `email` varchar(100) NOT NULL,\n  `name` varchar(120) NOT NULL,\n  `address` varchar(150) NOT NULL,\n  `password` varchar(100) NOT NULL,\n  `mobile_number` varchar(20) NOT NULL,\n  `description` varchar(2000) NOT NULL,\n  `longtitude` varchar(120) DEFAULT NULL,\n  `latitude` varchar(120) DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `deleted_status` enum('0','1') NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `email` (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `workspaces`\n--\n\nLOCK TABLES `workspaces` WRITE;\n/*!40000 ALTER TABLE `workspaces` DISABLE KEYS */;\nINSERT INTO `workspaces` VALUES ('1a046d98-f558-4c56-803c-c85652df74eb','','workspace02@gmail.com','Haven Resort','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 13:02:52','2022-12-29 13:02:52','0'),('7a4f2c59-abeb-4978-9d23-9af4ba3c5102','','workspace2@gmail.com','Patuha Resort','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 10:12:31','2022-12-29 10:12:31','0'),('a43ad3e7-cf54-4800-88f8-1b629b90faf9','','workspace05@gmail.com','Nuelcs ws','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 13:03:22','2022-12-29 13:03:22','0'),('a9cf6cbd-f4f9-41f0-b7d7-7365172251f4','','workspace95@gmail.com','Phan Theok','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 13:03:45','2022-12-29 13:03:45','0'),('ba42f139-8bd1-4cdb-832d-803308177446','','workspace@gmail.com','Patuha Resort','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-27 13:01:56','2022-12-27 13:01:56','0'),('eb977cdb-6688-46b0-abdc-56a5002eff77','','workspace1@gmail.com','Hatu Resort','Jl. Keapelan, no. 200 kec. Disana, kel. Disini, Jakarta, Indonesia','tes12345','628987654321','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 10:14:00','2022-12-29 10:14:00','0');\n/*!40000 ALTER TABLE `workspaces` ENABLE KEYS */;\nUNLOCK TABLES;\n/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;\n\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\n/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;\n\n-- Dump completed on 2023-01-12 23:31:02\n"
-        }
-      ]
-    },
-    {
-      "name": "getBookingById Users",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "{{bearToken}}",
-              "type": "string"
-            }
-          ]
+            "response": [
+                {
+                    "name": "Update",
+                    "originalRequest": {
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\r\n    \"name\" : \"awdaw\",\r\n    \"user_img\" : \"data:image/jpeg;base64,/9j/4QC/RXhpZgAATU0AKgAAAAgABQEAAAQAAAABAAAC0AEBAAQAAAABAAAFAIdpAAQAAAABAAAAXgESAAMAAAABAAAAAAEyAAIAAAAUAAAASgAAA...\r\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "localhost:3000/api/v1/users/profile/update",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "users",
+                                "profile",
+                                "update"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 99
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Sun, 15 Jan 2023 14:01:30 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1673792189
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"31dc-6D/bR22s5jTpNPLOZFqPWr/Hdq0\""
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "Accept-Encoding"
+                        },
+                        {
+                            "key": "Content-Encoding",
+                            "value": "gzip"
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        },
+                        {
+                            "key": "Transfer-Encoding",
+                            "value": "chunked"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "User Profile fetched Successfully",
+                        "data": {
+                            "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6ImF3ZGF3Iiwicm9sZSI6InN1cGVyX2FkbWluIiwidmVyaWZpZWQiOmZhbHNlLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTI5VDIwOjE1OjQ3LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTE1VDE0OjAxOjMwLjAwMFoiLCJkZWxldGVkX3N0YXR1cyI6IjAifSwiaWF0IjoxNjczNzkxMjkwLCJleHAiOjE2NzM4Nzc2OTB9.7XlAIo4LVnl25k0baFrqMmf9oBzMmAw24ifQXaNcIdFKkU8SCcmT4EPV1BQVWPuiI-fpxMFH-Ql-tApKMlJs_w",
+                            "user_img": "data:image/jpeg;base64,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"
+                        }
+                    }
+                }
+            ]
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}users/booking/history?page=1",
-          "host": [
-            "{{baseUrl}}users"
-          ],
-          "path": [
-            "booking",
-            "history"
-          ],
-          "query": [
-            {
-              "key": "page",
-              "value": "1"
-            }
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "getBookingById Users",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/api/v1/users/booking/history",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users",
-                "booking",
-                "history"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
+            "name": "GetById Users",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
             },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{bearToken}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "User-Agent",
+                        "value": "Dart",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": {
+                        "uid": "69420XXawxxxxwxXXXw",
+                        "email": "login3@gmail.com"
+                    },
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}users/69420IDUSER3",
+                    "host": [
+                        "{{baseUrl}}users"
+                    ],
+                    "path": [
+                        "69420IDUSER3"
+                    ]
+                }
             },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
-            },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "99"
-            },
-            {
-              "key": "Date",
-              "value": "Thu, 05 Jan 2023 14:55:02 GMT"
-            },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1672931401"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "Content-Length",
-              "value": "384"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"180-acr6OFtzhsz3TTGCEDnkXuvCRgA\""
-            },
-            {
-              "key": "Vary",
-              "value": "Accept-Encoding"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "success",
-            "data": {
-              "result": {
-                "id": "9c973bf6-dcbc-400e-9d64-58d7f408b077",
-                "id_ws": "badfa7e6-ba8c-4d33-a2c5-362ea001be19",
-                "id_user": "69420IDADMINUBISDEV2023",
-                "id_service": "96da811e-aefe-4d52-91a4-f4989887669e",
-                "start_date": "2022-12-29T01:00:00.000Z",
-                "end_date": "2022-12-29T02:00:00.000Z",
-                "jenis_pembayaran": "cash",
-                "total_pembayaran": 5000,
-                "status": "waiting"
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "getUserImage",
-      "request": {
-        "auth": {
-          "type": "bearer",
-          "bearer": [
-            {
-              "key": "token",
-              "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsInZlcmlmaWVkIjp0cnVlLCJtb2JpbGVfbnVtYmVyIjoiNjIyMzQyMzQ0NDMxIiwiY3JlYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzozMDo1Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzo1Mzo0My4wMDBaIiwiZGVsZXRlZF9zdGF0dXMiOiIwIiwid29ya3NwYWNlcyI6W119LCJpYXQiOjE2NzQ2NDc0MzIsImV4cCI6MTY3NDczMzgzMn0.-b_MWaKNEeDg8wRZE-vgNvhaqSKitLX4I7Y6OJZh7VM4eARTxXolzbVCqOcsN7wXbfcEQTKusJD-fO7Jge-dzQ",
-              "type": "string"
-            }
-          ]
+            "response": [
+                {
+                    "name": "GetById Users",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "User-Agent",
+                                "value": "Dart",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": {
+                                "uid": "69420XXawxxxxwxXXXw",
+                                "email": "login3@gmail.com"
+                            },
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "localhost:3000/api/v1/users/69420IDUSER3",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "users",
+                                "69420IDUSER3"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 98
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Thu, 29 Dec 2022 20:48:43 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1672347751
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 413
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"19d-GVX7qkyJhOvSFoZ9Tifb6FEEMLo\""
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "Accept-Encoding"
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "User Data Extracted",
+                        "data": {
+                            "result": {
+                                "iv": "UUZWaWFYTnVhWHBF",
+                                "encryptedData": "goNumQP79zDspe8qyKXoq4IiI0N0HnyD6m3sfhEUmsY7Ww4KFuGgJ3b4mj6b6ORDoDdgS/6JE0K4ISbMDfXgtK6E6IzRLDPJbZXg7JvlkzIYuDb5hJBppyGb8cuG/guMEnkc4vrD4nleRSVDV9OG3xCsRH+KJgChfMQD87oUgAxs5x2tU99oF6VUcp1ysjXzlUR2ERbOj0c/TOaCy6hdVSErZCopcEiDEnFPm35OFeWJZSq3MaN09v9i2viyrCpq825ght+t7RSSl7IJmJl89PhSFQ5K3FVe4CYCsmFi0Ww="
+                            }
+                        }
+                    }
+                }
+            ]
         },
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}users/profile/img",
-          "host": [
-            "{{baseUrl}}users"
-          ],
-          "path": [
-            "profile",
-            "img"
-          ]
-        }
-      },
-      "response": [
         {
-          "name": "getUserImage",
-          "originalRequest": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "localhost:3000/api/v1/users/profile/img",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "v1",
-                "users",
-                "profile",
-                "img"
-              ]
-            }
-          },
-          "status": "OK",
-          "code": 200,
-          "_postman_previewlanguage": "json",
-          "header": [
-            {
-              "key": "X-Powered-By",
-              "value": "Express"
+            "name": "getProfile",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsInZlcmlmaWVkIjp0cnVlLCJtb2JpbGVfbnVtYmVyIjoiNjIyMzQyMzQ0NDMxIiwiY3JlYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzozMDo1Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzo1Mzo0My4wMDBaIiwiZGVsZXRlZF9zdGF0dXMiOiIwIiwid29ya3NwYWNlcyI6W119LCJpYXQiOjE2NzQ2NDc0MzIsImV4cCI6MTY3NDczMzgzMn0.-b_MWaKNEeDg8wRZE-vgNvhaqSKitLX4I7Y6OJZh7VM4eARTxXolzbVCqOcsN7wXbfcEQTKusJD-fO7Jge-dzQ",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Cookie",
+                        "value": "",
+                        "type": "text"
+                    },
+                    {
+                        "key": "User-Agent",
+                        "value": "Dart",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}users/profile/details",
+                    "host": [
+                        "{{baseUrl}}users"
+                    ],
+                    "path": [
+                        "profile",
+                        "details"
+                    ]
+                }
             },
-            {
-              "key": "Access-Control-Allow-Origin",
-              "value": "*"
+            "response": [
+                {
+                    "name": "getProfile",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Cookie",
+                                "value": "",
+                                "type": "text"
+                            },
+                            {
+                                "key": "User-Agent",
+                                "value": "Dart",
+                                "type": "text"
+                            }
+                        ],
+                        "url": {
+                            "raw": "localhost:3000/api/v1/users/profile/details",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "users",
+                                "profile",
+                                "details"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 94
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Wed, 25 Jan 2023 11:54:27 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1674648151
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 633
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"279-CY2jIvXxLzz+0RSwAVpB2b6EKCM\""
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "Accept-Encoding"
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "User Profile fetched Successfully",
+                        "data": {
+                            "profile": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsInZlcmlmaWVkIjp0cnVlLCJtb2JpbGVfbnVtYmVyIjoiNjIyMzQyMzQ0NDMxIiwiY3JlYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzozMDo1Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzo1Mzo0My4wMDBaIiwiZGVsZXRlZF9zdGF0dXMiOiIwIiwid29ya3NwYWNlcyI6W119LCJpYXQiOjE2NzQ2NDc2NjcsImV4cCI6MTY3NDczNDA2N30.nXrWpnm4L14AeZLWnuEBZAZvpWMFwpB8S9xqNfD0POO3GQxqzClhbNlOWjgfAs5SDf4QrerBi8tE_6rFmm0TCA"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "DeleteById Users",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}users/69420IDUSER3",
+                    "host": [
+                        "{{baseUrl}}users"
+                    ],
+                    "path": [
+                        "69420IDUSER3"
+                    ]
+                }
             },
-            {
-              "key": "X-RateLimit-Limit",
-              "value": "100"
+            "response": []
+        },
+        {
+            "name": "getFile from server",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiNjk0MjBJREFETUlOVUJJU0RFVjIwMjMiLCJlbWFpbCI6InViaXpkZXZWYW5qaG9yZWlkYWRAZ21haWwuY29tIiwibmFtZSI6IlViaXNEZXYiLCJyb2xlIjoic3VwZXJfYWRtaW4iLCJtb2JpbGVfbnVtYmVyIjoiNjI4MTIzNDU2Nzg5MTAiLCJ1c2VyX2ltZyI6bnVsbCwidmVyaWZpZWQiOjAsInVwZGF0ZWRfYXQiOiIyMDIzLTAxLTA0VDExOjI4OjQzLjAwMFoifSwiaWF0IjoxNjcyODA2ODM5LCJleHAiOjE2ODE1MzMyMzl9.jqNgAgBNVWzFrmEZTp9beNOnoa7ReQk5JHWaYboRkXySpfHxfV7VmOABkRFDNqkTO8JLcBaRBKacX0BiZuTbdA",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/getFile",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "getFile"
+                    ]
+                }
             },
-            {
-              "key": "X-RateLimit-Remaining",
-              "value": "99"
+            "response": [
+                {
+                    "name": "getFile from server",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "localhost:3000/api/v1//getFile",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "",
+                                "getFile"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "raw",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 99
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Wed, 25 Jan 2023 11:55:26 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1674648384
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/octet-stream"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 19448
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"4bf8-a6NN7+bNVcXn2420cH+gwfJHU60\""
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "-- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)\n--\n-- Host: localhost    Database: ubisniz22_db\n-- ------------------------------------------------------\n-- Server version\t8.0.31-0ubuntu0.20.04.2\n\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\n/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\n/*!50503 SET NAMES utf8mb4 */;\n/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\n/*!40103 SET TIME_ZONE='+00:00' */;\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\n/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\n/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\n\n--\n-- Table structure for table `booking_ws`\n--\n\nDROP TABLE IF EXISTS `booking_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `booking_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `id_service` varchar(120) NOT NULL,\n  `id_type_ws` varchar(120) NOT NULL,\n  `payment_status` tinyint(1) NOT NULL DEFAULT '0',\n  `jenis_pembayaran` varchar(120) NOT NULL,\n  `total_pembayaran` int NOT NULL,\n  `status` enum('waiting','on_place','done') NOT NULL DEFAULT 'waiting',\n  `start_date` datetime NOT NULL,\n  `end_date` datetime NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  KEY `id_user` (`id_user`),\n  KEY `id_service` (`id_service`),\n  CONSTRAINT `booking_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `booking_ws_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `booking_ws_ibfk_3` FOREIGN KEY (`id_service`) REFERENCES `services` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `booking_ws`\n--\n\nLOCK TABLES `booking_ws` WRITE;\n/*!40000 ALTER TABLE `booking_ws` DISABLE KEYS */;\nINSERT INTO `booking_ws` VALUES ('1559e060-8c43-4c2c-85c0-7ea2b37e1b86','a9cf6cbd-f4f9-41f0-b7d7-7365172251f4','69420IDADMINUBISDEV2023','92d0e7d5-e569-4ad0-9b21-cb8b9ead0c0e','74d05b89-b165-4653-a3be-27124bda1eae',0,'Cash',35000,'waiting','2022-12-31 00:00:00','2022-12-31 00:00:00','2023-01-09 16:04:39','2023-01-09 16:04:39'),('29168789-8fe6-48a3-81ba-27ffc5cc7ca4','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-09 00:00:00','2023-01-09 00:00:00','2023-01-09 16:02:49','2023-01-09 16:02:49'),('4912ea6f-506e-4368-96eb-f9e33baad2a2','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-17 00:00:00','2023-01-17 00:00:00','2023-01-12 06:39:23','2023-01-12 06:39:23'),('5e1ad2f9-f129-4b97-b715-7a48475675ba','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-18 00:00:00','2023-01-18 00:00:00','2023-01-12 06:19:38','2023-01-12 06:19:38'),('61689f58-e478-4786-abb6-fd05b925a3b8','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-18 00:00:00','2023-01-18 00:00:00','2023-01-12 03:45:50','2023-01-12 03:45:50'),('9899d704-ea11-4fe5-853d-574eff10b7f2','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-17 00:00:00','2023-01-17 00:00:00','2023-01-12 06:44:41','2023-01-12 06:44:41'),('e5c36c71-de67-4e95-85cd-b78369fb68e2','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','3531b490-9761-4638-ad56-6acc7c495805','38119cd2-e6fd-4caf-9480-ed922f299357',0,'Cash',150000,'waiting','2022-12-29 00:00:00','2022-12-29 00:00:00','2023-01-09 16:03:13','2023-01-09 16:03:13'),('fde7e144-eb8a-477a-ad2b-8c76d1371bc7','1a046d98-f558-4c56-803c-c85652df74eb','69420IDADMINUBISDEV2023','2d9740f3-f73a-4d54-82a2-58f82183e1f9','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b',0,'Cash',200000,'waiting','2023-01-24 00:00:00','2023-01-24 00:00:00','2023-01-12 06:40:50','2023-01-12 06:40:50');\n/*!40000 ALTER TABLE `booking_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `review_ws`\n--\n\nDROP TABLE IF EXISTS `review_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `review_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `nilai` decimal(3,2) NOT NULL,\n  `komen` varchar(300) NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  KEY `id_user` (`id_user`),\n  CONSTRAINT `review_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `review_ws_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `review_ws`\n--\n\nLOCK TABLES `review_ws` WRITE;\n/*!40000 ALTER TABLE `review_ws` DISABLE KEYS */;\n/*!40000 ALTER TABLE `review_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `services`\n--\n\nDROP TABLE IF EXISTS `services`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `services` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `id_type_ws` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `start_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `finish_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  KEY `id_type_ws` (`id_type_ws`),\n  KEY `id_user` (`id_user`),\n  CONSTRAINT `services_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `services_ibfk_2` FOREIGN KEY (`id_type_ws`) REFERENCES `type_ws` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,\n  CONSTRAINT `services_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `services`\n--\n\nLOCK TABLES `services` WRITE;\n/*!40000 ALTER TABLE `services` DISABLE KEYS */;\nINSERT INTO `services` VALUES ('2d9740f3-f73a-4d54-82a2-58f82183e1f9','1a046d98-f558-4c56-803c-c85652df74eb','dd1ac863-6b26-40fd-9ff5-7d15ca3f031b','69420IDADMINUBISDEV2023','2023-01-06 21:30:00','2023-01-29 23:30:00','2023-01-05 14:54:25','2023-01-05 14:54:25'),('3531b490-9761-4638-ad56-6acc7c495805','1a046d98-f558-4c56-803c-c85652df74eb','38119cd2-e6fd-4caf-9480-ed922f299357','69420IDADMINUBISDEV2023','2022-12-29 21:30:00','2022-12-29 23:30:00','2023-01-06 11:16:53','2023-01-06 11:16:53'),('92d0e7d5-e569-4ad0-9b21-cb8b9ead0c0e','a9cf6cbd-f4f9-41f0-b7d7-7365172251f4','74d05b89-b165-4653-a3be-27124bda1eae','69420IDADMINUBISDEV2023','2022-12-30 13:30:00','2023-01-30 15:30:00','2023-01-09 14:38:33','2023-01-09 14:38:33');\n/*!40000 ALTER TABLE `services` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `type_ws`\n--\n\nDROP TABLE IF EXISTS `type_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `type_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL DEFAULT 'NULL',\n  `kapasitas` mediumint NOT NULL,\n  `type` varchar(120) NOT NULL,\n  `harga` int NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  CONSTRAINT `type_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `type_ws`\n--\n\nLOCK TABLES `type_ws` WRITE;\n/*!40000 ALTER TABLE `type_ws` DISABLE KEYS */;\nINSERT INTO `type_ws` VALUES ('38119cd2-e6fd-4caf-9480-ed922f299357','1a046d98-f558-4c56-803c-c85652df74eb',200,'Exclusive',150000,'2023-01-05 06:55:16','2023-01-05 06:55:16'),('74d05b89-b165-4653-a3be-27124bda1eae','a9cf6cbd-f4f9-41f0-b7d7-7365172251f4',200,'Regular',35000,'2023-01-09 14:37:36','2023-01-09 14:37:36'),('89f6839b-ab2d-46b9-a932-165a72fe2da5','7a4f2c59-abeb-4978-9d23-9af4ba3c5102',200,'Regular',35000,'2023-01-09 07:13:38','2023-01-09 07:13:38'),('8ad74849-b118-44be-a258-e0975ae7661d','1a046d98-f558-4c56-803c-c85652df74eb',200,'Normal',100000,'2023-01-05 08:23:49','2023-01-05 08:23:49'),('dd1ac863-6b26-40fd-9ff5-7d15ca3f031b','1a046d98-f558-4c56-803c-c85652df74eb',200,'Luxury',200000,'2023-01-05 14:53:08','2023-01-05 14:53:08');\n/*!40000 ALTER TABLE `type_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `url_ws`\n--\n\nDROP TABLE IF EXISTS `url_ws`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `url_ws` (\n  `id` varchar(120) NOT NULL,\n  `id_ws` varchar(120) NOT NULL,\n  `url` varchar(255) NOT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  KEY `id_ws` (`id_ws`),\n  CONSTRAINT `url_ws_ibfk_1` FOREIGN KEY (`id_ws`) REFERENCES `workspaces` (`id`) ON DELETE CASCADE ON UPDATE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `url_ws`\n--\n\nLOCK TABLES `url_ws` WRITE;\n/*!40000 ALTER TABLE `url_ws` DISABLE KEYS */;\n/*!40000 ALTER TABLE `url_ws` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `users`\n--\n\nDROP TABLE IF EXISTS `users`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `users` (\n  `id` varchar(120) NOT NULL,\n  `email` varchar(100) NOT NULL,\n  `name` varchar(120) NOT NULL,\n  `verified` tinyint(1) NOT NULL DEFAULT '0',\n  `mobile_number` varchar(20) NOT NULL,\n  `role` enum('user','admin','super_admin') NOT NULL DEFAULT 'user',\n  `user_img` longblob,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `deleted_status` enum('0','1') NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `email` (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `users`\n--\n\nLOCK TABLES `users` WRITE;\n/*!40000 ALTER TABLE `users` DISABLE KEYS */;\nINSERT INTO `users` VALUES ('0pBHmMh4atS1V6JJwAvOna86ADj1','evankevin68@gmail.com','EvanKevinChrystianto',0,'62895334776416','user',NULL,'2022-12-28 10:13:36','2022-12-28 10:13:36','0'),('69420IDADMINUBISDEV2023','ubizdevVanjhoreidad@gmail.com','UbisDev',0,'62812345678910','super_admin',NULL,'2022-12-29 03:41:59','2023-01-04 11:28:43','0'),('69420IDUSER1','user1@gmail.com','user',0,'62812345678','user',NULL,'2022-12-26 12:26:27','2022-12-26 12:26:27','0'),('69420IDUSER2','user2@gmail.com','user',0,'62812345678','user',NULL,'2022-12-26 12:32:37','2022-12-26 12:32:37','0'),('69420IDUSER3','user3@gmail.com','user',0,'62812345678','user',NULL,'2022-12-27 12:40:34','2022-12-27 12:40:34','0'),('69421IDADMINUBISDEV2023','ubizdevVanjhoreidad2@gmail.com','UbisDev',0,'628123456789101','user',NULL,'2023-01-05 06:15:39','2023-01-05 06:15:39','0'),('cyBo8GFD8bYF6vCyCKPcjoiefNh1','claynomercy@gmail.com','JhosuaCayaniM',0,'6282171022725','user',NULL,'2023-01-09 12:22:09','2023-01-09 12:22:09','0');\n/*!40000 ALTER TABLE `users` ENABLE KEYS */;\nUNLOCK TABLES;\n\n--\n-- Table structure for table `workspaces`\n--\n\nDROP TABLE IF EXISTS `workspaces`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!50503 SET character_set_client = utf8mb4 */;\nCREATE TABLE `workspaces` (\n  `id` varchar(120) NOT NULL,\n  `id_user` varchar(120) NOT NULL,\n  `email` varchar(100) NOT NULL,\n  `name` varchar(120) NOT NULL,\n  `address` varchar(150) NOT NULL,\n  `password` varchar(100) NOT NULL,\n  `mobile_number` varchar(20) NOT NULL,\n  `description` varchar(2000) NOT NULL,\n  `longtitude` varchar(120) DEFAULT NULL,\n  `latitude` varchar(120) DEFAULT NULL,\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `deleted_status` enum('0','1') NOT NULL DEFAULT '0',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `email` (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n/*!40101 SET character_set_client = @saved_cs_client */;\n\n--\n-- Dumping data for table `workspaces`\n--\n\nLOCK TABLES `workspaces` WRITE;\n/*!40000 ALTER TABLE `workspaces` DISABLE KEYS */;\nINSERT INTO `workspaces` VALUES ('1a046d98-f558-4c56-803c-c85652df74eb','','workspace02@gmail.com','Haven Resort','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 13:02:52','2022-12-29 13:02:52','0'),('7a4f2c59-abeb-4978-9d23-9af4ba3c5102','','workspace2@gmail.com','Patuha Resort','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 10:12:31','2022-12-29 10:12:31','0'),('a43ad3e7-cf54-4800-88f8-1b629b90faf9','','workspace05@gmail.com','Nuelcs ws','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 13:03:22','2022-12-29 13:03:22','0'),('a9cf6cbd-f4f9-41f0-b7d7-7365172251f4','','workspace95@gmail.com','Phan Theok','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 13:03:45','2022-12-29 13:03:45','0'),('ba42f139-8bd1-4cdb-832d-803308177446','','workspace@gmail.com','Patuha Resort','Jl. Kemanggisan, no. 200 kec. AntahBerantah, kel. BerantahAntah, Jakarta, Amerika','tes12345','62812345678','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-27 13:01:56','2022-12-27 13:01:56','0'),('eb977cdb-6688-46b0-abdc-56a5002eff77','','workspace1@gmail.com','Hatu Resort','Jl. Keapelan, no. 200 kec. Disana, kel. Disini, Jakarta, Indonesia','tes12345','628987654321','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',NULL,NULL,'2022-12-29 10:14:00','2022-12-29 10:14:00','0');\n/*!40000 ALTER TABLE `workspaces` ENABLE KEYS */;\nUNLOCK TABLES;\n/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;\n\n/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;\n/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;\n/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\n/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\n/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;\n\n-- Dump completed on 2023-01-12 23:31:02\n"
+                }
+            ]
+        },
+        {
+            "name": "getBookingById Users",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{bearToken}}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}users/booking/history?page=1",
+                    "host": [
+                        "{{baseUrl}}users"
+                    ],
+                    "path": [
+                        "booking",
+                        "history"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": 1
+                        }
+                    ]
+                }
             },
-            {
-              "key": "Date",
-              "value": "Wed, 25 Jan 2023 11:56:37 GMT"
+            "response": [
+                {
+                    "name": "getBookingById Users",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "localhost:3000/api/v1/users/booking/history",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "users",
+                                "booking",
+                                "history"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 99
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Thu, 05 Jan 2023 14:55:02 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1672931401
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": 384
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"180-acr6OFtzhsz3TTGCEDnkXuvCRgA\""
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "Accept-Encoding"
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "success",
+                        "data": {
+                            "result": {
+                                "id": "9c973bf6-dcbc-400e-9d64-58d7f408b077",
+                                "id_ws": "badfa7e6-ba8c-4d33-a2c5-362ea001be19",
+                                "id_user": "69420IDADMINUBISDEV2023",
+                                "id_service": "96da811e-aefe-4d52-91a4-f4989887669e",
+                                "start_date": "2022-12-29T01:00:00.000Z",
+                                "end_date": "2022-12-29T02:00:00.000Z",
+                                "jenis_pembayaran": "cash",
+                                "total_pembayaran": 5000,
+                                "status": "waiting"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "getUserImage",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoiODVhZDY5YjMtZTlhOS00Njk2LWE0ZjItMDk4ZDNlZDhlMzQxIiwiZW1haWwiOiJjbGF5bm9tZXJjeUBnbWFpbC5jb20iLCJuYW1lIjoidWJpc0NsYXkiLCJyb2xlIjoidXNlciIsInZlcmlmaWVkIjp0cnVlLCJtb2JpbGVfbnVtYmVyIjoiNjIyMzQyMzQ0NDMxIiwiY3JlYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzozMDo1Ni4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wMS0yNFQyMzo1Mzo0My4wMDBaIiwiZGVsZXRlZF9zdGF0dXMiOiIwIiwid29ya3NwYWNlcyI6W119LCJpYXQiOjE2NzQ2NDc0MzIsImV4cCI6MTY3NDczMzgzMn0.-b_MWaKNEeDg8wRZE-vgNvhaqSKitLX4I7Y6OJZh7VM4eARTxXolzbVCqOcsN7wXbfcEQTKusJD-fO7Jge-dzQ",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}users/profile/img",
+                    "host": [
+                        "{{baseUrl}}users"
+                    ],
+                    "path": [
+                        "profile",
+                        "img"
+                    ]
+                }
             },
-            {
-              "key": "X-RateLimit-Reset",
-              "value": "1674648694"
-            },
-            {
-              "key": "Content-Type",
-              "value": "application/json; charset=utf-8"
-            },
-            {
-              "key": "ETag",
-              "value": "W/\"7df-uZm9U1kmsj6YZVY6q1JTGvlzpes\""
-            },
-            {
-              "key": "Vary",
-              "value": "Accept-Encoding"
-            },
-            {
-              "key": "Content-Encoding",
-              "value": "gzip"
-            },
-            {
-              "key": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "key": "Keep-Alive",
-              "value": "timeout=5"
-            },
-            {
-              "key": "Transfer-Encoding",
-              "value": "chunked"
-            }
-          ],
-          "cookie": [],
-          "body": {
-            "type": "success",
-            "message": "User Profile fetched Successfully",
-            "data": {
-              "name": "ubisClay",
-              "user_img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLeqsbTn6eqpr7PJzc/j5ebf4eLZ3N2wtrnBxsjN0NLGysy6v8HT1tissra8wMNxTKO9AAAFDklEQVR4nO2d3XqDIAxAlfivoO//tEOZWzvbVTEpic252W3PF0gAIcsyRVEURVEURVEURVEURVEURVEURVEURVEURVEURflgAFL/AirAqzXO9R7XNBVcy9TbuMHmxjN6lr92cNVVLKEurVfK/zCORVvW8iUBnC02dj+Wpu0z0Y6QlaN5phcwZqjkOkK5HZyPAjkIjSO4fIdfcOwFKkJlX4zPu7Ha1tIcwR3wWxyFhRG6g4Je0YpSPDJCV8a2Sv2zd1O1x/2WMDZCwljH+clRrHfWCLGK8REMiql//2si5+DKWKcWeAGcFMzzNrXC/0TUwQ2s6+LhlcwjTMlYsUIQzPOCb7YBiyHopyLXIEKPEkI/TgeuiidK/R9FniUDOjRDpvm0RhqjMyyXNjDhCfIMYl1gGjIMIuYsnGEYRMRZOMMunaLVwpWRW008v6fYKDIzxCwVAeNSO90BJW6emelYBRF/kHpYGVaoxTDAaxOFsfP9y8hpJ4xd7gOcij7JNGQ1EYFgkPJa1jQEiYZXRaRINKxSDUW9n+FT82lSKadkiru9/4XPqSLWOekGPoY05TAvLm9orm+YWuwHoBHkZKijNBJGmeb61eL6Ff/6q7bLr7yvv3vKGhpDRjvgjGaPz+gUg6YgcvpyAR2FIZ9U6nEEyZRTovmEU32KichpGn7C17XrfyH9gK/c0CMP05HZIM2uf9sEveizKveBy9/6Qt7o89ne33D525cfcIMW6ab+TMEukQbQbu+xu7X3A9bChmWaCeAkG17bpntwXgWxHaMzGPmUaR5dQZiKqRVeUZ3047fi3nAu28h4CHxCsZAgmEH8Y27jJAhm8c+5RQzRQNVGhVFSfxOYIjp/pP7RxzjevYXVGf4eLt+BJ1vCuLuLkrgABgCGXZ2wik5uty+oBvNirI6mkzhAf4Gsb58Hcm67Jzd+KwD10BYPLL3e0MjvKrgAULnOfveF/O4N2Xb9BZom3gJes3F9X5Zze8/6Yt09b4CrqsEjUv8oFBaR2rl+6CZr2xVrp24o/WitBKuGrrpl1+bFkmK2qXTON4VpbdfLa7o7y/WdLxG7lm2Lqh2clOwTegbvc/vj2U78CwhA87Bn8G5Nk3eOb0Nsr9flz3sG78UUtue4kpv1xvjg3TMay62BMlTlP+vrOMnJsRmt/ze0jsfkPPYdAH57hK+34PeOyc8XIXu5xT2HsUkdZz+adwg8HGFfQ3K5jtDvbUiO4Di9/ywHGrL88pDizZ++oTp+an+SMX/ndymUCwmHMdO7yuOx83pUx/eEMU0AvxWndwgidAqOZ8ypCwdEfvvEo6D9HwpA8wzvmOJEqAg9ySu8g4x0Hb9hSB/BANEKJ+LbPBU0lzbAJs4xt1AoshKkUGQmiH8/jJ0gdhTTLmSegHlPE0oOdXALnqDjKYh3px//fSgSWG8UqfrrIICzYYSJXRr9BSPbpNzw7gBjKjKOYI7ReIGqQRIap5+5MdjyvuDkExvGeXSlONWZAP3/AZBwJohU7QJRGU+cTVH18ELmRPNBmibW6MT/k1b0XhdkRBvyT6SB6EYv/GvhSmRNpGngRULsAlxMCGNXp7w3FfdEbTEEDdLI9TdIKRUzUesa3I461ER8cpNT7gMRhpKmYVS9ELOgCUQsa4SsulciKiLbY+AnHD8cpuhISsnxpamI84sbDq9qYJgf8wiiOBrC7Ml7M7ZECCqKoiiKoiiKoiiKoijv5AvJxlZRyNWWLwAAAABJRU5ErkJggg=="
-            }
-          }
+            "response": [
+                {
+                    "name": "getUserImage",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "localhost:3000/api/v1/users/profile/img",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": 3000,
+                            "path": [
+                                "api",
+                                "v1",
+                                "users",
+                                "profile",
+                                "img"
+                            ]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "X-RateLimit-Limit",
+                            "value": 100
+                        },
+                        {
+                            "key": "X-RateLimit-Remaining",
+                            "value": 99
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Wed, 25 Jan 2023 11:56:37 GMT"
+                        },
+                        {
+                            "key": "X-RateLimit-Reset",
+                            "value": 1674648694
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"7df-uZm9U1kmsj6YZVY6q1JTGvlzpes\""
+                        },
+                        {
+                            "key": "Vary",
+                            "value": "Accept-Encoding"
+                        },
+                        {
+                            "key": "Content-Encoding",
+                            "value": "gzip"
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        },
+                        {
+                            "key": "Transfer-Encoding",
+                            "value": "chunked"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": {
+                        "type": "success",
+                        "message": "User Profile fetched Successfully",
+                        "data": {
+                            "name": "ubisClay",
+                            "user_img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLeqsbTn6eqpr7PJzc/j5ebf4eLZ3N2wtrnBxsjN0NLGysy6v8HT1tissra8wMNxTKO9AAAFDklEQVR4nO2d3XqDIAxAlfivoO//tEOZWzvbVTEpic252W3PF0gAIcsyRVEURVEURVEURVEURVEURVEURVEURVEURVEURflgAFL/AirAqzXO9R7XNBVcy9TbuMHmxjN6lr92cNVVLKEurVfK/zCORVvW8iUBnC02dj+Wpu0z0Y6QlaN5phcwZqjkOkK5HZyPAjkIjSO4fIdfcOwFKkJlX4zPu7Ha1tIcwR3wWxyFhRG6g4Je0YpSPDJCV8a2Sv2zd1O1x/2WMDZCwljH+clRrHfWCLGK8REMiql//2si5+DKWKcWeAGcFMzzNrXC/0TUwQ2s6+LhlcwjTMlYsUIQzPOCb7YBiyHopyLXIEKPEkI/TgeuiidK/R9FniUDOjRDpvm0RhqjMyyXNjDhCfIMYl1gGjIMIuYsnGEYRMRZOMMunaLVwpWRW008v6fYKDIzxCwVAeNSO90BJW6emelYBRF/kHpYGVaoxTDAaxOFsfP9y8hpJ4xd7gOcij7JNGQ1EYFgkPJa1jQEiYZXRaRINKxSDUW9n+FT82lSKadkiru9/4XPqSLWOekGPoY05TAvLm9orm+YWuwHoBHkZKijNBJGmeb61eL6Ff/6q7bLr7yvv3vKGhpDRjvgjGaPz+gUg6YgcvpyAR2FIZ9U6nEEyZRTovmEU32KichpGn7C17XrfyH9gK/c0CMP05HZIM2uf9sEveizKveBy9/6Qt7o89ne33D525cfcIMW6ab+TMEukQbQbu+xu7X3A9bChmWaCeAkG17bpntwXgWxHaMzGPmUaR5dQZiKqRVeUZ3047fi3nAu28h4CHxCsZAgmEH8Y27jJAhm8c+5RQzRQNVGhVFSfxOYIjp/pP7RxzjevYXVGf4eLt+BJ1vCuLuLkrgABgCGXZ2wik5uty+oBvNirI6mkzhAf4Gsb58Hcm67Jzd+KwD10BYPLL3e0MjvKrgAULnOfveF/O4N2Xb9BZom3gJes3F9X5Zze8/6Yt09b4CrqsEjUv8oFBaR2rl+6CZr2xVrp24o/WitBKuGrrpl1+bFkmK2qXTON4VpbdfLa7o7y/WdLxG7lm2Lqh2clOwTegbvc/vj2U78CwhA87Bn8G5Nk3eOb0Nsr9flz3sG78UUtue4kpv1xvjg3TMay62BMlTlP+vrOMnJsRmt/ze0jsfkPPYdAH57hK+34PeOyc8XIXu5xT2HsUkdZz+adwg8HGFfQ3K5jtDvbUiO4Di9/ywHGrL88pDizZ++oTp+an+SMX/ndymUCwmHMdO7yuOx83pUx/eEMU0AvxWndwgidAqOZ8ypCwdEfvvEo6D9HwpA8wzvmOJEqAg9ySu8g4x0Hb9hSB/BANEKJ+LbPBU0lzbAJs4xt1AoshKkUGQmiH8/jJ0gdhTTLmSegHlPE0oOdXALnqDjKYh3px//fSgSWG8UqfrrIICzYYSJXRr9BSPbpNzw7gBjKjKOYI7ReIGqQRIap5+5MdjyvuDkExvGeXSlONWZAP3/AZBwJohU7QJRGU+cTVH18ELmRPNBmibW6MT/k1b0XhdkRBvyT6SB6EYv/GvhSmRNpGngRULsAlxMCGNXp7w3FfdEbTEEDdLI9TdIKRUzUesa3I461ER8cpNT7gMRhpKmYVS9ELOgCUQsa4SsulciKiLbY+AnHD8cpuhISsnxpamI84sbDq9qYJgf8wiiOBrC7Ml7M7ZECCqKoiiKoiiKoiiKoijv5AvJxlZRyNWWLwAAAABJRU5ErkJggg=="
+                        }
+                    }
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
