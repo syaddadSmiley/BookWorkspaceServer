@@ -2,27 +2,50 @@
 
 module.exports = (sequelize, DataTypes) => {
 	const Users = sequelize.define('users', {
-		id : {
-			type: DataTypes.INTEGER,
-			primaryKey: true,
-			autoIncrement: true,
-		},
-		username: {
+		id: {
 			type: DataTypes.STRING,
+			allowNull: false,
+			primaryKey: true,
+		},
+		email: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
 		},
 		password: {
 			type: DataTypes.STRING,
+			allowNull: false,
 		},
-		created_at: {
-			type: DataTypes.DATE,
-			defaultValue: DataTypes.NOW,
+		role: {
+			type: DataTypes.ENUM('user'),
+			allowNull: false,
+			defaultValue: 'user',
 		},
-		updated_at: {
-			type: DataTypes.DATE,
-			defaultValue: DataTypes.NOW,
+		verified: {
+			type: DataTypes.BOOLEAN,
+			allowNull: true,
 		},
-	}, {
-		timestamps: false,
-	});
+		mobile_number: {
+			type: DataTypes.STRING,
+		},
+		user_img: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		createdAt:
+		{
+			type: DataTypes.DATE, field: 'created_at',
+		},
+		updatedAt: {
+			type: DataTypes.DATE, field: 'updated_at',
+		},
+		deleted_status: {
+			type: DataTypes.STRING,
+		},
+
+	}, {});
 	return Users;
-}
+};

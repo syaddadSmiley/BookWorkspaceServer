@@ -20,7 +20,8 @@ class BaseController {
 	* @return an err if an error occur
     */
 	static async getById(req, modelName) {
-		const reqParam = req.params.id;
+		// const reqParam = req.params.id;
+		const reqParam = req.params.id.replace(/[^a-zA-Z0-9_-]/g, '');
 		logger.log(reqParam, 'warn');
 		let result;
 		try {
@@ -36,7 +37,6 @@ class BaseController {
 
 	static async getByCustomOptions(req, modelName, options) {
 		let result;
-		// console.log(req, modelName, options)
 		try {
 			result = await req.app.get('db')[modelName].findAll(options)
 		} catch (err) {
@@ -46,7 +46,8 @@ class BaseController {
 	}
 
 	static async deleteById(req, modelName) {
-		const reqParam = req.params.id;
+		// const reqParam = req.params.id;
+		const reqParam = req.params.id.replace(/[^a-zA-Z0-9_-]/g, '');
 		let result;
 		try {
 			result = await req.app.get('db')[modelName].destroy({
@@ -128,8 +129,9 @@ class BaseController {
 	}
 
 	static async getList(req, modelName, options) {
-		const page = req.query.page;
-
+		const page = options.page;
+		
+		const limit = 20;
 		let results;
 		try {
 			if (_.isUndefined(options)) {
@@ -139,13 +141,24 @@ class BaseController {
 			if (parseInt(page, 10)) {
 				if (page === 0) {
 					options = _.extend({}, options, {});
-				} else {
+				} 
+				if (!_.isUndefined(options.limit) || !_.isEmpty(options.limit)) {
 					options = _.extend({}, options, {
-						offset: this.limit * (page - 1),
-						limit: this.limit,
+						offset: options.limit * (page - 1),
+					});
+				}else {
+					options = _.extend({}, options, {
+						offset: limit * (page - 1),
+						limit: limit,
 					});
 				}
 			} else {
+				if(options.status === "noAll"){
+					options = _.extend({}, options, {
+						offset: limit * (page - 1),
+						limit: limit,
+					});
+				}
 				options = _.extend({}, options, {}); // extend it so we can't mutate
 			}
 
@@ -160,5 +173,53 @@ class BaseController {
 		}
 		return results;
 	}
+
+	static async customSelectQuery(req, querySelect) {
+		let result;
+		try {
+			// sequelize.query(`SELECT
+			console.log("INI 2");
+			result = await req.app.get('db').sequelize.query(querySelect, 
+				{ type: req.app.get('db').sequelize.QueryTypes.SELECT
+			}).then(
+				errHandler.throwIf(r => !r, 500, 'Internal server error', 'something went wrong while fetching data'),
+				errHandler.throwError(500, 'sequelize error'),
+			).then(result => Promise.resolve(result));
+		} catch (err) {
+			return Promise.reject(err);
+		}
+		return result;
+	}
+
+	static async customUpdateQuery(req, query) {
+		let result;
+		try {
+			result = await req.app.get('db').sequelize.query(query, 
+				{ type: req.app.get('db').sequelize.QueryTypes.UPDATE
+			}).then(
+				errHandler.throwIf(r => !r, 500, 'Internal server error', 'something went wrong while fetching data'),
+				errHandler.throwError(500, 'sequelize error'),
+			).then(result => Promise.resolve(result));
+		} catch (err) {
+			return Promise.reject(err);
+		}
+		return result;
+	}
+
+	static async customDeleteQuery(req, query) {
+		let result;
+		try {
+			result = await req.app.get('db').sequelize.query(query, 
+				{ type: req.app.get('db').sequelize.QueryTypes.DELETE
+			}).then(
+				errHandler.throwIf(r => !r, 500, 'Internal server error', 'something went wrong while fetching data'),
+				errHandler.throwError(500, 'sequelize error'),
+			).then(result => Promise.resolve(result));
+		} catch (err) {
+			return Promise.reject(err);
+		}
+		return result;
+	}
+
 }
 module.exports = BaseController;

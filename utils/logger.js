@@ -1,5 +1,5 @@
 
-const { createLogger, format, transports } = require('winston');
+const { createLogger, format, transports, silly } = require('winston');
 const fs = require('fs');
 const DailyRotate = require('winston-daily-rotate-file');
 
@@ -9,6 +9,7 @@ const logDir = 'log';
 let infoLogger;
 let errorLogger;
 let warnLogger;
+let verboseLogger;
 let allLogger;
 
 class Logger {
@@ -104,6 +105,24 @@ class Logger {
 			exitOnError: false,
 		});
 
+		verboseLogger = createLogger({
+			// change level if in dev environment versus production
+			format: format.combine(
+				format.timestamp({
+					format: 'YYYY-MM-DD HH:mm:ss',
+				}),
+				format.printf(silly => `${silly.timestamp} ${silly.level}: ${silly.message}`),
+
+			),
+			transports: [
+				new (DailyRotate)({
+					filename: `${logDir}/%DATE%-verbose-results.log`,
+					datePattern: 'YYYY-MM-DD',
+				}),
+			],
+			exitOnError: false,
+		});
+
 		allLogger = createLogger({
 			// change level if in dev environment versus production
 			format: format.combine(
@@ -136,6 +155,9 @@ class Logger {
 			allLogger.log(severity, message, data);
 		} else if (severity === 'warn') {
 			warnLogger.log(severity, message, data);
+			allLogger.log(severity, message, data);
+		} else if(severity === 'verbose') {
+			verboseLogger.log(severity, message, data);
 			allLogger.log(severity, message, data);
 		}
 	}

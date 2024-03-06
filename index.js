@@ -1,46 +1,37 @@
 const express = require('express');
-const http = require('http');
-const dotenv = require('dotenv');
-const uuid = require('uuid');
-
-//SECURITY
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const compression = require('compression');
 const helmet = require('helmet');
 const csurf = require('csurf');
 const rateLimit = require('express-rate-limit');
-///
+const http = require('http');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const compression = require('compression');
+const uuid = require('uuid');
 
+const config = require('./config/appconfig');
 const Logger = require('./utils/logger.js');
 
 const logger = new Logger();
 const app = express();
-const config = dotenv.config().parsed;
-//add config to process.env
-if(!config) {
-	process.env.PORT = 8080;
-	process.env.JWT_SECRET = 'jwt_secret';
-	process.env.JWT_EXPIRATION = '1h';
-	process.env.DB_HOST = 'localhost';
-	process.env.DB_PORT = 3306;
-	process.env.DB_NAME = 'db_magang';
-	process.env.DB_USER = 'db_magang';
-	process.env.DB_PASS = 'db_magang';
-	process.env.NODE_ENV = 'test';
-}else{
-	Object.keys(config).forEach((key) => {
-		process.env[key] = config[key];
-	});
-}
 
-
-app.use(bodyParser.json());
+app.set('config', config); // the system configrationsx
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('method-override')());
+
 
 app.use(compression());
 app.use(cors());
 
+const swagger = require('./utils/swagger');
+const { use } = require('./router');
+
+
+app.use(rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // limit each IP to 100 requests per windowMs
+	message: 'Too many requests from this IP, please try again after 15 minutes',
+}));
 process.on('SIGINT', () => {
 	logger.log('stopping the server', 'info');
 	process.exit();
@@ -49,19 +40,16 @@ process.on('SIGINT', () => {
 app.set('db', require('./models/index.js'));
 
 app.set('port', process.env.DEV_APP_PORT);
-if(process.env.NODE_ENV !== 'test') {
-	app.use((req, res, next) => {
-		req.identifier = uuid();
-		const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body)}`;
-		logger.log(logString, 'info');
-		next();
-	});
-}
+app.use('/api/docs', swagger.router);
+
+app.use((req, res, next) => {
+	req.identifier = uuid();
+	const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body).slice(0, 150) }`;
+	logger.log(logString, 'info');
+	next();
+});
 
 app.use(require('./router'));
-app.get('/', (req, res) => {
-	res.status(200).type('text/plain').send('hello world');
-});
 
 app.use((req, res, next) => {
 	logger.log('the url you are trying to reach is not hosted on our server T_T', 'error');
@@ -70,25 +58,12 @@ app.use((req, res, next) => {
 	res.status(err.status).json({ type: 'error', message: 'the url you are trying to reach is not hosted on our server T_T' });
 
 	req.identifier = uuid();
-	const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body)}`;
+	const logString = `a request has been made with the following uuid [${req.identifier}] | ${req.ip} | ${req.url} | ${req.headers['user-agent']} ${JSON.stringify(req.body).slice(0, 150)}`;
 	logger.log(logString, 'info');
 	next(err);
 });
-
 app.use(csurf({ cookie: true }));
-app.use((err, req, res, next) => {
-	if (err.code !== 'EBADCSRFTOKEN') return next(err);
-	logger.log('the csrf token is invalid', 'error');
-	res.status(403).json({ type: 'error', message: 'the csrf token is invalid' });
-});
-
 app.use(helmet());
-app.use(rateLimit({
-	windowMs: 15 * 60 * 1000,
-	max: 100,
-	message: 'Too many requests from this IP, please try again after an hour',
-}));
-
 /**
  * Create HTTP server.
  */
@@ -116,7 +91,8 @@ function normalizePort(val) {
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || '3000');
+
+const port = normalizePort(process.env.DEV_APP_PORT || '3000');
 app.set('port', port);
 
 function onError(error) {
@@ -160,4 +136,4 @@ server.listen(port)
 server.on('error', onError);
 server.on('listening', onListening);
 
-module.exports = app;
+// module.exports = app;
