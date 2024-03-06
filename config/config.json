@@ -1,29 +1,29 @@
 {
-  "development": {
-  "url" : "",
-  "username": "ubisniz",
-  "password": "@Ubis20Niz22",
-  "database": "ubisniz22_db",
-  "host": "127.0.0.1",
-  "port": 3306,
-  "dialect": "mysql"
-  },
-  "test": {
-  "url" : "",
-  "username": "ubisniz",
-  "password": "@Ubis20Niz22",
-  "database": "ubisniz22_db",
-  "host": "127.0.0.1",
-  "port": 3306,
-  "dialect": "mysql"
-  },
-  "production": {
-  "url" : "",
-  "username": "ubisniz",
-  "password": "@Ubis20Niz22",
-  "database": "ubisniz22_db",
-  "host": "127.0.0.1",
-  "port": 3306,
-   "dialect": "mysql"
+    "development": {
+    "url" : "",
+    "username": "dot_magang",
+    "password": "dot_magang",
+    "database": "dot_magang",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+    },
+    "test": {
+    "url" : "",
+    "username": "dot_magang",
+    "password": "dot_magang",
+    "database": "dot_magang",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+    },
+    "production": {
+    "url" : "",
+    "username": "dot_magang",
+    "password": "dot_magang",
+    "database": "dot_magang",
+    "host": "127.0.0.1",
+    "port": 3306,
+     "dialect": "mysql"
+    }
   }
-}

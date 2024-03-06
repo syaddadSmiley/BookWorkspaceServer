@@ -10,34 +10,52 @@
 - git commit -m "feat: developing auth login & signUp"
 - git push origin {nama branch}
  
-In this repository, I don't aim to provide any optimal solution as each project have its own necessity but to help anyone that is starting with a NodeJS project and can't find any inspiration on how to start building the project to take this project as the starting point.
- 
- Some of the good practices followed in this repository:
- - `async` & `await` support 
- - WinstonJS logger implementation
- - Error Handling
- - Sequelize Support 
- - Basic Joi Validation
- - Open API specification implemented through swagger-jsdocs and swagger-ui
- - JWT implementation 
- - Enviroment variables to hold configuration values .env file
- - OOP (Object-Oriented Programming)
- - I followed [airbnb](https://github.com/airbnb/javascript) coding standard with eslint, to help keep things into prespective.
- 
- ### How to start the project:
- 
- - First, you clone the project by using the following command:\
- `git clone https://github.com/AlaaMezian/NodeJs-backend-structure.git`
- - Install node version 8.11.0 or use nvm to downgrade your node version.
- - Delete the existing `package.lock.json` and run `npm install`
- - Then you create a postgres database named iLrn with the following credentials:
- ```bash
- username: postgres
- password: password
- ```
- - Run the migration using the following command:
- `npx sequelize-cli db:migrate`
- - Lastly, you run `npm start`
 
-Future improvements utilize component based structure.\
-Please feel free to :star: and happy programming :v: 
+# Simple REST API with Node.js and Express
+
+This project is a simple REST API built with Node.js and Express, following the MVC pattern. It consists of CRUD operations for items, where the data is stored in MySQL using Sequelize. JWT token authentication is implemented to secure the API, and end-to-end testing is performed using Supertest.
+
+## Project Structure
+- `controllers`: Contains the business logic for handling CRUD operations.
+- `models`: Defines the data schema using Sequelize.
+- `routes`: Defines the API routes for items and authentication.
+- `tests`: Includes end-to-end tests for token authentication.
+- `middleware`: Contains JWT authentication middleware.
+
+## Why MVC Pattern?
+The MVC pattern was chosen for its simplicity and organization. It separates concerns by organizing the codebase into models, views, and controllers. This makes the codebase more maintainable and scalable, especially for small to medium-sized projects.
+
+```
+dot_magang
+├─ .eslintrc.json
+├─ config
+│  └─ config.json
+├─ controllers
+│  ├─ AuthController.js
+│  ├─ BaseController.js
+│  └─ ItemsController.js
+├─ gulpfile.js
+├─ index.js
+├─ migration.js
+├─ migrations
+│  ├─ 1700729837795_users.js
+│  └─ 1700730027433_items.js
+├─ models
+│  ├─ index.js
+│  ├─ items.js
+│  └─ users.js
+├─ package.json
+├─ README.md
+├─ router
+│  ├─ api
+│  │  ├─ authRouter.js
+│  │  ├─ index.js
+│  │  └─ itemsRouter.js
+│  └─ index.js
+├─ tests
+│  └─ e2e.test.js
+└─ utils
+   ├─ auth.js
+   └─ RequestHandler.js
+
+```

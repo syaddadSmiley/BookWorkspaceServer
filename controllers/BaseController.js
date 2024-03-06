@@ -1,5 +1,4 @@
 
-
 const _ = require('lodash');
 const RequestHandler = require('../utils/RequestHandler');
 const Logger = require('../utils/logger');
@@ -39,7 +38,7 @@ class BaseController {
 	static async getByCustomOptions(req, modelName, options) {
 		let result;
 		try {
-			result = await req.app.get('db')[modelName].findOne(options);
+			result = await req.app.get('db')[modelName].findAll(options)
 		} catch (err) {
 			return Promise.reject(err);
 		}

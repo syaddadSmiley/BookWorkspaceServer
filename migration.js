@@ -3,10 +3,10 @@ var migration = require('mysql-migrations');
 
 var connection = mysql.createPool({
     connectionLimit: 10,
-    host: '127.0.0.1',
-    user: 'ubisniz',
-    password: '@Ubis20Niz22',
-    database: 'ubisniz22_db'
+    host: 'localhost',
+    user: 'dot_magang',
+    password: 'dot_magang',
+    database: 'dot_magang'
 });
 
 migration.init(connection, __dirname + '/migrations', function () {
