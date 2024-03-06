@@ -1,4 +1,4 @@
-## Web Application Server (REST API) NodeJS - MVC - Smart Contract - Ethereum
+## Web Application Server (REST API) NodeJS - MVC - Booking App
 
 ### Key Features : 
 - [x] Express.js for running up the Server
